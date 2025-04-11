@@ -1,0 +1,128 @@
+<div id="pageSommaire">
+	<!--###################################### Accueil ##################################################-->
+
+	<!--
+		L'accueil se décompose dans l'ordre des blocs suivants :
+		-> Le bloc vidéo
+		-> Le bloc de présentation du lab
+		-> Le bloc « Notre approche »
+		-> Le bloc « Nos services »
+		-> Le bloc « En ce moment »
+	-->
+
+	<!--  Le bloc vidéo. -->
+	<div id="blocVideo" style="z-index: 0;display: block;">
+		<video
+				width="100%"
+				autoplay="autoplay"
+				muted="muted"
+				loop="loop"
+				playsinline="playsinline"
+				preload="metadata"
+				data-aos="fade-up"
+		>
+			<source src="#CHEMIN{media/video/video_accueil.webm}" type="video/webm">
+			<source src="#CHEMIN{media/video/video_accueil.mp4}" type="video/mp4">
+			Votre navigateur ne peut lire nos formats vidéo, veuillez mettre votre navigateur à jour.
+		</video>
+	</div>
+
+	<!--  Le bloc de présentation du lab. -->
+	<div id ="BlocPresentation" class="marges">
+		<BOUCLE_presentation_erasme(ARTICLES){statut=publie}{titre_mot=presentation}>
+		<h1 class="#EDIT{titre}">#TITRE</h1>
+		[<div class="#EDIT{texte} texte">(#TEXTE|image_reduire{520,0})</div>]
+		</BOUCLE_presentation_erasme>
+	</div>
+
+	<!--  Le bloc notre approche. -->
+	<div id ="BlocApproche" class="marges">
+		<BOUCLE_rubrique_approche(RUBRIQUES){titre_mot=presentation-approche}>
+		<h1 class="#EDIT{titre}">#TITRE</h1>
+		<ul class="marges overflow-scroll">
+			<BOUCLE_article_approche(ARTICLES){id_rubrique}{par date}>
+			<li class="#EDIT{logo}">[(#LOGO_ARTICLE|image_reduire{0,200})]<!--<p class="#EDIT{titre}">#TITRE</p>--></li>
+			</BOUCLE_article_approche>
+		</ul>
+		<div class="btn">
+			<a href="<BOUCLE_sommaire_quisommesnous(RUBRIQUES){titre_mot=presentation-sommaire-qui-sommes-nous}>#URL_RUBRIQUE</BOUCLE_sommaire_quisommesnous>">
+				<button><span class="#EDIT{texte} texte">#TEXTE</span></button>
+			</a>
+		</div>
+		</BOUCLE_rubrique_approche>
+	</div>
+
+	<!--  Le bloc notre histoire -->
+	<div id ="BlocHistoire" class="marges">
+		<BOUCLE_rubrique_histoire(RUBRIQUES){titre_mot=presentation-histoire}>
+		<BOUCLE_article_histoire(ARTICLES){id_rubrique}>
+		<h1 class="#EDIT{titre}">#TITRE</h1>
+		<div class="timeline #EDIT{logo}">#LOGO_ARTICLE</div>
+		</BOUCLE_article_histoire>
+		</BOUCLE_rubrique_histoire>
+	</div>
+
+	<!--Nos services mobile -->
+	<div class="marges">
+		<BOUCLE_titre_nos_services(RUBRIQUES){titre_mot=presentation-services}>
+		<h1 id="titrenosServices" class="#EDIT{titre}">#TITRE</h1>
+		</BOUCLE_titre_nos_services>
+		<div id="nosServicesMobile">
+			<div class="bloc_container small">
+				<BOUCLE_articles_urbanlab_inspirer_mobile(ARTICLES){titre_mot=presentation-urbanlab-inspirer}>
+				<a href="#URL_ARTICLE"><div class="bloc" style="background : url('<BOUCLE_doc1_mobile(DOCUMENTS){id_article}>#URL_DOCUMENT</BOUCLE_doc1_mobile>'); background-size: cover; background-position: center; background-repeat: no-repeat;"></div></a>
+				</BOUCLE_articles_urbanlab_inspirer_mobile>
+				<BOUCLE_articles_urbanlab_explorer_mobile(ARTICLES){titre_mot=presentation-urbanlab-explorer}>
+				<a href="#URL_ARTICLE"><div class="bloc" style="background : url('<BOUCLE_doc2_mobile(DOCUMENTS){id_article}>#URL_DOCUMENT</BOUCLE_doc2_mobile>'); background-size: cover; background-position: center; background-repeat: no-repeat;"></div></a>
+				</BOUCLE_articles_urbanlab_explorer_mobile>
+			</div>
+			<div class="bloc_container large">
+				<BOUCLE_images_urbanlab_accelerer_mobile(ARTICLES){titre_mot=presentation-urbanlab-accelerer}>
+				<a href="#URL_ARTICLE"><div class="bloc" style="background : url('<BOUCLE_doc3_mobile(DOCUMENTS){id_article}>#URL_DOCUMENT</BOUCLE_doc3_mobile>');  background-size: cover; background-position: center; background-repeat: no-repeat;"></div></a>
+				</BOUCLE_images_urbanlab_accelerer_mobile>
+				<BOUCLE_incubation_mobile(RUBRIQUES){id_rubrique=326}>
+				<a href="#URL_RUBRIQUE">
+					<div class="bloc incubation" style="
+					background: url('[(#LOGO_ARTICLE|extraire_attribut{src}|url_absolue)]') no-repeat;
+					background-size: cover;">
+						<h2 class="">L’incubation par ERASME</h2>
+					</div>
+				</a>
+				</BOUCLE_incubation_mobile>
+			</div>
+		</div>
+	</div>
+
+	<!--  Le bloc en ce moment -->
+	<div id="blocActualites" class="marges" style="position: relative;">
+		[(#REM) Le bloc brèves est constitué des trois brèves les plus récentes et d'un bloc d'inscription à l'infolettre.]
+		[(#REM) Commençons par les trois dernières brèves.]
+		<div id="blocPrincipalActualites">
+			<div id="blocBreves">
+				<BOUCLE_rubrique_actualites(RUBRIQUES){titre_mot=presentation-actualites}>
+				<h1 id="titreActus" class="#EDIT{titre}">#TITRE</h1>
+				</BOUCLE_rubrique_actualites>
+				<BOUCLE_articles_actus(ARTICLES){!par date}{0,5}{statut=publie}{titre_mot=actus}>
+				<div class="actualites">
+					<a href="#URL_ARTICLE" title="[(#TITRE)]">
+						<div class="blocEvenementAccueil">
+							<p class="blocEvenementTitre">[(#TITRE|troncature_propre{35, '...'})]</p>
+							<p class="blocEvenementChrono">[(#DATE|affdate)]</p>
+							<p class="blocEvenementContenu">[(#TEXTE|couper{120, '...'})]</p>
+						</div>
+					</a>
+				</div>
+				</BOUCLE_articles_actus>
+			</div>
+		</div>
+		<BOUCLE_bouton_evenement(ARTICLES){titre_mot=presentation-actualites}>
+		<div class="btn actu invert">
+			<a href="<BOUCLE_sommaire_evenements(RUBRIQUES){titre_mot=presentation-sommaire-actualites}>#URL_RUBRIQUE</BOUCLE_sommaire_evenements>">
+				<button>
+					<p class="invert #EDIT{titre} titre">#TITRE</p>
+				</button>
+			</a>
+		</div>
+		</BOUCLE_bouton_evenement>
+	</div>
+</div>

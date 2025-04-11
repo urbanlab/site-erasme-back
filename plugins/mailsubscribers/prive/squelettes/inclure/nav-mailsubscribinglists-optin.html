@@ -1,0 +1,35 @@
+<!-- Filtrer par listes de diffusion -->
+<BOUCLE_listes(MAILSUBSCRIBINGLISTS){statut IN #LISTE{ouverte,fermee}}{0,1}>
+
+	[(#BOITE_OUVRIR{<h3><:mailsubscriber:titre_listes_de_diffusion:></h3>,simple})]
+
+	<B_listes_ouvertes>
+	<div class="liste">
+		<h4><:mailsubscribinglist:texte_statut_ouverte:></h4>
+		<ul class="liste-items">
+	<BOUCLE_listes_ouvertes(MAILSUBSCRIBINGLISTS){statut=ouverte}{par num titre,titre}>
+		<li class="item[(#ENV{id_mailsubscribinglist}|=={#ID_MAILSUBSCRIBINGLIST}|oui)on]">[(#SELF|parametre_url{s,''}|parametre_url{id_mailsubscribinglist,#ID_MAILSUBSCRIBINGLIST}|lien_ou_expose{#TITRE,#ENV{id_mailsubscribinglist}|=={#ID_MAILSUBSCRIBINGLIST}})]
+		([(#IDENTIFIANT|mailsubscribers_compte_inscrits)])
+		</li>
+	</BOUCLE_listes_ouvertes>
+	</ul>
+	</div>
+	</B_listes_ouvertes>
+
+	<B_listes_fermees>
+	<div class="liste">
+		<h4><:mailsubscribinglist:texte_statut_fermee:></h4>
+		<ul class="liste-items">
+	<BOUCLE_listes_fermees(MAILSUBSCRIBINGLISTS){statut=fermee}{par num titre,titre}>
+		<li class="item[(#ENV{id_mailsubscribinglist}|=={#ID_MAILSUBSCRIBINGLIST}|oui)on]">[(#SELF|parametre_url{s,''}|parametre_url{id_mailsubscribinglist,#ID_MAILSUBSCRIBINGLIST}|lien_ou_expose{#TITRE,#ENV{id_mailsubscribinglist}|=={#ID_MAILSUBSCRIBINGLIST}})]
+		([(#IDENTIFIANT|mailsubscribers_compte_inscrits)])
+		</li>
+	</BOUCLE_listes_fermees>
+	</ul>
+	</div>
+	</B_listes_fermees>
+
+	[(#URL_ECRIRE{mailsubscribinglists}|icone_horizontale{<:mailsubscribinglist:titre_mailsubscribinglists:>,mailsubscribinglist-24})]
+
+	#BOITE_FERMER
+</BOUCLE_listes>

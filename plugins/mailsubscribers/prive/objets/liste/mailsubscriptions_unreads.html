@@ -1,0 +1,40 @@
+[(#SET{defaut_tri,#ARRAY{
+ email,1,
+ nb,-1,
+}})]#SET{unreads_to_send,#ENV{id_mailsubscribinglist}|mailsubscribers_filter_optins_to_send}
+<B_unreads>
+#ANCRE_PAGINATION
+<div class="liste-objets mailsubscriptions_optins">
+<table class='spip liste'>
+	[<caption><strong class="caption">(#ENV*{titre,#GRAND_TOTAL|singulier_ou_pluriel{mailsubscriptions:info_1_mailsubscriptions_unread,mailsubscriptions:info_nb_mailsubscriptions_unreads}})</strong></caption>]
+	<thead>
+		<tr class='first_row'>
+			<th class='email' scope='col'>[(#TRI{email,<:mailsubscriber:label_email:>,ajax})]</th>
+			<th class='liste' scope='col'>[(#TRI{nb,<:mailsubscriptions:nombre_envois:>,ajax})]</th>
+		</tr>
+	</thead>
+	<tbody>
+	<BOUCLE_unreads(DATA)
+		{source tableau,#GET{unreads_to_send}}
+		{tri #ENV{par,email},#GET{defaut_tri}}
+		{pagination #ENV{nb,10}}
+	>
+		<tr class='[(#COMPTEUR_BOUCLE|alterner{row_odd,row_even})]'>
+			<td class='email principal'><a href="[(#ID_MAILSUBSCRIBER|generer_url_entite{mailsubscriber}|parametre_url{email,#EMAIL})]">#EMAIL</a></td>
+			<td class='liste secondaire'>#NB</td>
+		</tr>
+	</BOUCLE_unreads>
+	</tbody>
+</table>
+[<nav class='pagination'>(#PAGINATION{prive})</nav>]
+</div>
+	#SET{tosend,#GET{unreads_to_send}|count}
+	[(#GET{tosend}|oui)
+		[(#SET{texte,#VAL{mailsubscriptions_optin:bouton_envoyer_demande_optin}|_T{#ARRAY{nb,#GET{tosend}}}})]
+		<div class="center">
+		[(#BOUTON_ACTION{#GET{texte},#URL_ACTION_AUTEUR{demander_optin_list_unread,#ID_MAILSUBSCRIBINGLIST,#SELF}})]
+		</div>
+	]
+</B_unreads>[
+<div class="liste-objets mailsubscriptions_optins caption-wrap"><strong class="caption">(#ENV*{sinon,''})</strong></div>
+]<//B_unreads>

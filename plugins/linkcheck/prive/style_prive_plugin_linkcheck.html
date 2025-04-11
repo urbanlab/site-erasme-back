@@ -1,0 +1,94 @@
+[(#REM)
+
+	Ce squelette definit les styles de l'espace prive
+
+	Note: l'entete "Vary:" sert a repousser l'entete par
+	defaut "Vary: Cookie,Accept-Encoding", qui est (un peu)
+	genant en cas de "rotation du cookie de session" apres
+	un changement d'IP (effet de clignotement).
+
+	ATTENTION: il faut absolument le charset sinon Firefox croit que
+	c'est du text/html !
+	<style>
+]#HTTP_HEADER{Content-Type: text/css; charset=utf-8}
+#HTTP_HEADER{Vary: Accept-Encoding}
+
+#SET{claire,##ENV{couleur_claire,edf3fe}}
+#SET{foncee,##ENV{couleur_foncee,3874b0}}
+#SET{left,#ENV{ltr}|choixsiegal{left,left,right}}
+#SET{right,#ENV{ltr}|choixsiegal{left,right,left}}
+#SET{rtl,#ENV{ltr}|choixsiegal{left,'',_rtl}}
+
+.linkchecks .patience_la_fontaine{margin:0.5em 0;padding:0.25em 0.25em 0.25em 25px;background:transparent url("[(#CHEMIN_IMAGE{loader.svg})]") no-repeat left center;background-size: contain;}
+
+.linkchecks .progress {
+	background-color: #F7F7F7;
+	background-image: linear-gradient(to bottom, #F5F5F5, #F9F9F9);
+	background-repeat: repeat-x;
+	border-radius: 4px 4px 4px 4px;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+	height: 20px;
+	overflow: hidden;
+	font-size:0.9em;
+}
+
+.linkchecks .progress .bar {
+	-moz-box-sizing: border-box;
+	background-color: #0E90D2;
+	background-repeat: repeat-x;
+	box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15) inset;
+	color: #FFFFFF;
+	float: left;
+	font-size: 12px;
+	height: 100%;
+	text-align: center;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+	transition: width 0.6s ease 0s;
+	width: 0;
+}
+
+.linkchecks .progress-ok .bar,.linkchecks  .progress .bar-ok {
+	background-color: hsl(var(--spip-color-success--h), var(--spip-color-success--s), 45%);
+}
+.linkchecks  .progress .bar-restreint {
+	background-color: hsl(var(--spip-color-notice--h), 100%, 48%);
+}
+.linkchecks  .progress .bar-deplace {
+	background-color: hsl(var(--spip-color-info--h), var(--spip-color-info--s), 60%);
+}
+.linkchecks  .progress .bar-malade {
+	background-color: hsl(var(--spip-color-error--h), var(--spip-color-error--s), 50%);
+}
+.linkchecks  .progress .bar-mort {
+	background-color: #777;
+}
+
+.linkchecks .stats{margin-bottom:1em;}
+
+#contenu .liste-objets-lies.linkchecks{
+	margin:2.0775em 0;
+}
+
+.linkchecks table{
+	table-layout:fixed;
+	word-wrap:break-word;
+}
+
+.liste-objets..linkchecks td{
+	overflow:hidden;
+	text-overflow:ellipsis;
+}
+
+.liste-objets.linkchecks .url {}
+.liste-objets.linkchecks .redirection {width:3em;}
+.liste-objets.linkchecks .code {width:5em;}
+.liste-objets.linkchecks .etat {width: 8em;}
+.liste-objets.linkchecks .utilise {width: 10em;}
+.liste-objets.linkchecks .date {width: 10em;}
+.liste-objets.linkchecks .id {width: 5em;}
+.liste-objets.linkchecks .row-etat_ok {background-color: hsl(var(--spip-color-success--h, 72), 55%, 90%);}
+.liste-objets.linkchecks .row-etat_restreint {background-color: hsl(var(--spip-color-notice--h,47), 90%, 90%);}
+.liste-objets.linkchecks .row-etat_deplace {background-color: hsl(var(--spip-color-info--h,197), 45%, 93%);}
+.liste-objets.linkchecks .row-etat_malade {background-color: hsl(var(--spip-color-error--h, 356), 55%, 95%);}
+.liste-objets.linkchecks .row-etat_mort {background-color: #ddd; color: #777;}
+.liste-linkchecks-par-objet .liste-objets.linkchecks .utilise {display: none}

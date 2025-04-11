@@ -1,0 +1,15 @@
+#SET{article_projet,non}
+[(#REM) Les articles dont la rubrique parente a un mot-clef "protos" devra utiliser un squelette différent.]
+<BOUCLE_article_courant(ARTICLES){id_article = #ENV{id_article}}>
+	<BOUCLE_rubrique_courante(RUBRIQUES){id_rubrique}>
+		<BOUCLE_mots_rubrique_courante(MOTS){id_rubrique}{titre_mot = protos}>
+			#SET{article_projet,oui}
+		</BOUCLE_mots_rubrique_courante>
+	</BOUCLE_rubrique_courante>
+</BOUCLE_article_courant>
+
+[(#REM) Les pages "protos".]
+[(#GET{article_projet}|=={oui}|oui) <INCLURE{fond=layout-projets}{env}{page=article-projets} />]
+
+[(#REM) Les autres articles.]
+[(#GET{article_projet}|=={oui}|non) <INCLURE{fond=layout}{env}{page=article} />]

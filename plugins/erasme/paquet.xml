@@ -1,0 +1,25 @@
+<paquet
+    prefix="era"
+    categorie="squelette"
+    version="2.0.2"
+    etat="dev"
+    logo="era.png"
+    schema="1.1.6"
+    compatibilite="[3.0;["
+>
+    <nom>Erasme - Plugin du site</nom>
+    <auteur>Patrick Vincent, K&eacute;vin Vennitti, Pierre-Alexandre Racine, Yassin Siouda</auteur>
+    <licence>GNU/GPL</licence>
+
+    <necessite nom="crayons" />
+    <necessite nom="cextras" compatibilite="[3.0.5;[" />
+    <necessite nom="facteur" />
+    <necessite nom="mailshot" />
+    <necessite nom="mailsubscribers" />
+    <necessite nom="newsletters" />
+    <necessite nom="saisies" />
+    <necessite nom="spip_bonux" />
+    <utilise nom="medias" />
+
+    <pipeline nom="declarer_champs_extras" inclure="era_cextras.php" />
+</paquet>

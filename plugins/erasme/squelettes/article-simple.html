@@ -1,0 +1,9 @@
+#SET{article_projet,non}
+<BOUCLE_layout_article(ARTICLES){id_article}>
+    <BOUCLE_rubriques(RUBRIQUES){id_secteur = #ID_SECTEUR}>
+        [(#TITRE|=={Projets}|oui) #SET{article_projet,oui}]
+    </BOUCLE_rubriques>
+
+    [(#GET{article_projet}|=={oui}|oui) <INCLURE{fond=layout-projets}{env}{page=article-projets} />]
+    [(#GET{article_projet}|=={oui}|non) <INCLURE{fond=layout}{env}{page=article}{simple=oui} />]
+</BOUCLE_layout_article>

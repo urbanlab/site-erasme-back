@@ -1,0 +1,551 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800);
+@import url(https://fonts.googleapis.com/css?family=Oswald:300italic,400italic,600italic,700italic,800italic,400,300,500,600,700,800);
+
+
+/* Main Style */
+html {
+    scroll-behavior: smooth;
+}
+body {
+    margin: 0;
+}
+
+.padding {
+    padding: 15px 20% 50px 20%;
+}
+
+.bg-grey {
+    background-color: #E1E1E1;
+}
+
+
+/* Fonts */ 
+h2 {
+    font-size: 35px;
+    font-family: 'Oswald', serif;
+    text-decoration: underline;
+    font-weight: normal;
+    margin-top: 50px;
+}
+
+h3 {
+    font-family: 'Oswald', serif;
+    font-weight: normal;
+    text-transform: uppercase;
+    font-size: 25px;
+    text-align: center;
+    margin: 0;
+}
+p,
+#desc_1,
+#desc_2,
+#desc_3,
+#desc_4
+{
+    font-size: 17px;
+    font-family: 'Open Sans', serif;
+    font-weight: lighter;
+    line-height: 1.5;
+}
+
+/*#desc_1 img,
+#desc_2 img,
+#desc_3 img,
+#desc_4 img 
+{
+    width: 100%;
+}*/
+
+a {
+    color: #FF5274;
+    text-decoration: none;
+}
+
+
+
+/* Navigation */
+.subnav {
+    display: flex;
+    position: fixed;
+    background-color: white;
+    width: 100%;
+    z-index: 2;
+    top: 62px;
+}
+.subnav ul {
+    display: flex;
+    list-style: none;
+}
+.subnav ul li {
+    margin: 0 15px 0 0;
+    border-left: solid 1px black;
+    padding-left: 10px;
+    font-size: 14px;
+}
+
+.subnav a {
+    color: black;
+    transition: all ease-in-out 0.3s;
+}
+
+.subnav a:hover {
+    color: grey;
+    transition: all ease-in-out 0.3s;
+}
+
+.logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin : 15px
+}
+.subnav .protoTitre {
+    font-family: Oswald;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: normal;
+    margin : 23px 0 0 23px;
+}
+
+/* Header */
+#protoHeader {
+    height: 400px;
+    background-size: cover;
+    background-position: center;
+}
+
+#protoHeader .text {
+    position: absolute;
+    top: 170px;
+    left: 45px;
+    width: max-content;
+}
+
+#protoHeader .text h1,
+#protoHeader .text p {
+    padding: 10px;
+    background-color: black;
+    color: white;
+    border: none;
+}
+
+#protoHeader .boutonRetour {
+    bottom: auto;
+    top: 340px;
+}
+
+/* Timeline */
+#developpement .timeline ul{
+    display: flex;
+    list-style: none;
+    justify-content: space-around;
+}
+
+#developpement .timeline .line {
+    width: 100%;
+    background: #E1E1E1;
+    height: 5px;
+    position: relative;
+    bottom: 80px;
+}
+/* Active */
+#developpement .timeline .event.active {
+    width: auto;
+}
+
+#developpement .timeline .event.active .title {
+    background: black;
+    color: white;
+    font-weight: bold;
+}
+
+#developpement .timeline .event.active .arrow-down {
+    border-top: 20px solid black;
+  }
+
+#developpement .timeline .event.active  .circle {
+    background: white;
+    border: 9px solid black;
+}
+#developpement .timeline .event.active .date {
+    font-weight: bold; 
+}
+
+
+
+/* Inactive */
+#developpement .timeline .event {
+    width: auto;
+    cursor: pointer;
+}
+
+#developpement .timeline .event .title {
+    background: #E1E1E1;
+    margin: 0 0 0 0;
+    color: #69696A;
+    padding: 10px;
+    border-radius: 3px;
+    font-weight: normal;
+    text-align: center;
+}
+
+#developpement .timeline .event .title abbr{
+    text-decoration: none;
+}
+
+#developpement .timeline .event .arrow-down {
+    width: 0; 
+    height: 0; 
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 20px solid #E1E1E1;
+    margin: auto;
+  }
+
+#developpement .timeline .event  .circle {
+    width: 15px;
+    height: 15px;
+    background: #CCCBCB;
+    border-radius: 50%;
+    border: 9px solid #E1E1E1;
+    position: relative;
+    margin: auto;
+    bottom: -15px;
+    z-index: 1;
+}
+#developpement .timeline .event .date {
+    text-align: center;
+    margin: 30px 0 0 0;
+    font-weight: normal; 
+}
+
+/*Articles liés*/
+.blocArticlesLies {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+/* Methodos Usages Technos */
+#methodos .card-container {
+    justify-content: space-between;
+    display: flex;
+    padding: 0;
+}
+#methodos ul li {
+    list-style: none;
+}
+
+#methodos .card {
+    border: solid black 3px;
+    margin: 0 25px 0;
+    padding: 15px;
+    width: 33%;
+}
+
+#methodos .card ul {
+    margin-left: 15px;
+    padding: 0;
+}
+
+#methodos .card h3 {
+    margin-bottom: 15px;
+}
+
+#methodos .card p {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    display: inline-table;
+    margin: 0;
+}
+#methodos .card p img {
+    height: 35px;
+    width: auto;
+    background: transparent;
+    filter: invert(1);
+}
+
+#methodos .card p i {
+    float: left;
+    margin-right: 15px;
+}
+
+
+/*Slider*/
+
+#slider {
+    width: 50%;
+    margin: 50px auto;
+    height: 300px;
+}
+
+.slick-prev::before,
+.slick-next::before {
+    font-size: 85px !important;
+    color: black !important;
+}
+
+.slider  .slick-prev {
+    z-index: 999;
+    top : 100px;
+    left: -100px;
+    z-index: 0;
+}
+
+.slider  .slick-next {
+    right: -28px;
+    z-index: 99999;
+    top :100px;
+    z-index: 0;
+}
+
+.slider .slick-slide {
+    opacity: 0;
+    transition: opacity ease-in-out 0.4s;
+}
+
+.slider .slick-active{
+    opacity: 1;
+    transition: opacity ease-in-out 0.4s;
+
+}
+
+
+/*.slider .slick-slide {
+    height: 200px !important;
+    width: auto !important;
+}
+*/
+/*.slider .slick-slide  img {
+    margin: 10px;
+    padding: 0;
+    display: block;
+    width: auto !important;
+}*/
+
+
+/* Chiffres */
+.chiffre-container {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    font-family: Oswald;
+    margin-top: 15px;
+}
+
+.chiffre-container .number {
+    background: black;
+    color: white;
+    border-radius: 50%;
+    width: 75px;
+    height: 75px;
+    text-align: center;
+}
+
+.chiffre-container .number p {
+    margin: 10px 0 0 0 !important;
+    font-size: 32px;
+    font-weight: bold;
+    margin: 0;
+    text-align: center;
+    
+}
+
+.chiffre-container  p {
+    margin: 20px;
+    text-align: center;
+}
+
+
+.chiffre-container .chiffre {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 30%;
+}
+
+/* Description technique */
+#descTech .col{
+    float: left;
+    width: 48%;
+    padding-right:20px ;
+}
+
+#descTech ul {
+    padding: 0;
+}
+
+#descTech ul li {
+    list-style: none;
+}
+
+#descTech p{
+    font-size: 18px;
+    font-weight: 300;
+    color: #4E4849;
+}
+
+#descTech h4 {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+#prototypes .resultatDocument img,
+#prototypes #blocDocuments a .resultatDocument img.spip_logo.spip_logos 
+{
+    float: left;
+}
+
+#prototypes .resultatDocument p,
+#prototypes .resultatRubriqueTitre
+{
+    color: black;
+    background-color: white ;
+}
+
+#prototypes  .resultatDocument .resultatDocumentTitre,
+#prototypes  #resultatDocumenttitre
+{
+    padding: 0 0 0 20px;
+    background-color: white ;
+}
+
+
+/* Ecosysteme */
+
+.project-tree {
+    position:relative;
+    padding: 100px 0 200px 0;
+  }
+  
+  .tree {
+    width:35%
+  }
+  
+  #section-tree-title {
+    font-size: 32px;
+    font-family:'Oswald';
+    text-align:center;
+    width: 100%;
+    position:relative;
+    border-radius:50%;
+    margin: 60px auto 0px auto;
+    color: rgba(28, 54, 83, 0.2);
+  }
+  
+  #tree-title {
+    font-size: 32px;
+    font-family:'Oswald';
+    text-transform:uppercase;
+    text-align:center;
+    width: 30%;
+    padding-top:50%;
+    position:relative;
+    border-radius:50%;
+    margin:0 auto;
+  }
+  
+  #tree-title span {
+    display:block;
+    position:absolute;
+    top:50%;
+    margin-top:-45px;
+    left:0;
+    right:0;
+    text-align:center;
+  }
+  
+  #tree-utilisateurs,
+  #tree-partenaires,
+  #tree-entreprises{
+    width: 510px;
+    height: 510px;
+    position: absolute;
+    z-index: 10;
+  }
+
+  #tree-utilisateurs {
+    top: 60px;
+    right: 0;
+  }
+  
+  #tree-partenaires {
+    top: 0;
+    left: 60px;
+  }
+  
+  #tree-entreprises {
+    bottom: 00px;
+    left: 350px;
+  }
+  
+  .tree ul {
+    margin: -15px;
+    padding:0;
+    list-style-type:none;
+    position: relative;
+  }
+  
+  .tree ul li {
+    display:block;
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    background:rgba(0,0,0,.8);
+    text-align:center;
+    vertical-align:middle;
+    line-height: 120px;
+    padding: 15px;
+    position:absolute;
+    z-index:1000000000
+  }
+  
+  .tree ul li.img {
+    border:solid 3px rgba(0,0,0,.8);
+    background:white;
+    background-position:center center;
+    background-repeat:no-repeat;
+    background-size:100%;
+  }
+
+  .tree ul li.petale_marguerite_sans_image {
+    font-family: Oswald;
+    text-transform: uppercase;
+    color: white;
+    font-size: 20px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .tree ul li span {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 20px;
+    width: 100%;
+    overflow: hidden;
+    font-size: 16px;
+    color: white;
+  }
+  
+  .tree h3 {
+    width:200px;
+    height:200px;
+    line-height: 200px;
+    border-radius:200px;
+    color:white;
+    text-align:center;
+    font-family:'Oswald';
+    position: absolute;
+    top: 135px;
+    left: 155px;
+    z-index: 100;
+  }
+
+
+
+
+  

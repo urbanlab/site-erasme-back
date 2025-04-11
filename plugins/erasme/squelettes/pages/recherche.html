@@ -1,0 +1,140 @@
+[(#REM) Les résultats de la recherche à afficher sont les articles, les brèves, les rubriques (?), les documents (?) ]
+
+<div id="listeResultatsRecherche">
+    <div id="titreRecherche">
+        <h1>Recherche : [(#RECHERCHE)]</h1>
+    </div>
+
+    [(#REM) Liste des articles]
+    <div id="listeCompleteResultats">
+        <div id="listeResultatsRechercheArticles ">
+            <h3>Articles correspondants : </h3>
+            <BOUCLE_articles_recherche(ARTICLES){recherche}{par points}{inverse}{0,50}>
+                <a href="#URL_ARTICLE">
+                    <div
+                            class="resultatArticle blocGrille"
+                            style="background-image: url('[(#LOGO_ARTICLE_RUBRIQUE|extraire_attribut{src}|url_absolue))]'); background-size: cover;"
+                    >
+                        <p class="titreMiniBlocArticle">
+                            [(#TITRE|couper{20, '...'})]
+                        </p>
+                    </div>
+                </a>
+            </BOUCLE_articles_recherche>
+            <p id="aucunArticleTrouve">Aucun article ne correspond à votre recherche.</p>
+            <//B_articles_recherche>
+        </div>
+
+
+        [(#REM) Liste des brèves]
+            <div id="listeResultatsRechercheBreves">
+                <h3>Breves :</h3>
+                <BOUCLE_breves_recherche(BREVES){recherche}{par points}{inverse}{0,50}>
+                <a href="#URL_BREVE">
+                    <div
+                            class="resultatBreve"
+                            style=""
+                    >
+                        <p class="blocEvenementTitre">[(#TITRE|couper{20, '...'})]</p>
+                        <p class="blocEvenementChrono">[(#MAJ|affdate)]</p>
+                        <p class="blocEvenementContenu">[(#TEXTE|couper{120, '...'})]</p>
+                    </div>
+                </a>
+                </BOUCLE_breves_recherche>
+                <p id="aucuneBreveTrouvee">Aucun brève ne correspond à votre recherche.</p>
+                <//B_breves_recherche>
+            </div>
+
+        [(#REM) Liste des rubriques]
+            <div id="listeResultatsRechercheRubriques">
+                <h3>Rubriques correspendants :</h3>
+                <BOUCLE_rubriques_recherche(RUBRIQUES){recherche}{par points}{inverse}{0,50}>
+                <a href="#URL_RUBRIQUE">
+                    <div
+                            class="resultatRubrique"
+                            style="background-image: url('[(#LOGO_RUBRIQUE|extraire_attribut{src}|url_absolue))]'); background-size: cover;"
+                    >
+                        <p class="resultatRubriqueTitre">
+                            [(#TITRE|couper{20, '...'})]
+                        </p>
+                    </div>
+                </a>
+                </BOUCLE_rubriques_recherche>
+                <p id="aucuneRubriqueTrouvee">Aucune rubrique ne correspond à votre recherche.</p>
+                <//B_rubriques_recherche>
+            </div>
+
+        [(#REM) Liste des documents]
+            <div class="listeResultatsRechercheDocuments">
+                <div id="listeImagesTrouvees">
+                <B_documents_recherche_images>
+                <h3>Images :</h3>
+                <BOUCLE_documents_recherche_images(DOCUMENTS){recherche}{extension==jpg|png|gif}{par points}{inverse}{0,50}>
+                <a href="#URL_DOCUMENT" target="_blank">
+                    <div
+                            class="resultatDocument"
+                            style="background-image: url('[(#LOGO_DOCUMENT_RUBRIQUE|extraire_attribut{src}|url_absolue))]'); background-size: cover;"
+                    >
+                        <div class="resultatDocumentLogo">[(#FICHIER|image_reduire{130,130}|inserer_attribut{alt,#TITRE})]</div>
+                        <div class="container">
+                            <p class="resultatDocumentTitre resultatRubriqueTitre">
+                                [(#TITRE|couper{18, '...'}|sinon{#TYPE_DOCUMENT})]
+                            </p>
+                            <p class="resultatDocumentDate">[(#DATE|nom_jour) ][(#DATE|affdate)]</p>
+                        </div>
+                    </div>
+                </a>
+                </BOUCLE_documents_recherche_images>
+                </div>
+            </div>
+            <div class="listeResultatsRechercheDocuments">
+                <div id="listeDocumentsTrouves">
+                <B_documents_recherche_documents>
+                <h3>Documents :</h3>
+                <BOUCLE_documents_recherche_documents(DOCUMENTS){recherche}{mode=document}{par points}{inverse}{0,50}{doublons}>
+                    <a href="#URL_DOCUMENT" target="_blank">
+                        <div
+                                class="resultatDocument"
+                                style="background-image: url('[(#LOGO_DOCUMENT_RUBRIQUE|extraire_attribut{src}|url_absolue))]'); background-size: cover;"
+                        >
+                            <div class="resultatDocumentLogo">[(#LOGO_DOCUMENT)]</div>
+                            <div class="container">
+                                <p class="resultatDocumentTitre resultatRubriqueTitre">
+                                    [(#TITRE|couper{18, '...'}|sinon{#TYPE_DOCUMENT})]
+                                </p>
+                                <p class="resultatDocumentDate">[(#DATE|nom_jour) ][(#DATE|affdate)]</p>
+                            </div>
+                        </div>
+                    </a>
+                </BOUCLE_documents_recherche_documents>
+                </div>
+            </div>
+    </div>
+
+    <div id="aucunResultat">
+        <p>Désolé !</p>
+        <p>Votre recherche n'a abouti à aucun résultat.</p>
+        <p>Nous vous invitons à réessayer.</p>
+    </div>
+
+<script>
+    /*
+        On souhaite un affichage différent lorsque aucun résultat n'est trouvé. La solution la plus simple et
+        la plus compréhensible et de modifier des affichage en javascript... C'est très sale mais je n'ai pas
+        vraiment le choix avec SPIP.
+     */
+    const contenuArticles   = document.getElementById('aucunArticleTrouve');
+    const contenuBreves     = document.getElementById('aucuneBreveTrouvee');
+    const contenuRubriques  = document.getElementById('aucuneRubriqueTrouvee');
+    const contenuImages     = document.getElementById('listeImagesTrouvees');
+    const contenuDocuments  = document.getElementById('listeDocumentsTrouves');
+
+    if (contenuArticles && contenuBreves && contenuRubriques && contenuImages.innerHTML.trim()==='' && contenuDocuments.innerHTML.trim()===''){
+        //console.log('aucun article ni brève ni rubrique ni image ni document.');
+        document.getElementById('listeCompleteResultats').style.display='None';
+    } else {
+        document.getElementById('aucunResultat').style.display='None';
+    }
+</script>
+
+</div>

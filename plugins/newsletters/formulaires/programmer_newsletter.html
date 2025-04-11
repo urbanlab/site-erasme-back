@@ -1,0 +1,229 @@
+<div class='formulaire_spip formulaire_editer formulaire_#FORM' xmlns="http://www.w3.org/1999/html">
+	[<p class="reponse_formulaire reponse_formulaire_ok">(#ENV**{message_ok})</p>]
+	[<p class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</p>]
+
+	<form method='post' action='#ENV{action}'><div>
+		#ACTION_FORMULAIRE{#ENV{action}}
+		#SET{fl,programmernewsletter}
+		<div class="editer-groupe">
+			#SET{name,titre}#SET{obli,'obligatoire'}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+			<div class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+				<label for="#GET{name}"><:info_titre:><em class="aide">#AIDER{titre}</em></label>[
+				<span class='erreur_message'>(#GET{erreurs})</span>
+				]<input type="text" name="#GET{name}" class="text" value="#ENV*{#GET{name},#GET{defaut}}" id="#GET{name}"[(#HTML5|et{#GET{obli}})required='required']/>
+			</div>
+			<fieldset class="reccurence">
+				<legend><:programmernewsletter:legend_recurrence:></legend>
+				<div class="editer-groupe">
+					#SET{name,date_debut}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+					<div class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+						<label for="#GET{name}">[(#GET{fl}|concat{':label_',#GET{name}}|_T)]</label>[
+						<span class='erreur_message'>(#GET{erreurs})</span>
+						]<input type="text" name="#GET{name}" class="text date" value="#ENV*{#GET{name},#GET{defaut}}" size='10' maxlength='10' id="#GET{name}" [(#HTML5|et{#GET{obli}})required='required']/>
+						<input type="text" class="text heure time" name="#GET{name}_heure" id="#GET{name}_heure" value="#ENV{#GET{name}_heure}" size="5"/>
+					</div>
+					#SET{name,frequence}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+					<div class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+						<label for="#GET{name}">[(#GET{fl}|concat{':label_',#GET{name}}|_T)]</label>[
+						<span class='erreur_message'>(#GET{erreurs})</span>
+						]<select name="#GET{name}" class="select" id="#GET{name}">
+							#SET{val,daily}
+							<option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]>[(#GET{fl}|concat{':label_',#GET{name},'_',#GET{val}}|_T)]</option>
+							#SET{val,weekly}
+							<option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]>[(#GET{fl}|concat{':label_',#GET{name},'_',#GET{val}}|_T)]</option>
+							#SET{val,monthly}
+							<option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]>[(#GET{fl}|concat{':label_',#GET{name},'_',#GET{val}}|_T)]</option>
+							#SET{val,yearly}
+							<option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]>[(#GET{fl}|concat{':label_',#GET{name},'_',#GET{val}}|_T)]</option>
+						</select>
+					</div>
+					<fieldset class="suite suite_frequence fieldset daily">
+						<div class="editer-groupe">
+							#SET{name,daily_interval}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+							<div class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+								<label for="#GET{name}">[(#GET{fl}|concat{':label_',#GET{name}}|_T)]</label>[
+								<span class='erreur_message'>(#GET{erreurs})</span>
+								]<select name="#GET{name}" class="select" id="#GET{name}">
+									<BOUCLE_dc(DATA){enum 1,31}>
+									#SET{val,#VALEUR}
+									<option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]>#GET{val}</option>
+									</BOUCLE_dc>
+								</select>
+								[(#GET{fl}|concat{':label_',#GET{name},'_unite'}|_T)]
+							</div>
+						</div>
+					</fieldset>
+					<fieldset class="suite suite_frequence fieldset weekly">
+						<div class="editer-groupe">
+							#SET{name,weekly_interval}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+							<div class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+								<label for="#GET{name}">[(#GET{fl}|concat{':label_',#GET{name}}|_T)]</label>[
+								<span class='erreur_message'>(#GET{erreurs})</span>
+								]<select name="#GET{name}" class="select" id="#GET{name}">
+									<BOUCLE_wc(DATA){enum 1,52}>
+									#SET{val,#VALEUR}
+									<option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]>#GET{val}</option>
+									</BOUCLE_wc>
+								</select>
+								[(#GET{fl}|concat{':label_',#GET{name},'_unite'}|_T)]
+							</div>
+							#SET{name,byweekday}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+							<div class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+								<label>[(#GET{fl}|concat{':label_',#GET{name}}|_T)]</label>[
+								<span class='erreur_message'>(#GET{erreurs})</span>
+								]
+								<BOUCLE_wd(DATA){enum 1,7}>
+								#SET{val,#VALEUR}
+								<span class="choix">
+									<input type="checkbox" name="#GET{name}#EVAL{chr(91)}#EVAL{chr(93)}" class="checkbox" id="#GET{name}_#GET{val}" value="#GET{val}"[(#GET{val}|in_any{#ENV{#GET{name},#GET{defaut}}}|oui)checked="checked"] />
+									<label for="#GET{name}_#GET{val}">[(#REM|concat{'date_jour_',#GET{val},'_initiale'}|_T)]</label>
+								</span>
+								</BOUCLE_wd>
+							</div>
+						</div>
+					</fieldset>
+					<fieldset class="suite suite_frequence fieldset monthly">
+						<div class="editer-groupe">
+							#SET{name,monthly_interval}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+							<div class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+								<label for="#GET{name}">[(#GET{fl}|concat{':label_',#GET{name}}|_T)]</label>[
+								<span class='erreur_message'>(#GET{erreurs})</span>
+								]<select name="#GET{name}" class="select" id="#GET{name}">
+									<BOUCLE_mc(DATA){enum 1,24}>
+									#SET{val,#VALEUR}
+									<option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]>#GET{val}</option>
+									</BOUCLE_mc>
+								</select>
+								[(#GET{fl}|concat{':label_',#GET{name},'_unite'}|_T)]
+							</div>
+						</div>
+					</fieldset>
+					<fieldset class="suite suite_frequence fieldset yearly">
+						<div class="editer-groupe">
+							#SET{name,yearly_interval}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+							<div class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+								<label for="#GET{name}">[(#GET{fl}|concat{':label_',#GET{name}}|_T)]</label>[
+								<span class='erreur_message'>(#GET{erreurs})</span>
+								]<select name="#GET{name}" class="select" id="#GET{name}">
+									<BOUCLE_yc(DATA){enum 1,10}>
+									#SET{val,#VALEUR}
+									<option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]>#GET{val}</option>
+									</BOUCLE_yc>
+								</select>
+								[(#GET{fl}|concat{':label_',#GET{name},'_unite'}|_T)]
+							</div>
+						</div>
+					</fieldset>
+					#SET{name,has_end}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+					<div class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+						<label>[(#GET{fl}|concat{':label_',#GET{name}}|_T)]</label>[
+						<span class='erreur_message'>(#GET{erreurs})</span>
+						]
+						#SET{val,no}
+						<div class="choix no">
+							<input type="radio" name="#GET{name}" class="radio" id="#GET{name}_#GET{val}" value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)checked="checked"] />
+							<label for="#GET{name}_#GET{val}">[(#GET{fl}|concat{':label_',#GET{name},'_',#GET{val}}|_T)]</label>
+						</div>
+						#SET{val,count}
+						<div class="choix count">
+							<input type="radio" name="#GET{name}" class="radio" id="#GET{name}_#GET{val}" value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)checked="checked"] />
+							<label for="#GET{name}_#GET{val}">[(#GET{fl}|concat{':label_',#GET{name},'_',#GET{val}}|_T)]</label>
+							#SET{name2,count}#SET{obli2,''}#SET{defaut2,''}#SET{erreurs2,#ENV**{erreurs}|table_valeur{#GET{name2}}}
+							<input type="text" name="#GET{name2}" class="text" value="#ENV*{#GET{name2},#GET{defaut2}}" size='10' maxlength='10' id="#GET{name2}" [(#HTML5|et{#GET{obli2}})required='required']/>
+						</div>
+						#SET{val,until}
+						<div class="choix until">
+							<input type="radio" name="#GET{name}" class="radio" id="#GET{name}_#GET{val}" value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)checked="checked"] />
+							<label for="#GET{name}_#GET{val}">[(#GET{fl}|concat{':label_',#GET{name},'_',#GET{val}}|_T)]</label>
+							#SET{name2,until}#SET{obli2,''}#SET{defaut2,''}#SET{erreurs2,#ENV**{erreurs}|table_valeur{#GET{name2}}}
+							<input type="text" name="#GET{name2}" class="text date" value="#ENV*{#GET{name2},#GET{defaut2}}" size='10' maxlength='10' id="#GET{name2}" [(#HTML5|et{#GET{obli2}})required='required']/>
+						</div>
+					</div>
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend><:programmernewsletter:legend_contenu:></legend>
+				<div class="editer-groupe">
+					#SET{name,patron}#SET{obli,'obligatoire'}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+					<div class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+						<label for="#GET{name}"><:newsletter:label_patron:></label>[
+						<span class='erreur_message'>(#GET{erreurs})</span>
+						]<INCLURE{fond=formulaires/inc-options-patrons,name=#GET{name},defaut=#GET{defaut},env} />
+					</div>
+					#SET{name,selection_edito}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+					<div class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+						<label><:newsletter:label_selection_edito:></label>[
+						<span class='erreur_message'>(#GET{erreurs})</span>
+						]<INCLURE{fond=formulaires/selecteur/articles,rubriques=1,name=#GET{name},selected=#ENV*{#GET{name},#GET{defaut}}} />
+					</div>
+					#SET{name,chapo}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+					<div class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+						<label for="#GET{name}"><:info_chapeau:><em class="aide">#AIDER{chapo}</em></label>[
+						<span class='erreur_message'>(#GET{erreurs})</span>
+						]<textarea name="#GET{name}" class="textarea"[ lang='(#LANGUE)'][ rows='(#ENV**{config}|table_valeur{lignes})'] cols='40'>
+		#ENV*{#GET{name},#GET{defaut}}</textarea>
+					</div>
+					#SET{name,texte}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+					<div class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+						<label for="#GET{name}"><:info_texte:><em class="aide">#AIDER{text_area}</em></label>[
+						<span class='erreur_message'>(#GET{erreurs})</span>
+						][(#ENV**{_texte_trop_long,''})
+						]<textarea name="#GET{name}" class="textarea"[ lang='(#LANGUE)'] rows='[(#ENV**{config}|table_valeur{lignes}|plus{2})]' cols='40'>
+		#ENV*{#GET{name},#GET{defaut}}</textarea>
+					</div>
+					#SET{name,adresse_site}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+					<div class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+						<label for="#GET{name}"><:info_adresse_url:></label>[
+						<span class='erreur_message'>(#GET{erreurs})</span>
+						]<input type="text" name="#GET{name}" class="email text" value="#ENV*{#GET{name}}" id="#GET{name}"
+				        placeholder="[(#CONST{_DIR_RACINE}|newsletter_url_absolue)]" />
+					</div>
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend><:programmernewsletter:legend_envoi:></legend>
+				<div class="editer-groupe">
+					#SET{name,email_test}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+					<div class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+						<label for="#GET{name}">[(#GET{fl}|concat{':label_',#GET{name}}|_T)]</label>[
+						<span class='erreur_message'>(#GET{erreurs})</span>
+						]<input type="text" name="#GET{name}" class="text" value="#ENV*{#GET{name},#GET{defaut}}" id="#GET{name}"[(#HTML5|et{#GET{obli}})required='required']/>
+					</div>
+					#SET{name,liste}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+					<div class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+						<label for="#GET{name}">[(#GET{fl}|concat{':label_',#GET{name}}|_T)]</label>[
+						<span class='erreur_message'>(#GET{erreurs})</span>
+						]<select name="#GET{name}" class="select" id="#GET{name}">
+						<INCLURE{fond=formulaires/inc-options-subscribinglists-prog,name=#GET{name},choix_listes=#ENV{_listes_dispo},env} />
+						</select>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+
+		[(#REM) ajouter les saisies supplementaires : extra et autre, a cet endroit ]
+		<!--extra-->
+		<p class="boutons"><input type='submit' class='submit' value='<:bouton_enregistrer:>' /></p>
+	</div></form>
+	#INCLURE{fond=formulaires/dateur/inc-dateur}
+</div>
+<style type="text/css">
+.reccurence {border-bottom: 1px solid #ddd;margin-bottom: 1em;}
+fieldset.suite_frequence {border:0; margin-top: calc(var(--spip-form-fieldset-spacing,0) * -1); !important; margin-bottom: 0 !important;}
+.suite_frequence .editer select {width:5em;}
+.editer_has_end .choix.count input.text {max-width: 5em;}
+.editer_has_end .choix.until input.text {max-width: 9em;}
+.editer_byweekday .choix label {margin-left: 0;margin-right: 7px;}
+</style>
+<script type="text/javascript">
+jQuery(function(){
+	function actualise_saisie_frequence(){
+		var f = jQuery('#frequence').find(':selected').attr('value');
+		jQuery('#frequence').closest('.editer').siblings('.suite:not(.'+f+')').hide().siblings('.suite.'+f).show();
+	}
+	jQuery('#frequence').change(actualise_saisie_frequence);
+	actualise_saisie_frequence();
+	jQuery('#count,#until').bind('keydown',function(){jQuery(this).siblings('input.radio').prop('checked',true);})
+	jQuery('#count,#until').change(function(){jQuery(this).siblings('input.radio').prop('checked',true);})
+});
+</script>

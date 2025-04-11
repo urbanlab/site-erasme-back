@@ -1,0 +1,1106 @@
+/* 
+
+HTML5
+Boilerplate   
+CSS RESET
+
+*/
+
+
+html, body, div, span, object,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+  margin:0;
+  padding:0;
+  border:0;
+  outline:0;
+  font-size:100%;
+  vertical-align:baseline;
+  background:transparent;
+}                  
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section { 
+    display:block;
+}
+
+nav ul { list-style:none; }
+
+blockquote, q { quotes:none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after { content:''; content:none; }
+
+a { margin:0; padding:0; font-size:100%; vertical-align:baseline; background:transparent; text-decoration:none; color:#000;}
+
+ins { background-color:#ff9; color:#000; text-decoration:none; }
+
+mark { background-color:#ff9; color:#000; font-style:italic; font-weight:bold; }
+
+del { text-decoration: line-through; }
+
+abbr[title], dfn[title] { border-bottom:1px dotted; cursor:help; }
+
+/* tables still need cellspacing="0" in the markup */
+table { border-collapse:collapse; border-spacing:0; }
+
+hr { display:block; height:1px; border:0; border-top:1px solid rgba(255,255,255,0.2);padding:0;clear:both; }
+
+input, select { vertical-align:middle; }
+
+.nettoyeur { clear: both; }
+.cache { display: none; }
+/*.cache2 { visibility: hidden; }*/
+.aligne_centre { text-align: center; margin: 0 auto;}
+.aligne_gauche { text-align: left; }
+.aligne_droite { text-align: right; }
+.gauche { position: relative; float: left; }
+.droite { position: relative; float: right; }
+.fin	{ font-weight: normal; }
+.gras	{ font-weight: bold; }
+
+/* END RESET CSS */
+
+
+body {
+font-family:Arial, Helvetica, sans-serif;
+background-color:#ddded5;
+ height:100%;
+}
+
+iframe {
+z-index:100;
+}
+
+
+#content #spip-admin {display: none;}
+
+
+/*--------------------------------*/
+/*------- FONT FACE      ---------*/
+/*--------------------------------*/
+
+@font-face {
+    font-family: 'lores';
+    src: url('../font/lrftnarr.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'loresbold';
+    src: url('../font/lrftbold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+
+/*--------------------------------*/
+/*------- HEADER         ---------*/
+/*--------------------------------*/
+
+#header{
+width:100%;
+height:130px;
+margin-top:60px;
+}
+
+#designbyinook {
+  position: absolute;
+  right: 2px;
+  top: 440px;
+  z-index: 100;	
+}
+
+#menu{
+margin-left:20px;
+float:left
+}
+
+#menu_right {
+float:right;
+width:270px;
+margin-right:20px;
+}
+
+.menu {
+width:100%;
+clear:both;
+float:left;
+}
+
+.liens_menu {
+float:left;
+font-family:loresBold, Arial, Helvetica, sans-serif;
+text-decoration:none;
+font-size:15px;
+margin-right:5px;
+height:87px;
+background-color:#063;
+color:rgba(255,255,255, 1);
+-webkit-transition: all .2s ease-in;
+-moz-transition: all .2s ease-in;
+transition: all .2s ease-in;
+}
+
+
+#menu_logo {background-color:rgba(0,0,0, 1);}
+#menu_erasme {background-color:rgba(130,105,225, 1);}
+#menu_museolab {background-color:rgba(72,193,217, 1);}
+#menu_education {background-color:rgba(166,208,17, 1);}
+#menu_seniors {background-color:rgba(255,170,9, 1);}
+#menu_technologies {background-color:rgba(255,50,116, 1);}
+
+
+#recherche_bloc {
+float:left;
+}
+
+
+#recherche {
+float:left;
+}
+
+#recherche_input {
+float:left;
+}
+
+input[type=text] {
+-moz-border-radius: 12px;
+-webkit-border-radius: 12px;
+border-radius: 12px;	
+height:25px;
+padding-left:10px;
+border:0px solid #CCC;
+color:#000;
+font-size:11px;
+}
+
+input[type=image] {
+margin-left:-23px;
+margin-top:5px;
+}
+
+#bt_ecrire {
+float:left;
+margin-left:20px;
+}
+
+#legende {
+width:270px;
+font-size:11px;
+line-height:17px;
+height:60px;
+}
+
+
+/* FIL D'ARIANNE */
+
+#bloc_arianne{
+width:980px;
+float:left;
+clear:both;
+margin-left:20px;
+}
+
+#link_accueil {
+float:left;
+font-family:Arial, Helvetica, sans-serif;
+font-size:11px;
+padding-top:2px;
+margin-right:2px;
+height:15px;
+text-decoration:underline;
+}
+
+#arianne {
+float:left;
+font-family:Arial, Helvetica, sans-serif;
+font-size:11px;
+padding-top:2px;
+height:15px;
+}
+
+#close {
+float:left;	
+margin-left:5px;
+height:15px;
+}
+
+#arianne a {
+	float:left;
+text-decoration:underline;
+color:#000;
+margin-left:3px;
+margin-right:3px;
+}
+
+#arianne p {
+float:left;
+margin-left:3px;
+margin-right:3px;
+}
+
+
+/* CONTENT */
+
+#container {
+min-height:100%;
+   position:relative;
+}
+
+
+#content {
+width:100%;
+display:table;
+}
+
+#table-row {
+display:table-row;	
+}
+
+
+#cell_liste {
+display:table-cell;
+padding-bottom:270px;
+}
+
+#liste_articles {
+
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+margin-bottom:20px;
+}
+
+.all {
+margin-top:20px;
+margin-left:20px;
+color:#000;
+padding-bottom:10px;
+}
+
+.projet_article {
+margin-top:20px;
+margin-left:20px;
+}
+
+.all h2 {
+margin-top:4px;
+font-size:14px;
+padding-left:10px;
+padding-right:10px;	
+}
+
+.all h4 {
+padding: 5px 10px 0px 10px;
+margin-top:4px;
+font-size:12px;
+font-weight:bold;
+}
+
+.all p {
+font-size:12px;
+padding-left:10px;
+padding-right:10px;
+/*float:left;*/
+}
+
+.all a {
+/*font-size:11px;*/
+text-decoration:none;
+}
+
+.isotope-item a, .isotope-item a:hover {
+font-size:11px;
+}
+
+.full {width:640px;}
+.medium {width:420px;}
+.small {width:200px;}
+
+.erasme {background-color:rgba(130,105,225, 1);}
+.musees {background-color:rgba(72,193,217, 1);}
+.education {background-color:rgba(166,208,17, 1);}
+.seniors {background-color:rgba(255,170,9, 1);}
+.technologies {background-color:rgba(255,50,116, 0.8);}
+
+
+.articles {
+background-color:#FFF;
+}
+.articles_162 {
+background-color:#FFF;
+background-image:url(../img/background/background_rubrique_erasme.png);
+background-position:right bottom;
+background-repeat:no-repeat;	
+}
+
+.articles_110 {
+background-color:#FFF;
+background-image:url(../img/background/background_rubrique_musees.png);
+background-position:right bottom;
+background-repeat:no-repeat;	
+}
+
+.articles_35 {
+background-color:#FFF;
+background-image:url(../img/background/background_rubrique_education.png);
+background-position:right bottom;
+background-repeat:no-repeat;	
+}
+
+.articles_97 {
+background-color:#FFF;
+background-image:url(../img/background/background_rubrique_seniors.png);
+background-position:right bottom;
+background-repeat:no-repeat;	
+}
+
+.articles_64 {
+background-color:#FFF;
+background-image:url(../img/background/background_rubrique_technologies.png);
+background-position:right bottom;
+background-repeat:no-repeat;	
+}
+
+.lire_article_162 {color:rgba(130,105,225, 1);}
+.lire_article_110 {color:rgba(72,193,217, 1)}
+.lire_article_35 {color:rgba(166,208,17, 1);}
+.lire_article_97 {color:rgba(255,170,9, 1);}
+.lire_article_64 {color:rgba(255,50,116, 0.8);}
+
+.lire_article:hover {color:#000;}
+
+.article_single .auteurs_article {
+position: relative;
+padding-top: 40px;
+text-align: right;
+font-weight: bold;
+}
+
+div.socialtags{
+text-align: right;
+padding-top: 10px;
+}
+
+.header_projet {
+cursor:pointer;
+margin:0px;
+}
+
+.edito {
+background-color:rgba(255,255,255, 0.5);
+width:420px;
+padding:10px;
+padding-bottom:10px;
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+min-height:200px;
+}
+
+.edito h1 {
+font-size:30px;
+font-family:'loresbold', Arial, Helvetica, sans-serif;
+color:#FFF;
+font-weight:lighter;
+color:rgba(0,0,0, 0.9);
+padding-right:0px;
+padding-left:0px;
+
+}
+
+.edito h2 {
+font-size:16px;
+color:#000;
+margin-top:15px;
+font-weight:lighter;
+margin-bottom:20px;
+color:rgba(0,0,0, 1);
+padding-right:0px;
+padding-left:0px;
+}
+
+.edito p{
+	font-size:11px;
+	font-style:normal;
+	color:rgba(0,0,0, 0.9);
+	padding-right:10px;
+padding-left:0px;
+padding-bottom:20px;
+float:left;
+}
+
+.edito:hover {background-color:rgba(255,255,255, 0.5);}
+
+
+
+
+#article {
+padding-left:20px;
+padding-top:20px;
+}
+
+/* TEXTE */
+
+
+.rubriques {
+font-size:15px;
+color:rgba(255,255,255, 0.5);
+text-transform:capitalize;
+float:left;
+clear:left;
+padding-left:10px;
+padding-top:3px;
+padding-bottom:5px;
+font-family:loresBold;
+}
+
+.bloc_img {
+float:left;
+clear:both;
+display:block;
+height:auto;
+}
+
+.lire_article {
+font-style:italic;
+margin-left:10px;
+}
+
+.nb_article {
+
+font-size:11px;
+float:right;
+clear:right;
+padding-top:3px;
+padding-right:10px;
+line-height:21px;
+}
+
+
+
+/*--------------------------------*/
+/*------- SIDEBAR        ---------*/
+/*--------------------------------*/
+
+
+#sidebar {
+width:290px;
+display: table-cell;
+vertical-align:top;
+padding-top:20px;
+padding-bottom:270px;
+}
+
+.sidebar_bloc {
+width:240px;
+background-color:rgba(0,0,0, 0.1);
+-moz-border-radius: 18px;
+-webkit-border-radius: 18px;
+border-radius: 18px;
+margin-bottom:8px;
+float:left;
+padding: 0px 10px 10px 10px;
+
+}
+
+.sidebar_bloc h1{
+font-size:15px;
+width:230px;
+font-family: 'loresbold', Arial, Helvetica, sans-serif;
+font-weight:100;
+color:rgba(0,0,0, 1);
+padding-top:8px;
+padding-left:17px;
+text-transform:uppercase;
+cursor:pointer;
+}
+
+.fleche_desc {
+width:12px;
+height:10px;
+background-image:url(../img/sidebar/fleche_desc.png);
+background-repeat:no-repeat;
+display:block;
+float:left;
+margin-top:13px;
+}
+
+.fleche_left {
+width:12px;
+height:10px;
+background-image:url(../img/sidebar/fleche_left.png);
+background-repeat:no-repeat;
+display:block;
+float:left;
+margin-top:13px;
+}
+
+.content_sidebar {
+margin: 5px 0px 10px 0px; 	
+}
+
+.open_panel:hover {
+color:#666666;	
+}
+/*--------------------------------*/
+/*------- FICHE RUBRIQUE ---------*/
+/*--------------------------------*/
+
+.fiche_rubrique {
+width:260px;
+font-size:11px;
+margin-bottom:10px;
+padding-bottom:20px;
+
+}
+
+.fiche_rubrique h2 {
+margin-top:4px;
+margin-bottom:5px;
+font-size:14px;
+padding-left:10px;
+padding-right:10px;	
+}
+
+.fiche_rubrique p,  .fiche_rubrique span {
+margin-top:4px;
+font-size:12px;
+padding-left:10px;
+padding-right:10px;
+line-height:17px;
+margin-bottom:8px;
+}
+
+#fiche-162, .fiche-162 {
+background-color:rgba(130,105,225, 1);	
+}
+
+#fiche-110, .fiche-110 {
+background-color:rgba(72,193,217, 1);
+}
+
+#fiche-35, .fiche-35 {
+background-color:rgba(166,208,17, 1);
+}
+
+#fiche-97, .fiche-97 {
+background-color:rgba(255,170,9, 1);
+}
+
+#fiche-64, .fiche-64 {
+background-color:rgba(255,50,116, 0.8);
+}
+
+/*--------------------------------*/
+
+/*--------------------------------*/
+/*-------PAGE ARTICLES     -------*/
+/*--------------------------------*/
+
+.article_single {
+width:610px;
+padding:50px 15px 60px 15px;
+background-color:#FFF;
+}
+
+.article_single div {
+/*float:left;*/
+}
+
+.article_single h1{
+color:#000;
+ font-family: 'loresbold', Arial;
+ font-size:30px;
+ margin: 0px 0px 20px 0px;
+}
+
+.article_single h3{
+color:#000;
+ font-family:Arial, Helvetica, sans-serif;
+ font-size:14px;
+ margin: 20px 0px 10px 0px;
+ font-weight:bold;
+ clear:both;
+/*float:left;*/
+ width:600px;
+ 
+}
+
+.article_single p{
+margin: 10px 0px 2px 0px;
+padding: 0px 0px 0px 0px;
+/*float:left;
+clear:both;*/
+font-size:11px;
+line-height:17px;
+max-width:600px;
+}
+
+.article_single a{
+text-decoration:underline;
+}
+
+.article_single.article_single_162 h1{
+color:rgba(130,105,225, 1);
+}
+
+.article_single.article_single_110 h1{
+color:rgba(72,193,217, 1);
+}
+
+.article_single.article_single_35 h1{
+color:rgba(166,208,17, 1);
+}
+
+.article_single.article_single_97 h1{
+color:rgba(255,170,9, 1);
+}
+
+.article_single.article_single_64 h1{
+color:rgba(255,50,116, 1);
+}
+
+
+.article_single_162 {
+background-image:url(http://www.erasme.org/reseau/squelettes/img/background/background_article_erasme.png);
+background-position:right top;
+background-repeat:no-repeat;	
+}
+
+.article_single_110 {
+background-image:url(../img/background/background_article_musees.png);
+background-position:right top;
+background-repeat:no-repeat;	
+}
+
+.article_single_35 {
+background-image:url(../img/background/background_article_education.png);
+background-position:right top;
+background-repeat:no-repeat;	
+}
+
+.article_single_97 {
+background-image:url(../img/background/background_article_seniors.png);
+background-position:right top;
+background-repeat:no-repeat;	
+}
+
+.article_single_64 {
+background-image:url(../img/background/background_article_technologies.png);
+background-position:right top;
+background-repeat:no-repeat;	
+}
+
+#descriptif_162 p {
+font-size:16px;
+line-height:22px;
+color:rgba(130,105,225, 1);
+/*float:left;*/
+clear:right;
+width:600px;
+}
+
+#descriptif_110 p {
+font-size:16px;
+line-height:22px;
+color:rgba(72,193,217, 1);
+/*float:left;*/
+clear:right;
+width:600px;
+}
+
+#descriptif_35 p {
+font-size:16px;
+line-height:22px;
+color:rgba(166,208,17, 1);
+/*float:left;*/
+clear:right;
+width:600px;
+}
+
+#descriptif_97 p {
+font-size:16px;
+line-height:22px;
+color:rgba(255,170,9, 1);
+/*float:left;*/
+clear:right;
+width:600px;
+}
+
+#descriptif_64 p {
+font-size:16px;
+line-height:22px;
+color:rgba(255,50,116, 1);
+/*float:left;*/
+clear:right;
+width:600px;
+}
+
+.article_single ul {
+clear:both;
+/*float:left;*/
+font-size:11px;
+padding-left:10px;
+margin:5px 0px 10px 15px;
+line-height:17px;
+}
+
+table {
+/*float:left;*/
+}
+.document {
+width:100px;
+background-color:rgba(195,196,186, 1);
+color:#FFF;
+font-size:11px;
+padding: 10px 10px 10px 10px;
+}
+
+
+.document_large {
+width:180px;
+background-color:rgba(195,196,186, 1);
+color:#FFF;
+font-size:11px;
+padding: 10px 10px 10px 10px;
+}
+
+.document_large p {
+/*float:left;
+clear:both;*/
+padding-left:0px;
+}
+
+.spip_documents {
+margin: 5px;
+/*display:block;*/
+}
+
+.spip_documents dt, .spip_documents dl, .spip_documents dd{
+font-size: 11px;
+}
+
+/* Tableaux */
+table.spip { max-width: 99%; margin-right: auto; margin-left: auto; margin-bottom: 1em; border-collapse: collapse; border-spacing: 0; line-height: normal;font-size:11px; }
+table.spip caption { caption-side: top;text-align: center; margin-right: auto; margin-left: auto; font-weight: bold; }
+table.spip tr.row_first { background: #DDD; }
+table.spip tr.row_odd { background: #EEE; }
+table.spip tr.row_even { background: #DDD; }
+table.spip th, table.spip td { padding: 0.20em 0.40em; text-align: left; border: 1px solid #CCC; }
+table.spip th { vertical-align: bottom; font-weight: bold; }
+table.spip td { vertical-align: top; }
+table.spip td.numeric {text-align:right;}
+
+
+.article_single h2.spip{
+clear: both;
+padding: 0;
+margin: 10px 0px 5px 0px; 
+}
+
+.article_single object {
+clear: both;
+position: relative;
+/*float:left;*/
+padding: 0;
+}
+
+/*--------------------------------*/
+
+
+
+/*--------------------------------*/
+/*------- FILTRES KEYWORDS -------*/
+/*--------------------------------*/
+
+#keywords h2 {
+float:left;
+clear:both;
+font-size:12px;
+font-weight:normal;
+width:240px;
+margin-bottom:5px;
+}
+
+#keywords p {
+font-size:11px;
+width:auto;
+padding:2px 7px 2px 7px;
+float:left;
+cursor:pointer;
+margin-right:5px;
+margin-bottom:5px;
+-moz-border-radius: 12px;
+-webkit-border-radius: 12px;
+border-radius: 12px;
+}
+
+#keywords p:hover {
+color:#666;
+background-color:#FFF;
+}
+
+.filtre_keywords {
+ color:#FFF;
+ background-color:#666;
+}
+
+.keywords_actif {
+color:#666;
+background-color:#FFF;
+}
+
+
+/*--------------------------------*/
+
+
+/*--------------------------------*/
+/*------- BREVES         ---------*/
+/*--------------------------------*/
+
+#breves {
+font-size:11px;
+font-weight:bold;
+color:#000;
+margin-top:10px;
+}
+
+#breves p {
+font-style:italic;
+color:#333;
+font-weight:100;
+font-size:11px;
+}
+
+#breves a:hover {
+
+text-decoration:underline;
+
+}
+
+.bloc_breves {
+padding-left:5px;
+margin-left:5px;
+margin-bottom:15px;
+color:#000;	
+border-left-style:solid;
+border-left-width:6px;
+}
+
+.bloc_breves-36 {
+border-left-color:#000;
+}
+
+.bloc_breves-162 {
+border-left-color:rgba(130,105,225, 1);	
+}
+
+.bloc_breves-110 {
+border-left-color:rgba(72,193,217, 1);
+}
+
+.bloc_breves-35 {
+border-left-color:rgba(166,208,17, 1);
+}
+
+.bloc_breves-97 {
+border-left-color:rgba(255,170,9, 1);
+}
+
+.bloc_breves-64 {
+border-left-color:rgba(255,50,116, 0.8);
+}
+
+
+.breves {
+background-color:rgba(195,196,186, 1);
+font-size:11px;
+}
+
+.breves_single {
+font-size:11px;
+margin-top:10px;
+margin-left:10px;
+padding-right:10px;
+}
+
+.breves_single p {
+font-style:italic;
+color:#333;
+font-weight:100;
+font-size:11px;
+width:180px;
+}
+
+.breves_single a {
+
+font-weight:bold;
+
+
+}
+
+.breves_single a:hover {
+
+text-decoration:underline;
+}
+
+.breves_single_date {
+font-style:italic;	
+	
+}
+/*--------------------------------*/
+
+
+
+/*--------------------------------*/
+/*------- FLICKR         ---------*/
+/*--------------------------------*/
+
+#flickr {
+margin-left:4px;	
+}
+
+#flickr a{
+padding-left:4px;	
+}
+
+
+/*--------------------------------*/
+
+
+
+/*--------------------------------*/
+/*------- FOOTER         ---------*/
+/*--------------------------------*/
+
+#footer {
+position:absolute;
+bottom:0;
+width:100%;
+height:211px;
+background-color:#000000;
+margin-top:40px;
+color:#FFF;
+font-size:11px;
+padding-top:40px;
+}
+
+#footer a {
+color:#FFF;
+text-decoration:underline;
+font-style:italic;
+padding:0px 3px 0px 3px;
+}
+
+#footer a:hover {
+text-decoration:none;
+}
+
+#footer_left {
+position:relative;
+left:0px;
+float: left;
+height:50px;
+padding-left:20px;
+padding-top:28px;
+}
+
+#footer_center {
+position:relative;
+width: 440px;
+margin: 0px auto;
+}
+
+#bloc_footer_center {
+
+}
+
+#footer_right {
+position:relative;
+float: right;
+right:0px;
+height:50px;
+padding-top:17px;
+}
+
+#footer_right a{
+padding:0px;
+}
+
+.bloc_social {
+width:41px;
+height:41px;
+background-color:#666;
+float:left;
+margin-left:5px;
+-webkit-transition: all .2s ease-in;
+-moz-transition: all .2s ease-in;
+transition: all .2s ease-in;
+}
+
+.bloc_social:hover {
+background-color:#333;
+}
+
+/*--------------------------------*/
+
+
+
+
+/* ISOTOPE */
+
+
+.isotope,
+.isotope .isotope-item {
+  /* change duration value to whatever you like */
+  -webkit-transition-duration: 0.8s;
+     -moz-transition-duration: 0.8s;
+          transition-duration: 0.8s;
+}
+
+.isotope {
+  -webkit-transition-property: height, width;
+     -moz-transition-property: height, width;
+          transition-property: height, width;
+}
+
+.isotope .isotope-item {
+  -webkit-transition-property: -webkit-transform, opacity;
+     -moz-transition-property:    -moz-transform, opacity;
+          transition-property:         transform, opacity;
+}
+
+
+
+/**** Isotope filtering ****/
+
+.isotope-item {
+  z-index: 2;
+}
+
+.isotope-hidden.isotope-item {
+  pointer-events: none;
+  z-index: 1;
+}
+
+
+.isotope .isotope-item {
+  -webkit-transition-property: top, left, opacity;
+     -moz-transition-property: top, left, opacity;
+       -o-transition-property: top, left, opacity;
+          transition-property: top, left, opacity;
+}
+
+

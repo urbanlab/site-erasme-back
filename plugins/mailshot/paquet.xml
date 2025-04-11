@@ -1,0 +1,34 @@
+<paquet
+	prefix="mailshot"
+	categorie="communication"
+	version="3.4.1"
+	etat="stable"
+	compatibilite="[3.2.0;4.*]"
+	logo="prive/themes/spip/images/mailshot-32.png"
+	documentation="https://contrib.spip.net/mailshot"
+	schema="0.4.1"
+>
+
+	<nom>MailShot</nom>
+
+	<auteur lien='http://nursit.com'>Cedric Morin</auteur>
+
+	<licence>GNU/GPL</licence>
+	<pipeline nom="autoriser" inclure="mailshot_autorisations.php" />
+	<pipeline nom="declarer_tables_objets_sql" inclure="base/mailshot.php" />
+	<pipeline nom="declarer_tables_auxiliaires" inclure="base/mailshot.php" />
+	<pipeline nom="declarer_tables_interfaces" inclure="base/mailshot.php" />
+	<pipeline nom="facteur_lister_methodes_mailer" inclure="mailshot_pipelines.php" />
+	<pipeline nom="taches_generales_cron" inclure="mailshot_pipelines.php" />
+	<pipeline nom="afficher_complement_objet" inclure="mailshot_pipelines.php" />
+	<pipeline nom="afficher_fiche_objet" inclure="mailshot_pipelines.php" />
+	<pipeline nom="optimiser_base_disparus" inclure="mailshot_pipelines.php" />
+	<pipeline nom="pre_edition" inclure="mailshot_pipelines.php" />
+	<pipeline nom="post_edition" inclure="mailshot_pipelines.php" />
+	<pipeline nom="newsletter_pre_envoi" action="" />
+
+
+	<necessite nom="facteur" compatibilite="[4.3.2;]" />
+	<necessite nom="php" compatibilite="[7.1.0;]" />
+	<menu nom="mailshots" titre="mailshot:titre_menu_mailshots" parent="menu_publication" icone="images/mailshot-16.png" action="mailshots" />
+</paquet>

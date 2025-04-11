@@ -1,0 +1,265 @@
+<!-- Slick slider -->
+<link rel="stylesheet" type="text/css" href="[(#CHEMIN{css/slick-theme.css})]">
+<link rel="stylesheet" type="text/css" href="[(#CHEMIN{css/slick.css})]">
+<script src="[(#CHEMIN{js/slick.min.js})]"></script>
+
+<div id="prototypes">
+    <!--Prototype sub menu-->
+    <div class="subnav">
+        [<img src="(#LOGO_ARTICLE_RUBRIQUE|extraire_attribut{src})" alt="#TITRE" class="logo">]
+        <p class="protoTitre"><BOUCLE_titre1(ARTICLES){id_article}>#TITRE</BOUCLE_titre1></p>
+        <ul>
+            <a href="#developpement"><li class="element">Développement</li></a>
+            <a href="#methodos"><li class="element">Méthodos/Usages/Technos</li></a>
+            <a href="#chiffresCle"><li class="element">Chiffres Clef</li></a>
+            <a href="#section-tree"><li class="element">Écosystème</li></a>
+            <a href="#descTech"><li class="element">infos Pratiques</li></a>
+        </ul>
+    </div>
+    <!--Header-->
+    <BOUCLE_article_image_enTete(ARTICLES){id_article}>
+    #SET{enTete_declaree, #LOGO_ARTICLE_RUBRIQUE|extraire_attribut{src}|url_absolue}
+        <BOUCLE_documents_image_enTete(DOCUMENTS){id_article}>
+    [(#REM) On souhaite récupérer une image d'en-tête si il en existe une déclarée comme telle, càd avec un type=type_image_principale ]
+            [(#TYPE|=={type_image_principale}|oui) #SET{enTete_declaree, #FICHIER} ]
+        </BOUCLE_documents_image_enTete>
+    </BOUCLE_article_image_enTete>
+    #GET{enTete_declaree}
+    <div
+            id="protoHeader"
+            style="
+                        background-image: url('[(#GET{enTete_declaree})]');"
+    >
+
+        <div class="text">
+            <BOUCLE_titre3(ARTICLES){id_article}><h1 class="#EDIT{titre}">#TITRE</h1></BOUCLE_titre3>
+        </div>
+        <a href="<BOUCLE_sommaire_prototypes(RUBRIQUES){titre_mot=presentation-sommaire-prototypes}>#URL_RUBRIQUE</BOUCLE_sommaire_prototypes>">
+            <button class="boutonRetour">
+                <svg width="9" height="15" viewBox="0 0 9 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8.49484 1.01685L1.37109 7.80815L8.49484 14.077" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>                
+                <span>Retour</span>
+            </button>
+        </a>
+    </div>
+
+    <!-- Description -->
+    <div id="desc_1" class="padding bg-grey">
+        <BOUCLE_descr1(ARTICLES){id_article}>
+        [<h2 class="title #EDIT{description_title}">(#DESCRIPTION_TITLE)</h2>]
+        </BOUCLE_descr1>
+        <BOUCLE_descr_text_1(ARTICLES){id_article}>
+        <div class="texte #EDIT{description}">
+            [(#DESCRIPTION|nl2br)]
+        </div>
+        </BOUCLE_descr_text_1>
+    </div>
+
+    <!--Développement-->
+    <div id="developpement" class="padding">
+        <h2>Développement</h2>
+        <BOUCLE_timeline(ARTICLES){id_article}>[(#DEVELOPPEMENT|getTimeline)]</BOUCLE_timeline>
+    </div>
+
+     <!--Articles Liés-->
+    <BOUCLE_rub_liee(ARTICLES){id_article}>
+    #SET{rub_liee, #ID_LINKED_RUB}
+    </BOUCLE_rub_liee>
+    <B_articles_lies>
+     <div id="articleslies" class="padding">
+        <h2>Derniers sujets relatifs</h2>
+        <div class="blocArticlesLies">
+            <BOUCLE_articles_lies(ARTICLES){id_rubrique=#GET{rub_liee}}{!par date}{0,3}>
+            <a href="#URL_ARTICLE">
+                <div class="blocArticleLie">
+                    <p class="titreArticleLie">[(#TITRE|troncature_propre{25, '...'})]</p>
+                    <p class="dateArticleLie">[(#DATE|affdate)]</p>
+                    <p class="texteArticleLie">[(#TEXTE|couper{120, '...'})]</p>
+                </div>
+            </a>
+            </BOUCLE_articles_lies>
+        </div>
+    </div>
+
+    <div id="desc_2" class="padding bg-grey">
+        <BOUCLE_descr_titre_2(ARTICLES){id_article}>
+        [<h2 class="title #EDIT{description_title_second}">(#DESCRIPTION_TITLE_SECOND)</h2>]
+        </BOUCLE_descr_titre_2>
+        <div class="text">
+            <div id="descr2_text">
+                <!-- todo nettoyer le texte des éventuelles balises <img> qui seraient présentes
+                ex : https://erasme.dev.erasme.org/DatAgora?var_mode=recalcul
+                 -->
+                <BOUCLE_descr_text_2(ARTICLES){id_article}>
+                <div class="texte #EDIT{description}">
+                    [(#DESCRIPTION_SECOND|nl2br)]
+                </div>
+                </BOUCLE_descr_text_2>
+            </div>
+            <div id="descr2_img">
+                [(#REM) Tentons d'abord de récupérer l'identifiant de l'image contenue dans ce champ texte.]
+                <BOUCLE_descr_img_2(ARTICLES){id_article}>[(#SET{id_image_descr2, #DESCRIPTION_SECOND|recuperer_id_image})]</BOUCLE_descr_img_2>
+                [(#REM) Cherchons à présent l'image ayant cet identifiant et affichons-la.]
+                <BOUCLE_documents_image_descr2(DOCUMENTS){id_document=#GET{id_image_descr2}}>
+                <img src="[(#FICHIER|extraire_attribut{src})]">
+                </BOUCLE_documents_image_descr2>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Methodos Usages Techno-->
+    <div id="methodos" class="padding">
+        <ul class="card-container">
+            <li class="card">
+                <h3>Methodos</h3>
+                <ul>
+                    <BOUCLE_mots_methodo(MOTS){id_article}{type=Méthodologies de développement}{!par id_mot}>
+                    <li><p><i>[(#LOGO_MOT|image_reduire{100, 0})]</i>#TITRE</p></li>
+                    </BOUCLE_mots_methodo>
+                </ul>
+            </li>
+            <li class="card">
+                <h3>Usages</h3>
+                <ul>
+                    <BOUCLE_mots_usages(MOTS){id_article}{type=Usages}{!par id_mot}>
+                    <li><p><i>[(#LOGO_MOT|image_reduire{100, 0})]</i>#TITRE</p></li>
+                    </BOUCLE_mots_usages>
+                </ul>
+            </li>
+            <li class="card">
+                <h3>Techno</h3>
+                <ul>
+                    <BOUCLE_mots_techno(MOTS){id_article}{type=Technologies}{!par id_mot}>
+                    <li><p><i>[(#LOGO_MOT|image_reduire{100, 0})]</i>#TITRE</p></li>
+                    </BOUCLE_mots_techno>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <!--Quel usage ?-->
+        <B_descr_titre_3>
+    <div id="desc_3" class="padding bg-grey">
+        <BOUCLE_descr_titre_3(ARTICLES){id_article}>
+        [<h2 class="title #EDIT{description_lateral_title}">(#DESCRIPTION_LATERAL_TITLE)</h2>]
+        </BOUCLE_descr_titre_3>
+            [(#REM) Tentons d'abord de récupérer l'identifiant de l'image contenue dans ce champ texte.]
+            
+            [(#REM) Cherchons à présent l'image ayant cet identifiant et affichons-la.]
+        <BOUCLE_documents_image_descr_lateral(DOCUMENTS){id_document=#GET{id_image_descr_lateral}}>
+        [<div class="img">
+            <img src="(#FICHIER|extraire_attribut{src})">
+        </div>]
+            [(#REM) TODO : l'image n'est pas correctement rerise : elle est liée dans une option au lieu d'être placée dans le contenu.]
+        </BOUCLE_documents_image_descr_lateral>
+
+        <BOUCLE_descr_text_lateral(ARTICLES){id_article}>
+        [<div class="text texte #EDIT{description_lateral}">
+            (#DESCRIPTION_LATERAL|nl2br)
+        </div>]
+        </BOUCLE_descr_text_lateral>
+    </div>
+    <script>
+        /*
+            Impossible de forcer à SPIP de ne pas afficher le div desc_3 malgré mes efforts. Je le masque donc en js...
+         */
+        const blocDesc3 = document.getElementById('desc_3');
+        if (blocDesc3.innerHTML.trim()===''){
+            blocDesc3.style.display='None';
+        }
+    </script>
+        </B_descr_titre_3>
+
+    <!--Slider-->
+    <div id="slider" class="slider">
+        <BOUCLE_portfolio(DOCUMENTS){id_article}{extension==jpg|png|gif}{mode=image}>
+        <div class="image"><img src="#FICHIER" alt="" style="height: 300px;"></div>
+        </BOUCLE_portfolio>
+    </div>
+
+    <!--Chiffres clés -->
+    <BOUCLE_chiffresClef(ARTICLES){id_article}>
+    <div id="chiffresCle" class="padding bg-grey texte #EDIT{chiffres_cles}">
+        [(#CHIFFRES_CLES|getInformationsChiffresClef{})]
+    </div>
+    </BOUCLE_chiffresClef>
+
+    <!-- Ecosystème-->
+    <div id="section-tree" class="padding">
+        <h2>Écosystème</h2>
+        <div class="anchor"><span id="tree"></span></div>
+        <div class="project-tree">
+            <div class="tree" id="tree-utilisateurs" data-angle="-90">
+                <h3 class="backgroundColor">Utilisateurs</h3>
+                <ul>
+                    <BOUCLE_utilisateurs(MOTS){id_article}{type=Utilisateurs}>
+                    <a href="#URL_MOT">
+                        <li><span>#TITRE</span></li>
+                    </a>
+                    </BOUCLE_utilisateurs>
+                </ul>
+            </div>
+
+            <h2 id="tree-title"><span><BOUCLE_titre_ecosysteme(ARTICLES){id_article}>#TITRE</BOUCLE_titre_ecosysteme></span></h2>
+
+            <div class="tree" id="tree-partenaires" data-angle="90">
+                <h3 class="backgroundColor">Partenaires</h3>
+                <ul>
+                    <!-- On souhaite que la Métropole de Lyon soit toujours déclarée comme partenaire. -->
+                    <BOUCLE_partenaires_metropole(MOTS){id_mot=124}{doublons}>
+                    <a href="#URL_MOT">
+                        [(#LOGO_MOT|image_reduire{0, 320}|extraire_attribut{src}|url_absolue|codePetaleMargueriteEcosysteme{#TITRE, #LOGO_MOT})]
+                    </a>
+                    </BOUCLE_partenaires_metropole>
+
+                    <!-- Les autres mots-clef. -->
+                    <BOUCLE_partenaires(MOTS){id_article}{type=Partenaires}{doublons}>
+                    <a href="#URL_MOT">
+                        [(#LOGO_MOT|image_reduire{0, 320}|extraire_attribut{src}|url_absolue|codePetaleMargueriteEcosysteme{#TITRE, #LOGO_MOT})]
+                    </a>
+                    </BOUCLE_partenaires>
+                </ul>
+            </div>
+
+            <div class="tree" id="tree-entreprises" data-angle="0">
+                <h3 class="backgroundColor">Entreprises</h3>
+                <ul>
+                    <BOUCLE_entreprises(MOTS){id_article}{type=Entreprises}>
+                    <a href="#URL_MOT">
+                        [(#LOGO_MOT|image_reduire{0, 320}|extraire_attribut{src}|url_absolue|codePetaleMargueriteEcosysteme{#TITRE, #LOGO_MOT})]
+                    </a>
+                    </BOUCLE_entreprises>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!--Desciption n°4-->
+    <BOUCLE_descr_4(ARTICLES){id_article}>
+    [<div id="desc_4" class="padding bg-grey">
+        <h2 class="title #EDIT{description_title_third}">(#DESCRIPTION_TITLE_THIRD)</h2>
+        <span class="texte #EDIT{texte}">(#MEDIA)</span>
+    </div>]
+    </BOUCLE_descr_4>
+
+    <!--Descriptif technique -->
+    <div id="descTech" class="padding">
+        [(#REM) C'est trop chiant (et illisible) de gérer tous les cas en SPIP, je déporte ça en PHP.]
+        <BOUCLE_descriptifTechnique(ARTICLES){id_article}>[(#DESCR_TECH_TECHNIQUE|injecterBlocDescriptifTechnique{#DESCR_TECH_DEVICES, #DESCR_TECH_FRAMEWORK, #DESCR_TECH_DEPOT, #DESCR_TECH_LICENCE})]</BOUCLE_descriptifTechnique>
+        <BOUCLE_informations(ARTICLES){id_article}>[(#INFORMATION_SITE_WEB|injecterBlocInformations{#INFORMATION_MAILING, #INFORMATION_COMMUNAUTE_UTILISATEURS, #INFORMATION_ENTREPRISES})]</BOUCLE_informations>
+    
+        <!-- Documents de l'article -->
+        <B_affichage_documents>
+        <div class="col">
+            <h2 class="title">Documents</h2>
+            <div id="blocDocuments">
+            <BOUCLE_affichage_documents(DOCUMENTS){id_article}{mode=document}>
+                [<a href="#URL_DOCUMENT"><div class="resultatDocument">(#LOGO_DOCUMENT|image_reduire{500})<div class="container"><p id="resultaDocumenttitre" class="resultatDocumentTitre">#TITRE</p></div></div></a>]
+                </BOUCLE_affichage_documents>
+            </div>
+        </div>
+        </B_affichage_documents>
+    </div>
+</div>

@@ -1,0 +1,115 @@
+[(#REM)
+La page auteur se compose de plusieurs blocs :
+- un bloc photo avec des informations générales sur l'auteur (id : blocEnTeteAuteur)      (TOUJOURS AFFICHÉ)
+- un bloc de tags pour trier les écrits de cet auteur        (id : blocContenantTags)     (AFFICHÉ SI IL EN EXISTE AU MOINS UN)
+- un bloc contenant les mini-blocs de projets                (id : blocContenantArticles) (AFFICHÉ SI IL EN EXISTE AU MOINS UN)
+]
+
+<script type="text/javascript">
+    // Notre liste de tags. Nécessaire pour avoir nos filtres.
+    const listeTagsProjets={<BOUCLE_mots_tags(MOTS){id_groupe=19}>"[(#TITRE|nettoyer_nom_classe)]":false,</BOUCLE_mots_tags>};
+    var blocCourant = 'articlesAuteur';
+</script>
+
+<div id="contenuAuteur">
+    [(#REM) LA PARTIE 1/3]
+    <BOUCLE_auteurCourant(AUTEURS){id_auteur}>
+    <div id="blocEnTeteAuteur">
+        <div id="blocGaucheEnTeteAuteur">
+            <div
+                    id="photoAuteur"
+                    style="
+                    background: url('[(#LOGO_AUTEUR|extraire_attribut{src}|url_absolue)]') no-repeat;
+                    background-size: cover;"
+            >
+            </div>
+        </div>
+        <div id="blocDroiteEnTeteAuteur">
+            <div id="nomAuteur">
+                #NOM
+            </div>
+            <div id="infosAuteur">
+                #BIO
+            </div>
+            <div id="reseauxSociauxAuteur">
+                <button id="auteur-contact-click" onclick="openModal('auteur_contact')"><img src='#CHEMIN{img/auteur/envelope-solid.png}'></button>
+                [(#AUTEUR_COMPTE_TWITTER|oui)
+                    <div id='twitter_auteur'>
+                        <a href='#AUTEUR_COMPTE_TWITTER' target="_blank"><img src='#CHEMIN{img/auteur/picto_twitter.png}' ></a>
+                    </div>
+                ]
+                [(#AUTEUR_COMPTE_LINKEDIN|oui)
+                    <div id='linkedin_auteur'>
+                        <a href='#AUTEUR_COMPTE_LINKEDIN' target="_blank"><img src='#CHEMIN{img/auteur/picto_linkedin.png}'></a>
+                    </div>
+                ]
+               
+            </div>
+        </div>
+        <a href="#URL_SITE_SPIP">
+            <button class="boutonRetour"">
+                <svg width="9" height="15" viewBox="0 0 9 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8.49484 1.01685L1.37109 7.80815L8.49484 14.077" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>                
+                <p>Retour</p>
+            </button>
+        </a>
+    </div>
+   
+    <div id="auteur_contact" class="cacher">
+        <img class="close" onclick="closeModal('auteur_contact')" src="#CHEMIN{img/cross_black.png}">
+        <h1>Contact</h1>
+        <div id="formulaire_contact_auteur" class="modal contact">
+            #FORMULAIRE_ECRIRE_AUTEUR
+        </div>
+    </div>
+    <div class="marges">
+        <h1>Contributions</h1>
+        [(#REM) LA PARTIE 2/3]
+        <!--  Si il existe  -->
+        <div id="blocTags" class="">
+            <h3>Filter par</h3>
+            <BOUCLE_tags(MOTS){id_groupe=19}>
+            <button
+                    id="tag_[(#TITRE|nettoyer_nom_classe)]"
+                    class="boutonTag boutonTagInactif"
+                    onclick="toggleTag(this.id);modifierAffichageMiniBlcs();">
+                #TITRE
+                <div class="boutonTagEtat">
+                    <img src="#CHEMIN{img/cross_black.png}">
+                </div>
+            </button>
+            </BOUCLE_tags>
+        </div>
+
+            [(#REM) LA PARTIE 3/3]
+            <div id="blocContenantArticles">
+                <!-- test de nettoyage git -->
+                <BOUCLE_articlesAuteurCourant(ARTICLES){id_auteur}{statut=publie}{!par date}>
+                    <a href="#URL_ARTICLE">
+                        <div
+                                class="articleDeCetAuteur blocGrille <BOUCLE_mots_clefs_articles(MOTS){id_article}>[(#TITRE|nettoyer_nom_classe)] </BOUCLE_mots_clefs_articles><BOUCLE_mots_clefs_rubrique_parente(MOTS){id_rubrique}>[(#TITRE|nettoyer_nom_classe)] </BOUCLE_mots_clefs_rubrique_parente>"
+                                style="background-image: url('[(#LOGO_RUBRIQUE|extraire_attribut{src}|url_absolue))]'); background-size: cover;"
+                        >
+                                <div>
+                                    <p class="titreMiniBlocProjet">[(#TITRE|couper{20, '...'})]</p>
+                                    <p class="dateMiniBlocProjet">[(#MAJ|affdate)]</p>
+                                </div>
+                        </div>
+                    </a>
+                </BOUCLE_articlesAuteurCourant>
+            </div>
+            </BOUCLE_auteurCourant>
+        </div>
+    </div>
+    <!--Afin d'éviter des fermetures intempestives à la soumission d'un formulaire-->
+    <script>
+        if ($(".reponse_formulaire").hasClass("reponse_formulaire_erreur")) {
+            $("#auteur-contact-click").click()
+        }
+        if ($("fieldset").hasClass("previsu")) {
+            $("#auteur-contact-click").click()
+        }
+    </script>
+</div>
+

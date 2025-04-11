@@ -1,0 +1,19 @@
+[(#REM) Cette page doit idéalement servir de contrôleur pour appeler les différentes variations de squelettes d'article.]
+[(#REM) La distinction entre les cas se fait grâce aux mots-clef.]
+
+[(#REM) Les cas à traiter sont pour le moment : ]
+[(#REM) - Les pages non-trombines du trombinoscopes, inspirer, accélérer, transformer. ]
+[(#REM) - Le cas par défaut. ]
+
+
+[(#REM) Affectation des cas. ]
+#SET{type_article, article_normal}
+
+<BOUCLE_mots_article(MOTS){id_article}>
+    [(#REM) L'article contient un mot-clef demandant un squelette simplifié. ]
+    [(#TITRE|=={squelette_article_simplifié}|oui) #SET{type_article, article_simplifie} <INCLURE{fond=pages/article_simplifie}{env}>]
+    [(#TITRE|=={infolettre}|oui) #SET{type_article, infolettre} <INCLURE{fond=pages/newsletter}{env}>]
+</BOUCLE_mots_article>
+
+[(#REM) Aucun mot-clef intéressant n'a été trouvé, on peut basculer sur l'affichage par défaut. ]
+[(#GET{type_article}|=={article_normal}|oui) <INCLURE{fond=pages/article_par_defaut}{env}>]

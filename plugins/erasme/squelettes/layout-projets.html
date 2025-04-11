@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+	<head>
+
+		<meta name="author" content="Erasme, le laboratoire d'innovation ouverte de la Métropole de Lyon">
+		<meta charset="utf-8">
+		<meta name="description" content="<BOUCLE_descr(ARTICLES){id_article}>#SOUSTITRE</BOUCLE_descr>">
+		<meta name="title" content="Erasme - <BOUCLE_titre1(ARTICLES){id_article}>#TITRE</BOUCLE_titre1>">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<title>ERASME - <BOUCLE_titre0(ARTICLES){id_article}>#TITRE</BOUCLE_titre0></title>
+
+		<link rel="stylesheet" type="text/css" href="[(#CHEMIN{css/erasmeV2-static.css})]">
+		<link rel="stylesheet" type="text/css" href="[(#CHEMIN{css/style_projets.css})]">
+		<link rel="stylesheet" type="text/css" href="[(#CHEMIN{css/screen.css})]">
+		<link rel="icon" href="[(#CHEMIN{img/erasme_favicon.ico})]" />
+
+		<!-- Jquery -->
+		<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+		<!--Font Awesome CDN-->
+		<script src="https://use.fontawesome.com/ca24b77c86.js"></script>
+
+		<script src="[(#CHEMIN{js/scriptsV2-static.js})]"></script>
+
+		<!--Script prototypes-->
+		<script src="[(#CHEMIN{js/scripts_projets.js})]"></script>
+
+	</head>
+	<body>
+		<INCLURE{fond=noisettes/header, env} />
+		<INCLURE{fond=pages/prototype, env} />
+		<INCLURE{fond=noisettes/footer, env} />
+	</body>
+</html>

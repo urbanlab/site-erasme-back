@@ -1,0 +1,31 @@
+services:
+  db:
+    image: mariadb:10.11
+    restart: always
+    env_file:
+      - .env
+    environment:
+      - MYSQL_ROOT_PASSWORD=MysqlRootPassword
+      - MYSQL_DATABASE=${SPIP_DB_NAME}
+      - MYSQL_USER=${SPIP_DB_LOGIN}
+      - MYSQL_PASSWORD=${SPIP_DB_PASS}
+
+  app:
+    image: erasme/erasme.org:dev
+    restart: always
+    env_file:
+      - .env
+    build:
+      context: .
+      args:
+        - name=value
+    volumes:
+      - ./IMG/:/var/www/html/IMG
+      - ./plugins/:/var/www/html/plugins
+      - ./tmp/sessions/:/var/www/html/tmp/sessions
+      - ./dump.sqlite:/var/www/html/tmp/dump/dump.sqlite
+
+    links:
+      - db:mysql
+    ports:
+      - 8880:80

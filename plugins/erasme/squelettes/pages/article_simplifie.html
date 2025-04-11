@@ -1,0 +1,52 @@
+<!-- CONTENU -->
+<BOUCLE_entete_article(ARTICLES){id_article}>
+<div
+        id="enTeteArticle"
+        class="blocPremierNiveau "
+        style="
+                background-image: url('[(#LOGO_ARTICLE_RUBRIQUE|image_reduire{1920, 0}|extraire_attribut{src}|url_absolue))]');
+                background-size: cover;
+                background-position: center;   
+                "
+>
+
+    <div id="contenuEnTeteArticle">
+        <h2>#TITRE</h2>
+    </div>
+
+    <a href="#URL_RUBRIQUE">
+        <button class="boutonRetour">
+            <svg width="9" height="15" viewBox="0 0 9 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.49484 1.01685L1.37109 7.80815L8.49484 14.077" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <p>Retour</p>
+        </button>
+    </a>
+    [(#REM) ---------------------- TAG ONU ----------------------- ]
+    <!--#SET{isMot,non}
+    <BOUCLE_CheckmotONU(MOTS){id_rubrique}>
+        [(#ID_GROUPE |=={20}|oui) 
+            #SET{isMot,oui}
+        ]
+    </BOUCLE_CheckmotONU>
+    [(#GET{isMot}|=={oui}|oui) <div class="picto_onu"><img class="dvp_durable" src="#CHEMIN{img/pictos/objectif_dvp_durable.png}">]
+    <BOUCLE_motONU(MOTS){id_rubrique}>
+        [(#ID_GROUPE |=={20}|oui) 
+        <img src="[(#LOGO_MOT|extraire_attribut{src})]" title="#TITRE">
+        ]
+    </BOUCLE_motONU>
+    [(#GET{isMot}|=={oui}|oui) </div> ]-->
+</div>
+</BOUCLE_entete_article>
+
+<div id="liste_articles">
+    <BOUCLE_article(ARTICLES){id_article}>
+    <div class="all medium isotope_single article_single article_single_#ID_SECTEUR">
+        <!--[<div style="float:right;">(#LOGO_ARTICLE||image_reduire{100})</div>]-->
+        <h1 class="#EDIT{titre}">#TITRE</h1>
+        <div id="descriptif_#ID_SECTEUR" class="#EDIT{descriptif} descriptif">#DESCRIPTIF</div>
+
+        [<div class="#EDIT{texte}">(#TEXTE|image_reduire{730,4000})</div>]
+    </div>
+    </BOUCLE_article>
+</div>

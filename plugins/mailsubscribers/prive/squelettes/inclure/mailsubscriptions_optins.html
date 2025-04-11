@@ -1,0 +1,33 @@
+
+<INCLURE{
+	fond=prive/objets/liste/mailsubscriptions_optins,
+  statut=valide,
+	env,
+	ajax,
+	nb=5,
+}>
+
+<INCLURE{
+	fond=prive/objets/liste/mailsubscriptions_optins,
+  statut=#LISTE{refuse,outdated},
+	env,
+	ajax,
+	nb=5,
+}>
+
+<INCLURE{
+	fond=prive/objets/liste/mailsubscriptions_optins,
+  statut=prop,
+	env,
+	ajax,
+	nb=5,
+}>
+
+<INCLURE{
+	fond=prive/objets/liste/mailsubscriptions_optins,
+	statut=prepa,
+	env,
+	ajax,
+	sinon=#VAL{0}|titre_liste_demandes_optin{prepa},
+	nb=5,
+}>

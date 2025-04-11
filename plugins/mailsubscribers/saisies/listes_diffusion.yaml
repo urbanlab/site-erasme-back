@@ -1,0 +1,129 @@
+
+titre: '<:mailsubscriber:titre_listes_de_diffusion:>'
+description: 'Sélecteur de listes de diffusion'
+icone: 'prive/themes/spip/images/mailsubscribinglist-xx.svg'
+options:
+  -
+    saisie: 'fieldset'
+    options:
+      nom: 'description'
+      label: '<:saisies:option_groupe_description:>'
+    saisies:
+      -
+        saisie: 'input'
+        options:
+          nom: 'label'
+          label: '<:saisies:option_label_label:>'
+          explication: '<:saisies:option_label_explication:>'
+          size: 50
+      -
+        saisie: 'input'
+        options:
+          nom: 'explication'
+          label: '<:saisies:option_explication_label:>'
+          explication: '<:saisies:option_explication_explication:>'
+          size: 50
+      -
+        saisie: 'input'
+        options:
+          nom: 'defaut'
+          label: '<:saisies:option_defaut_label:>'
+          explication: '<:mailsubscriber:explication_listes_diffusion_option_defaut:>'
+          size: 50
+      -
+        saisie: 'checkbox'
+        options:
+          nom: 'statut'
+          label: '<:mailsubscriber:label_listes_diffusion_option_statut:>'
+          explication: '<:mailsubscriber:explication_listes_diffusion_option_statut:>'
+          defaut: 'ouverte'
+          data:
+            ouverte: '<:mailsubscribinglist:texte_statut_ouverte:>'
+            fermee: '<:mailsubscribinglist:texte_statut_fermee:>'
+            poubelle: '<:texte_statut_poubelle:>'
+      -
+        saisie: 'listes_diffusion'
+        options:
+          nom: 'identifiant'
+          label: '<:mailsubscriber:label_listes_diffusion_option_identifiant:>'
+          explication: '<:mailsubscriber:explication_listes_diffusion_option_identifiant:>'
+      -
+        saisie: 'case'
+        options:
+          nom: 'autoriser_aucune'
+          label_case: '<:mailsubscriber:label_case_listes_diffusion_option_autoriser_aucune:>'
+          conteneur_class: 'pleine_largeur'
+      -
+        saisie: 'radio'
+        options:
+          nom: 'type_choix'
+          label: '<:saisie_evenements:option_type_choix_label:>'
+          data:
+            radio:  '<:saisie_evenements:option_type_choix_radio:>'
+            selection:  '<:saisie_evenements:option_type_choix_selection:>'
+            checkbox:  '<:saisie_evenements:option_type_choix_checkbox:>'
+          defaut: 'checkbox'
+  -
+    saisie: 'fieldset'
+    options:
+      nom: 'utilisation'
+      label: '<:saisies:option_groupe_utilisation:>'
+    saisies:
+      -
+        saisie: 'oui_non'
+        options:
+          nom: 'disable'
+          label: '<:saisies:option_disable_label:>'
+          explication: '<:saisies:option_disable_explication:>'
+      -
+        saisie: 'oui_non'
+        options:
+          nom: 'disable_avec_post'
+          label: '<:saisies:option_disable_avec_post_label:>'
+          explication: '<:saisies:option_disable_avec_post_explication:>'
+  -
+    saisie: 'fieldset'
+    options:
+      nom: 'affichage'
+      label: '<:saisies:option_groupe_affichage:>'
+    saisies:
+      -
+        saisie: 'case'
+        options:
+          nom : 'titre_prive_uniquement'
+          label_case : '<:mailsubscriber:label_case_listes_diffusion_option_titre_prive_uniquement:>'
+          explication : '<:mailsubscriber:explication_listes_diffusion_option_titre_prive_uniquement:>'
+          conteneur_class: 'pleine_largeur'
+      -
+        saisie: 'input'
+        options:
+          nom: 'attention'
+          label: '<:saisies:option_attention_label:>'
+          explication: '<:saisies:option_attention_explication:>'
+          size: 50
+      -
+        saisie: 'input'
+        options:
+          nom: 'class'
+          label: '<:saisies:option_class_label:>'
+          size: 50
+  -
+    saisie: 'fieldset'
+    options:
+      nom: 'conditions'
+      label: '<:saisies:option_groupe_conditions:>'
+    saisies:
+      -  'inclure:saisies/_base/afficher_si.yaml'
+  -
+    saisie: 'fieldset'
+    options:
+      nom: 'obligatoire'
+      label: '<:saisies:option_groupe_validation:>'
+    saisies:
+      - 'inclure:saisies/_base/obligatoire.yaml'
+
+options_dev:
+      - 'inclure:saisies/_base/options_dev.yaml'
+defaut:
+  options:
+    label: '<:newsletter:label_subscribe_lists:>'

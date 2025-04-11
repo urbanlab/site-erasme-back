@@ -1,0 +1,40 @@
+[(#SET{defaut_tri,#ARRAY{
+	maj,#ENV{date_sens,-1},
+	id_linkcheck,-1,
+	url,1,
+	etat,1,
+	points,-1
+}})]<B_ListeLink>
+<div class="clearfix">
+<div class="liste-objets linkchecks">
+<table class="spip liste">
+	[<caption><strong class="caption">(#ENV*{titre,#GRAND_TOTAL|singulier_ou_pluriel{linkcheck:info_1_linkcheck,linkcheck:info_nb_linkchecks}})</strong></caption>]
+	<thead>
+		<tr class='first_row'>
+			<th class="url principale" scope='col'>[(#TRI{url,<:linkcheck:url:>,ajax})]</th>
+			<th class="redirection" scope='col'></th>
+			<th class="code" scope='col'>[(#TRI{code,<:linkcheck:label_code:>,ajax})]</th>
+			<th class="etat" scope='col'>[(#TRI{etat,<:linkcheck:etat:>,ajax})]</th>
+			<th class="utilise" scope='col'><:linkcheck:utilise:></th>
+			<th class='date secondaire' scope='col'>[(#TRI{maj,<:linkcheck:maj:>,ajax})]</th>
+			<th class="id" scope='col'>[(#TRI{id_linkcheck,<:info_numero_abbreviation:>,ajax})]</th>
+		</tr>
+	[<tr><th colspan='7'><nav class='pagination' role='navigation'>(#PAGINATION{prive})</nav></th></tr>]
+	</thead>
+	<tbody>
+<BOUCLE_ListeLink(LINKCHECKS)
+	{id_linkcheck?}{objet?}{code?}{etat?=#ENV{etat,''}|replace{'-',''}}{url?}{publie?}{url LIKE %#ENV{recherche}%}{distant?}{where?}
+	{tri #ENV{par,maj},#GET{defaut_tri},session_liste_linkchecks}{pagination #ENV{nb,10}}>
+	<INCLURE{fond=prive/objets/liste/linkcheck_detail,id_linkcheck,env}>
+</BOUCLE_ListeLink>
+	</tbody>
+</table>
+[<nav class='pagination' role='navigation'>(#PAGINATION{prive})</nav>]
+#SET{nb_orphelins,#GRAND_TOTAL}
+</div>
+#SET{distant_label,''}[(#VAL{0}|in_any{#ENV{distant}}|oui)#SET{distant_label,#GET{distant_label}|concat{_internal}][(#VAL{1}|in_any{#ENV{distant}}|oui)#SET{distant_label,#GET{distant_label}|concat{_external}]
+<a download="[(#NOM_SITE_SPIP|attribut_html)-linkchecks[_(#ENV{etat})][(#GET{distant_label})].csv]" href="[(#URL_PAGE{prive/linkcheck.csv}|parametre_url{etat,#ENV{etat}}|parametre_url{distant,[(#ENV{distant}|?{#ENV{distant}|implode{','},''})]})]" class="btn btn_dowload btn_secondaire float-end"><:linkcheck:bouton_exporter_selection:></a>
+</div>
+</B_ListeLink>[
+<div class="liste-objets linkchecks caption-wrap"><strong class="caption">(#ENV*{sinon,''})</strong></div>
+]<//B_ListeLink>

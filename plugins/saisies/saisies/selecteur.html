@@ -1,0 +1,17 @@
+
+[(#REM) Attention ! Nécessite SPIP 3 ! ]
+
+[(#SET{val,#ENV{valeur_forcee,#ENV{valeur,#ENV{defaut}}}})]
+[(#SET{select,[(#ENV{multiple}|?{0,1})]})]
+<INCLURE{fond=formulaires/selecteur/generique,
+	selected=#GET{val},
+	name=#ENV{nom},
+	afficher_langue=#ENV{afficher_langue,''},
+	select=#GET{select},
+	whitelist=#ENV{whitelist,#ARRAY},
+	blacklist=#ENV{blacklist,#ARRAY},
+	racine=#ENV{racine},
+	objet=#ENV{objet,racine},
+	id_objet=#ENV{id_objet,0},
+	env}
+	/>

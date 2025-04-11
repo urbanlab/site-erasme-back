@@ -1,0 +1,15 @@
+#SET{date_alerte,#ENV{date_alerte_fail}|mailshot_fail_ratio_alert_check}
+[(#GET{date_alerte}|oui)
+<div class="warning">
+	#SET{date_alerte,#GET{date_alerte}|affdate}
+	<p>
+		<:mailshot:message_admin_alerte_fail_ratio{date=#GET{date_alerte}}:>
+	</p>
+
+	[(#AUTORISER{acquiter,alertefail}|oui)
+	<div class="right">
+		[(#BOUTON_ACTION{<:mailshot:bouton_acquiter_alerte:>,#URL_ACTION_AUTEUR{mailshot_acquiter_alerte_fail,#REM,#SELF}})]
+	</div>
+	]
+</div>
+]

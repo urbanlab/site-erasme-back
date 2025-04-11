@@ -1,0 +1,71 @@
+<script>
+    const listeTagsProjets={<BOUCLE_mots_tags(MOTS){id_groupe=19}>"[(#TITRE|nettoyer_nom_classe)]":false,</BOUCLE_mots_tags>};
+    const blocCourant='evenements';
+</script>
+
+<div id="pageSommaire">
+    <!--###################################### Accueil ##################################################-->
+
+    <!--
+        La section « En ce moment » de la page d'accueil se compose :
+        -> d'un en-tête
+        -> d'un bloc de boutons-filtres
+        -> d'un bloc affichant la liste des brèves
+    -->
+
+    <!-- Le bloc d'en-tête. -->
+    <BOUCLE_entete_evenements(RUBRIQUES){titre_mot=evenements}>
+    <div id="enTeteEvenement">
+        <div id="contenuEnTeteEvenement" style="[color: #(#LOGO_RUBRIQUE|couleur_extraire|couleur_extreme|couleur_inverser);] ">
+            <h2 class="#EDIT{titre} titre">#TITRE</h2>
+            <p class="texteEnTeteActu #EDIT{texte} texte">[(#TEXTE|textebrut)]</p>
+        </div>
+        <a href="#URL_SITE_SPIP">
+            <button class="boutonRetour" onclick="boutonMenu('erasme');">
+                <svg width="9" height="15" viewBox="0 0 9 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8.49484 1.01685L1.37109 7.80815L8.49484 14.077" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <p>Retour</p>
+            </button>
+        </a>
+    </div>
+    </BOUCLE_entete_evenements>
+
+    <!-- Le bloc des filtres. -->
+    <div id="blocTags" class="marges">
+        <BOUCLE_groupes_mots_politiques(GROUPES_MOTS){id_groupe=19}>
+        <h3 class="#EDIT{descriptif}">#DESCRIPTIF</h3>
+        </BOUCLE_groupes_mots_politiques>
+        <BOUCLE_tags(MOTS){id_groupe=19}>
+        <button
+                id="tag_[(#TITRE|nettoyer_nom_classe)]"
+                class="boutonTag boutonTagInactif"
+                onclick="toggleTag(this.id);modifierAffichageMiniBlocs();">
+            <div>
+                #TITRE
+                <div class="boutonTagEtat">
+                    <img src="#CHEMIN{img/cross_black.png}">
+                </div>
+            </div>
+        </button>
+        </BOUCLE_tags>
+    </div>
+
+    <!-- Le bloc d'affichage des actu. -->
+    <div id="miniBlocEvenements" class="marges">
+        <BOUCLE_actus_exclus(ARTICLES){titre_mot=Archives}{doublons}>
+        [(#REM) Cette boucle sert à exclure les articles possédant le mot-clef « Archives ».]
+        [(#REM) Seule solution si on souhaite exclure des articles par mots-clef.]
+        </BOUCLE_actus_exclus>
+        <BOUCLE_articles__toutes_actus(ARTICLES){!par date}{0,12}{statut=publie}{titre_mot=actus}{doublons}>
+        <a href="#URL_ARTICLE" title="[(#TITRE)]">
+            <div class="blocEvenementAccueil blocGrille <BOUCLE_mots_clefs_actus(MOTS){id_article}>[(#TITRE|nettoyer_nom_classe)] </BOUCLE_mots_clefs_actus> <BOUCLE_mots_clefs_rubrique_parente(MOTS){id_rubrique}>[(#TITRE|nettoyer_nom_classe)] </BOUCLE_mots_clefs_rubrique_parente>">
+                <p class="blocEvenementTitre">[(#TITRE|troncature_propre{35, '...'})]</p>
+                <p class="blocEvenementChrono">[(#DATE|affdate)]</p>
+                <p class="blocEvenementContenu">[(#TEXTE|couper{120, '...'})]</p>
+            </div>
+        </a>
+        </BOUCLE_articles__toutes_actus>
+    </div>
+
+</div>

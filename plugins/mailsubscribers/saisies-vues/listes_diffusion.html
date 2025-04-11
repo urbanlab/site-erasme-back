@@ -1,0 +1,9 @@
+[(#REM) On réutilise la saisie checkbox ]
+#SET{data,#ARRAY}
+[(#ENV{autoriser_aucune}|oui)
+	[(#SET{data,#ARRAY{saisie_liste_diffusion_autoriser_aucune_veut_pas,<:mailsubscriber:aucune_liste:>}})]
+]
+<BOUCLE_data(DATA){source table, #GET{options}|mailsubscribers_listes}>
+#SET{data, #GET{data}|array_merge{#ARRAY{#ID,#TITRE_PUBLIC|sinon{#TITRE}}}}
+</BOUCLE_data>
+<INCLURE{fond=saisies-vues/checkbox, data=#GET{data}, env} />

@@ -1,0 +1,30 @@
+#SET{rubrique_normale,oui}
+
+<BOUCLE_test_rubrique_sommaire(RUBRIQUES){id_rubrique}>
+    <BOUCLE_sommaire_accueil(MOTS){id_rubrique}{titre_mot=presentation-sommaire-accueil}>
+        #SET{rubrique_normale,non}
+        <INCLURE{fond=layout}{env}{page=sommaire_accueil} />
+    </BOUCLE_sommaire_accueil>
+
+    <BOUCLE_sommaire_projets(MOTS){id_rubrique}{titre_mot=presentation-sommaire-projets}>
+        #SET{rubrique_normale,non}
+        <INCLURE{fond=layout}{env}{page=sommaire_projets} />
+    </BOUCLE_sommaire_projets>
+
+    <BOUCLE_sommaire_prototypes(MOTS){id_rubrique}{titre_mot=presentation-sommaire-prototypes}>
+        #SET{rubrique_normale,non}
+        <INCLURE{fond=layout}{env}{page=sommaire_prototypes} />
+    </BOUCLE_sommaire_prototypes>
+
+    <BOUCLE_sommaire_evenements(MOTS){id_rubrique}{titre_mot=presentation-sommaire-actualites}>
+        #SET{rubrique_normale,non}
+        <INCLURE{fond=layout}{env}{page=sommaire_actualites} />
+    </BOUCLE_sommaire_evenements>
+
+    <BOUCLE_sommaire_qui_sommes_nous(MOTS){id_rubrique}{titre_mot=presentation-sommaire-qui-sommes-nous}>
+        #SET{rubrique_normale,non}
+        <INCLURE{fond=layout}{env}{page=sommaire_qui_sommes_nous} />
+    </BOUCLE_sommaire_qui_sommes_nous>
+</BOUCLE_test_rubrique_sommaire>
+
+[(#GET{rubrique_normale}|=={oui}|oui) <INCLURE{fond=layout}{env}{page=rubrique} />]

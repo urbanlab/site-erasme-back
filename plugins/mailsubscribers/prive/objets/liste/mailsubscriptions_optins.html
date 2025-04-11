@@ -1,0 +1,49 @@
+[(#SET{defaut_tri,#ARRAY{
+	date,-1,
+	id_mailsubscriptions_optin,-1,
+	id_mailsubscriber,1,
+	id_mailsubscribinglist,1,
+	points,-1
+}})]
+<B_mailsubscriptions>
+#ANCRE_PAGINATION
+<div class="liste-objets mailsupscriptions_optins">
+<table class='spip liste'>
+	[<caption><strong class="caption">(#ENV*{titre,#GRAND_TOTAL|titre_liste_demandes_optin{#ENV{statut}}})</strong></caption>]
+	<thead>
+		<tr class='first_row'>
+			<th class='statut' scope='col'>[(#TRI{statut,<span title="<:lien_trier_statut|attribut_html:>">#</span>,ajax})]</th>
+			[(#ENV{id_mailsubscriber}|non)
+				<th class='email' scope='col'>[(#TRI{email,Subscriber,ajax})]</th>
+			][(#ENV{id_mailsubscribinglist}|non)
+				<th class='id_mailsubscribinglist' scope='col'>[(#TRI{id_mailsubscribinglist,Liste,ajax})]</th>
+			]
+			<th class='date' scope='col'>[(#TRI{date,<:date:>,ajax})]</th>
+		</tr>
+	</thead>
+	<tbody>
+	<BOUCLE_mailsubscriptions(MAILSUBSCRIPTIONS_OPTINS mailsubscribers mailsubscribinglists)
+		{id_mailsubscribinglist?}
+		{id_mailsubscriptions_optin?}
+		{id_mailsubscriber?}
+		{where?}{statut?}{recherche?}
+		{tri #ENV{par,id_mailsubscriptions_optin},#GET{defaut_tri}}
+		{pagination #ENV{nb,10}}
+	>
+		<tr class='[(#COMPTEUR_BOUCLE|alterner{row_odd,row_even})]'>
+			<td class='statut'>[(#STATUT|puce_statut{mailsubscriptions_optin,#ID_MAILSUBSCRIPTIONS_OPTIN})]</td>
+			[(#ENV{id_mailsubscriber}|non)
+				<td class='email'><a href="[(#ID_MAILSUBSCRIBER|generer_url_entite{mailsubscriber}|parametre_url{email,#EMAIL})]">#EMAIL</a></td>
+			][(#ENV{id_mailsubscribinglist}|non)
+				<td class='id_mailsubscribinglist'>[(#TITRE_PUBLIC|sinon{#IDENTIFIANT})]</td>
+			]
+			<td class='date secondaire'>[(#DATE|affdate_jourcourt)]</td>
+		</tr>
+	</BOUCLE_mailsubscriptions>
+	</tbody>
+</table>
+[<nav class='pagination'>(#PAGINATION{prive})</nav>]
+</div>
+</B_mailsubscriptions>[
+<div class="liste-objets mailsupscriptions_optins caption-wrap"><strong class="caption">(#ENV*{sinon,''})</strong></div>
+]<//B_mailsubscriptions>

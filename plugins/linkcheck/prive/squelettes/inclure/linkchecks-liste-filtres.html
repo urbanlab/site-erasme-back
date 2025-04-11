@@ -1,0 +1,44 @@
+[(#SET{distant,#LISTE{1,0}})]
+[(#ENV{distant}|=={oui}|oui)[(#SET{distant,#LISTE{1}})]]
+[(#ENV{distant}|=={non}|oui)[(#SET{distant,#LISTE{0}})]]
+<div class='onglets_simple clearfix'>
+	<ul>
+	[<li>(#SELF|parametre_url{etat,''}|parametre_url{debut_ListeLink,''}|lien_ou_expose{<:linkcheck:tous_les_liens:>,#ENV{etat,''}|=={''},ajax})</li>]
+	<BOUCLE_etats(DATA){source table,#LISTE{'-','ok','restreint','deplace','malade','mort'}}>
+		<BOUCLE_comptem(LINKCHECKS){etat=#VALEUR|replace{'-',''}}{url LIKE %#ENV{recherche}%}{distant IN #GET{distant}}{objet ?}{publie?} />
+		[<li class='#VALEUR'>(#SELF|parametre_url{etat,#VALEUR}|parametre_url{debut_ListeLink,''}|lien_ou_expose{#VAL{linkcheck:etat_}|concat{#VALEUR|replace{'-',''}}|_T|concat{' (',#TOTAL_BOUCLE,')'},#ENV{etat}|=={#VALEUR},ajax})</li>]
+		<//B_comptem>
+	</BOUCLE_etats>
+	</ul>
+</div>
+
+#FORMULAIRE_RECHERCHE_ECRIRE{#SELF,ajax}
+
+<div class='onglets_simple second'>
+	<ul>
+		[<li>(#SELF|parametre_url{publie,''}|parametre_url{debut_ListeLink,''}|lien_ou_expose{<:linkcheck:tous_les_liens:>,#ENV{publie,''}|=={''},ajax})</li>]
+		[<li>(#SELF|parametre_url{publie,oui}|parametre_url{debut_ListeLink,''}|lien_ou_expose{<:linkcheck:liens_publies:>,#ENV{publie}|=={oui},ajax})</li>]
+		[<li>(#SELF|parametre_url{publie,non}|parametre_url{debut_ListeLink,''}|lien_ou_expose{<:linkcheck:liens_publies_non:>,#ENV{publie}|=={non},ajax})</li>]
+	</ul>
+</div>
+
+<div class='onglets_simple second'>
+	<ul>
+		[<li>(#SELF|parametre_url{objet,''}|parametre_url{debut_ListeLink,''}|lien_ou_expose{<:linkcheck:tous_les_liens:>,#ENV{objet,''}|=={''},ajax})</li>]
+		<BOUCLE_objets(spip_linkchecks_liens){fusion objet}{objet != linkcheck}{par objet}>
+		[<li>(#SELF|parametre_url{objet,#OBJET}|parametre_url{debut_ListeLink,''}|lien_ou_expose{#OBJET,#ENV{objet}|=={#OBJET},ajax})</li>]
+		</BOUCLE_objets>
+	</ul>
+	<ul>
+		[<li>(#SELF|parametre_url{distant,''}|parametre_url{debut_ListeLink,''}|lien_ou_expose{<:linkcheck:tous_les_liens:>,#ENV{distant,''}|=={''},ajax})</li>]
+		[<li>(#SELF|parametre_url{distant,oui}|parametre_url{debut_ListeLink,''}|lien_ou_expose{<:linkcheck:distant_oui:>,#ENV{distant}|=={oui},ajax})</li>]
+		[<li>(#SELF|parametre_url{distant,non}|parametre_url{debut_ListeLink,''}|lien_ou_expose{<:linkcheck:distant_non:>,#ENV{distant}|=={non},ajax})</li>]
+	</ul>
+	<ul>
+		[<li>(#SELF|parametre_url{redirect,''}|parametre_url{debut_ListeLink,''}|lien_ou_expose{<:linkcheck:tous_les_liens:>,#ENV{redirect,''}|=={''},ajax})</li>]
+		[<li>(#SELF|parametre_url{redirect,oui}|parametre_url{debut_ListeLink,''}|lien_ou_expose{<:linkcheck:redirect_oui:>,#ENV{redirect}|=={oui},ajax})</li>]
+	</ul>
+</div>
+
+#SET{where,#ENV{redirect}|?{"redirection!=''"}}
+<INCLURE{fond=prive/objets/liste/linkchecks,ajax,env,distant=#GET{distant},where=#GET{where},sinon=<:linkcheck:info_aucun_linkcheck:>}>

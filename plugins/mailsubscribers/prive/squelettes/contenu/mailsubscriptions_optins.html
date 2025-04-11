@@ -1,0 +1,61 @@
+[(#AUTORISER{voir,_mailsubscriptions_optins}|sinon_interdire_acces)]
+
+#FORMULAIRE_RECHERCHE_ECRIRE{#SELF,ajax}
+<h1 class="grostitre"><:mailsubscriptions_optin:info_page_titre:></h1>
+<div class="nettoyeur"></div>
+
+
+<BOUCLE_liste(MAILSUBSCRIBINGLISTS){id_mailsubscribinglist}{statut!=poubelle}{par num titre,titre}>
+	#SET{redirect,#ID_MAILSUBSCRIBINGLIST|generer_url_entite{mailsubscribinglist}}
+	[(#BOITE_OUVRIR{[<h3>
+	[(#GET{redirect}|icone_verticale{[(#VAL{mailsubscribinglist}|objet_info{texte_retour}|_T)],mailsubscribinglist,'',left retour})]
+	(#TITRE|sinon{#IDENTIFIANT})</h3>#TITRE_PUBLIC],simple})]
+		<ul class="liste-items">
+			<li class="item">[(#IDENTIFIANT|mailsubscribers_compte_inscrits|singulier_ou_pluriel{mailsubscriber:info_1_mailsubscriber,mailsubscriber:info_nb_mailsubscribers})]</li>
+			[(#SET{nb_envois,#ID_MAILSUBSCRIBINGLIST|mailsubscribers_mailsubscriptions_sends})]
+			<li class="item">
+				<:mailsubscriptions_optin:info_consent_sur_un_an:> [(#GET{nb_envois}|singulier_ou_pluriel{mailsubscriptions:info_1_envoi,mailsubscriptions:info_nb_envois}|sinon{<:mailsubscriptions:info_aucun_envoi:/>})]
+			#SET{nb_envois_min,2}
+			[(#GET{nb_envois}|<{#GET{nb_envois_min}}|oui)
+				<div class="msg-alert notice">
+					<:mailsubscriptions_optin:info_consent_au_moins_nb_envois_sur_nb_mois{nb_envois=#GET{nb_envois_min},nb_mois=12}:>
+				</div>
+			]
+			</li>
+		</ul>
+
+	#BOITE_FERMER
+
+	<INCLURE{fond=prive/squelettes/inclure/mailsubscriptions_optins, env, ajax}>
+
+	<hr class="spip"/>
+
+	<h2><:mailsubscriptions_optin:titre_inscrits_sans_demande_optin:></h2>
+	<div class="msg-alert info">
+		<:mailsubscriptions_optin:info_consent_parmi_inscrits_ayant_recu_moitie:>
+	</div>
+
+	<INCLURE{
+		fond=prive/objets/liste/mailsubscriptions_unreads,
+		env,
+		ajax,
+		sinon=<:mailsubscriptions:info_aucun_mailsubscriptions_unread:>,
+		nb=5,
+	}>
+
+
+	<INCLURE{
+		fond=prive/objets/liste/mailsubscriptions_unclics,
+		env,
+		ajax,
+		sinon=<:mailsubscriptions:info_aucun_mailsubscriptions_unclic:>,
+		nb=5,
+	}>
+</BOUCLE_liste>
+
+	<div class="msg-alert notice">
+		<:mailsubscriptions_optin:selection_mailinglist:>
+	</div>
+
+	<INCLURE{fond=prive/squelettes/inclure/nav-mailsubscribinglists-optin,env} />
+<//B_liste>

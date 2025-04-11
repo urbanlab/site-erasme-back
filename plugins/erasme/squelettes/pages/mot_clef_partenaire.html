@@ -1,0 +1,26 @@
+<div id="contenuPartenaire">
+    <div id="blocEnTetePartenaire">
+    <!--[(#LOGO_MOT|image_reduire{250, 250}|extraire_attribut{src}|url_absolue)]-->
+    <BOUCLE_titre(MOTS){id_mot}>
+        <h2>#TITRE</h2>
+    </BOUCLE_titre>
+    
+    </div>
+
+    <h2 class="marges">Contributeur de :</h2>
+    <div id="blocContenantArticles" class="marges">
+        <BOUCLE_articlesPartenaire(ARTICLES){id_mot}>
+        <a href="#URL_ARTICLE">
+            <div
+                    class="blocGrille"
+                    style="background-image: url('[(#LOGO_ARTICLE_RUBRIQUE|extraire_attribut{src}|url_absolue))]'); background-size: cover;"
+            >
+                <div>
+                    <p class="titreMiniBlocProjet">[(#TITRE|couper{20, '...'})]</p>
+                    <p class="dateMiniBlocProjet">[(#MAJ|affdate)]</p>
+                </div>
+            </div>
+        </a>
+        </BOUCLE_articlesPartenaire>
+    </div>
+</div>

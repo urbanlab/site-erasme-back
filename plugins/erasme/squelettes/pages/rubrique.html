@@ -1,0 +1,88 @@
+<INCLURE{fond=noisettes/header}{env}>
+[(#REM) La page rubrique se constitue d'une succession de deux blocs :
+        - le bloc d'en-tête qui contient des données générales sur la rubrique/projet en cours
+        - la liste des contenus de cette rubrique/projet.
+]
+
+<div class="blocPremierNiveau">
+    [(#REM) ---------------------- EN-TÊTE ---------------------------------- ]
+    <div class="enTeteRubriqueProjet"
+         style="background-image: url('[(#LOGO_RUBRIQUE|image_reduire{1920, 0}|extraire_attribut{src}|url_absolue))]'); background-size: cover;">
+        <BOUCLE_nom_rubrique(RUBRIQUES){id_rubrique=#ENV{id_rubrique}}>
+            <div id="contenuEnTeteRubriqueProjet" style="[color: #(#LOGO_RUBRIQUE|couleur_extraire|couleur_extreme|couleur_inverser);] ">
+                <h2 class="titreEnTeteRubriqueProjet #EDIT{titre}">#TITRE</h2>
+                <p class="texteEnTeteRubriqueProjet">[(#TEXTE|couper{250, '...'})]</p>
+            </div>
+            <a href="<BOUCLE_sommaire_projets(RUBRIQUES){titre_mot=presentation-sommaire-projets}>#URL_RUBRIQUE</BOUCLE_sommaire_projets>">
+                <button class="boutonRetour">
+                    <svg width="9" height="15" viewBox="0 0 9 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8.49484 1.01685L1.37109 7.80815L8.49484 14.077" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <p>Retour</p>
+                </button>
+            </a>
+        </BOUCLE_nom_rubrique>
+        [(#REM) ---------------------- TAG ONU ----------------------- ]
+        #SET{isMot,non}
+        <!--<BOUCLE_CheckmotONU(MOTS){id_rubrique}>
+            [(#ID_GROUPE |=={20}|oui) 
+                #SET{isMot,oui}
+            ]
+        </BOUCLE_CheckmotONU>
+        [(#GET{isMot}|=={oui}|oui) <div class="picto_onu"><img class="dvp_durable" src="#CHEMIN{img/pictos/objectif_dvp_durable.png}">]
+        <BOUCLE_motONU(MOTS){id_rubrique}>
+            [(#ID_GROUPE |=={20}|oui)
+        <a href="#TEXTE*">
+            <img src="[(#LOGO_MOT|extraire_attribut{src})]" title="#TITRE">
+        </a>
+            ]
+        </BOUCLE_motONU>
+        [(#GET{isMot}|=={oui}|oui) </div> ]-->
+        
+    </div>
+
+    [(#REM) ---------------------- LISTE DES CONTENUS ----------------------- ]
+    <div id="blocListeDesRubriquesProjets" class="marges">
+        <BOUCLE_layout_rubrique(RUBRIQUES){id_rubrique=#ENV{id_rubrique}}>
+        <BOUCLE_articles_exclus(ARTICLES){titre_mot=Archives}{doublons}>
+        [(#REM) Cette boucle sert à exclure les articles possédant le mot-clef « Archives ».]
+        [(#REM) Seule solution si on souhaite exclure des articles par mots-clef.]
+        </BOUCLE_articles_exclus>
+
+        <B_articles_premier_rang>
+        <div class="miniBlocPremierRang" style="background-color: maroon">
+        <BOUCLE_articles_premier_rang(ARTICLES){id_rubrique}{titre_mot=premier_rang}{par date}{statut=publie}{inverse}{doublons}>
+        <a href="#URL_ARTICLE" title="[(#TITRE)]">
+            <div class="bloc_article
+            <BOUCLE_mots_clefs_article_premier_rang(MOTS){id_article}>[(#TITRE|nettoyer_nom_classe)] </BOUCLE_mots_clefs_article_premier_rang>"
+                 style="background-image: url('[(#LOGO_ARTICLE_RUBRIQUE|image_reduire{500, 500}|extraire_attribut{src}|url_absolue))]'); background-size: cover;"
+            >
+                <div>
+                    <p class="titreMiniBlocPrototype">[(#TITRE)]</p>
+                </div>
+            </div>
+        </a>
+        </BOUCLE_articles_premier_rang>
+        </div>
+        </B_articles_premier_rang>
+
+        <B_article_small>
+        <div id="miniBlocRangDivers" style="clear: both">
+        <BOUCLE_article_small(ARTICLES){id_rubrique}{par date}{statut=publie}{inverse}{doublons}>
+        <a href="#URL_ARTICLE" title="[(#TITRE)]">
+            <div class="bloc_article
+            <BOUCLE_mots_clefs_article(MOTS){id_article}>[(#TITRE|nettoyer_nom_classe)] </BOUCLE_mots_clefs_article>"
+                 style="background-image: url('[(#LOGO_ARTICLE_RUBRIQUE|image_reduire{500, 500}|extraire_attribut{src}|url_absolue))]'); background-size: cover;"
+            >
+                <div>
+                    <p class="titreMiniBlocPrototype">[(#TITRE)]</p>
+                    <p class="dateMiniBlocPrototype">[(#DATE|affdate)]</p>
+                </div>
+            </div>
+        </a>
+        </BOUCLE_article_small>
+        </div>
+        </B_article_small>
+        </BOUCLE_layout_rubrique>
+    </div>
+</div>

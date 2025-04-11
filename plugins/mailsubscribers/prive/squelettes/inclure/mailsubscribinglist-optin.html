@@ -1,0 +1,8 @@
+[(#AUTORISER{voir,_mailsubscriptions_optins})
+	[(#BOITE_OUVRIR{<:mailsubscriptions_optin:info_page_legend:>,raccourcis})]
+	<p><:mailsubscriptions_optin:info_page_texte:></p>
+
+	[(#URL_ECRIRE{mailsubscriptions_optins}|parametre_url{id_mailsubscribinglist,#ID_MAILSUBSCRIBINGLIST}
+		|icone_horizontale{<:mailsubscriptions_optin:info_page_lien:>,mailsubscriber-24})]
+	#BOITE_FERMER
+]

@@ -1,0 +1,551 @@
+<script type="text/javascript">
+    /*
+        Ce listener se lance au chargement de la page et effectue des modifications en javascript qui surchargent celles
+        de SPIP.
+        - mise à jour de l'apparence du bloc d'inscription à la newsletter
+        - lancement d'isotope sur la page d'accueil (affichage des bons blocs)
+     */
+    var isoGeneral, isoSousBloc;
+    window.addEventListener('load', function () {
+        mettreAJourFormulaireInscriptionInfolettre();
+        miseAJourInitialeIsotope();
+    });
+    var blocCourant='erasme';
+
+    const listeTagsProjets={<BOUCLE_mots_tags(MOTS){id_groupe=19}>"[(#TITRE|nettoyer_nom_classe)]":false,</BOUCLE_mots_tags>};
+</script>
+
+<!--
+TODO
+- logo des articles en .gif -> ne pas les ré-échantilloner pour qu'ils restent animés
+-->
+
+<!-- Structure du fichier
+Page Sommaire :
+    - Accueil :
+        - [X] Bloc video
+        - [X] Bloc présentation (titre + texte)
+        - [X] Bloc Notre approche
+        - [X] Bloc Notre histoire
+        - [X] Bloc en ce moment
+    - Rubriques :
+        - [X] Bloc entete projet
+        - [X] Bloc entete proto
+        - [X] Bloc entete actu
+        - [X] Bloc filtre (projets/proto/actus) (ne peux pas être bougé sinon ce cale à des endroits non voulus)
+        - [X] Mini bloc projet
+        - [X] Mini bloc proto
+        - [X] Mini bloc actu
+    - Qui sommes nous :
+        - [X] Bloc entete qui sommes nous
+        - [X] Bloc équipe
+        - [X] Bloc partenaires
+        - [X] Bloc l'urban lab et contact
+        - [X] Bloc nos services
+        - [X] Bloc quelques chiffres
+-->
+
+<div id="pageSommaire">
+
+    <!--###################################### Accueil ##################################################-->
+    <!--  Le bloc vidéo. -->
+    <div id="blocVideo" class="blocPremierNiveau erasme" style="z-index: 0;display: block;">
+        <a href="#titreActus">
+            <!--<svg class="scroll" width="51" height="51" viewBox="0 0 51 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="25.5" cy="25.5" r="25.5" fill="black"/>
+                <path d="M26.5 14C26.5 13.1716 25.8284 12.5 25 12.5C24.1716 12.5 23.5 13.1716 23.5 14H26.5ZM23.9393 37.0607C24.5251 37.6464 25.4749 37.6464 26.0607 37.0607L35.6066 27.5147C36.1924 26.9289 36.1924 25.9792 35.6066 25.3934C35.0208 24.8076 34.0711 24.8076 33.4853 25.3934L25 33.8787L16.5147 25.3934C15.9289 24.8076 14.9792 24.8076 14.3934 25.3934C13.8076 25.9792 13.8076 26.9289 14.3934 27.5147L23.9393 37.0607ZM23.5 14V36H26.5V14H23.5Z" fill="white"/>
+            </svg>-->                
+        </a>
+        <video
+                width="100%"
+                autoplay="autoplay"
+                muted="muted"
+                loop="loop"
+                playsinline="playsinline"
+                preload="metadata"
+                data-aos="fade-up"
+        >
+            <source src="#CHEMIN{media/video/video_accueil.webm}" type="video/webm">
+            <source src="#CHEMIN{media/video/video_accueil.mp4}" type="video/mp4">
+            Votre navigateur ne peut lire nos formats vidéo, mettez-le à jour.
+        </video>
+    </div>
+    <!--  Le bloc de présentation du lab. -->
+    <div id ="BlocPresentation" class="blocPremierNiveau erasme marges">
+        <BOUCLE_presentation_erasme(ARTICLES){statut=publie}{titre_mot=presentation}>
+        <h1 class="#EDIT{titre}">#TITRE</h1>
+        [<div class="#EDIT{texte} texte">(#TEXTE|image_reduire{520,0})</div>]
+        </BOUCLE_presentation_erasme>
+    </div>
+    <!--  Le bloc notre approche. -->
+    <div id ="BlocApproche" class="blocPremierNiveau erasme marges">
+        <BOUCLE_rubrique_approche(RUBRIQUES){titre_mot=presentation-approche}>
+        <h1 class="#EDIT{titre}">#TITRE</h1>
+        <ul class="marges overflow-scroll">
+            <BOUCLE_article_approche(ARTICLES){id_rubrique}{par date}>
+            <li class="#EDIT{logo}">[(#LOGO_ARTICLE|image_reduire{0,200})]<!--<p class="#EDIT{titre}">#TITRE</p>--></li>
+            </BOUCLE_article_approche>
+        </ul>
+        <div class="btn">
+            <button onclick="boutonMenu('quisommesnous');"><span class="#EDIT{texte} texte">#TEXTE</span></button>
+        </div>
+        </BOUCLE_rubrique_approche>
+    </div>
+    <!--  Le bloc notre histoire -->
+    <div id ="BlocHistoire" class="blocPremierNiveau erasme marges">
+        <BOUCLE_rubrique_histoire(RUBRIQUES){titre_mot=presentation-histoire}>
+            <BOUCLE_article_histoire(ARTICLES){id_rubrique}>
+        <h1 class="#EDIT{titre}">#TITRE</h1>
+        <div class="timeline #EDIT{logo}">#LOGO_ARTICLE</div>
+            </BOUCLE_article_histoire>
+        </BOUCLE_rubrique_histoire>
+    </div>
+
+    <!--Nos services mobile -->
+    <div id="nosServicesMobile" class="blocPremierNiveau erasme marges">
+        
+<div class="bloc_container small">
+            <BOUCLE_articles_urbanlab_inspirer_mobile(ARTICLES){titre_mot=presentation-urbanlab-inspirer}>
+            <a href="#URL_ARTICLE"><div class="bloc" style="background : url('<BOUCLE_doc1_mobile(DOCUMENTS){id_article}>#URL_DOCUMENT</BOUCLE_doc1_mobile>'); background-size: cover; background-position: center; background-repeat: no-repeat;"></div></a>
+            </BOUCLE_articles_urbanlab_inspirer_mobile>
+            <BOUCLE_articles_urbanlab_explorer_mobile(ARTICLES){titre_mot=presentation-urbanlab-explorer}>
+            <a href="#URL_ARTICLE"><div class="bloc" style="background : url('<BOUCLE_doc2_mobile(DOCUMENTS){id_article}>#URL_DOCUMENT</BOUCLE_doc2_mobile>'); background-size: cover; background-position: center; background-repeat: no-repeat;"></div></a>
+            </BOUCLE_articles_urbanlab_explorer_mobile>
+        </div>
+        <div class="bloc_container large">
+            <BOUCLE_images_urbanlab_accelerer_mobile(ARTICLES){titre_mot=presentation-urbanlab-accelerer}>
+            <a href="#URL_ARTICLE"><div class="bloc" style="background : url('<BOUCLE_doc3_mobile(DOCUMENTS){id_article}>#URL_DOCUMENT</BOUCLE_doc3_mobile>');  background-size: cover; background-position: center; background-repeat: no-repeat;"></div></a>
+            </BOUCLE_images_urbanlab_accelerer_mobile>
+            <BOUCLE_incubation_mobile(ARTICLES){titre_mot=presentation-services}>
+            <div class="bloc incubation">
+                <h2 class="">L’incubation par ERASME</h2>
+                <a href="#URL_ARTICLE"><div class="btn"><button><p>En savoir plus</p></button></div></a>
+            </div>
+            </BOUCLE_incubation_mobile>
+        </div>
+    </div>
+ 
+    <!--  Le bloc en ce moment -->
+    <div id="blocActualites" class="blocPremierNiveau erasme marges" style="position: relative;">
+        [(#REM) Le bloc brèves est constitué des trois brèves les plus récentes et d'un bloc d'inscription à l'infolettre.]
+        [(#REM) Commençons par les trois dernières brèves.]
+        <div id="blocPrincipalActualites">
+            <div id="blocBreves">
+                <BOUCLE_rubrique_actualites(RUBRIQUES){titre_mot=presentation-actualites}>
+                <h1 id="titreActus" class="#EDIT{titre}">#TITRE</h1>
+                </BOUCLE_rubrique_actualites>
+                <BOUCLE_articles_actus(ARTICLES){!par date}{0,3}{statut=publie}{titre_mot=actus}>
+                <div class="actualites">
+                    <a href="#URL_ARTICLE" title="[(#TITRE)]">
+                        <div class="blocEvenementAccueil">
+                            <p class="blocEvenementTitre">[(#TITRE|troncature_propre{35, '...'})]</p>
+                            <p class="blocEvenementChrono">[(#DATE|affdate)]</p>
+                            <p class="blocEvenementContenu">[(#TEXTE|couper{120, '...'})]</p>
+                        </div>
+                    </a>
+                </div>
+                </BOUCLE_articles_actus>
+            </div>
+
+            <BOUCLE_INVITE_INFOLETTRE(ARTICLES){titre_mot=presentation-infolettre}>
+            <div id="blocInfolettres">
+                <div class="item newsletter home">
+                    <div class="item-content">
+                        <div class="newsletter-subscription-form-container">
+                            <h2 class="newsletter-main-text title #EDIT{titre}">#TITRE</h2>
+                            <span class="#EDIT{texte} texte">#TEXTE</span>
+                            [(#REM) Le CSS du bloc infolettre n'est pas personnalisable via SPIP. La solution est de le personnaliser en
+                            javascript au chargement de la page. Un listener js a été ajouté au haut de cette feuille sommaire.html]
+                            <div id="formulaire_inscription_infolettre">
+                                #FORMULAIRE_NEWSLETTER_SUBSCRIBE{"infolettre"}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="btn actu">
+                <button class="invert #EDIT{descriptif} descriptif" onclick="boutonMenu('evenements');">#DESCRIPTIF</button>
+            </div>
+            </BOUCLE_INVITE_INFOLETTRE>
+        </div>
+    </div>
+
+    <!--###################################### RUBRIQUES ##################################################-->
+    <!-- Le bloc entête projet. -->
+    <BOUCLE_entete_projet(RUBRIQUES){titre_mot=Projets}>
+    <div id="enTeteProjet" class="blocPremierNiveau projets" style="display: none;">
+        <div id="contenuEnTeteProjet" style="[color: #(#LOGO_RUBRIQUE|couleur_extraire|couleur_extreme|couleur_inverser);] ">
+            <h2 class="#EDIT{titre}">#TITRE</h2>
+            <p class="texteEnTeteProjet #EDIT{texte} texte">[(#TEXTE|textebrut)]</p>
+        </div>
+        <button class="boutonRetour" onclick="boutonMenu('erasme');">
+            <svg width="9" height="15" viewBox="0 0 9 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.49484 1.01685L1.37109 7.80815L8.49484 14.077" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>                
+            <p>Retour</p>
+        </button>
+    </div>
+    </BOUCLE_entete_projet>
+
+
+    <!-- Le bloc entête proto. -->
+    <BOUCLE_entete_prototype(RUBRIQUES){titre_mot=protos}>
+        <div id="enTetePrototype" class="blocPremierNiveau prototypes">
+            <div id="contenuEnTetePrototype" style="[color: #(#LOGO_RUBRIQUE|couleur_extraire|couleur_extreme|couleur_inverser);] ">
+                <h2 class="#EDIT{titre} titre">#TITRE</h2>
+                    <p class="texteEnTetePrototype #EDIT{texte} texte">[(#TEXTE|textebrut)]</p>
+            </div>
+            <button class="boutonRetour" onclick="boutonMenu('erasme');">
+                <svg width="9" height="15" viewBox="0 0 9 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8.49484 1.01685L1.37109 7.80815L8.49484 14.077" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>    
+                <p>Retour</p>
+            </button>
+        </div>
+    </BOUCLE_entete_prototype>
+
+    <!-- Le bloc entête actu. -->
+    <BOUCLE_entete_evenements(RUBRIQUES){titre_mot=evenements}>
+        <div id="enTeteEvenement" class="blocPremierNiveau evenements">
+            <div id="contenuEnTeteEvenement" style="[color: #(#LOGO_RUBRIQUE|couleur_extraire|couleur_extreme|couleur_inverser);] ">
+                <h2 class="#EDIT{titre} titre">#TITRE</h2>
+                    <p class="texteEnTeteActu #EDIT{texte} texte">[(#TEXTE|textebrut)]</p>
+            </div>
+            <button class="boutonRetour" onclick="boutonMenu('erasme');">
+                <svg width="9" height="15" viewBox="0 0 9 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8.49484 1.01685L1.37109 7.80815L8.49484 14.077" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>                
+                <p>Retour</p>
+            </button>
+        </div>
+    </BOUCLE_entete_evenements>
+
+    <!-- Le bloc des filtres. -->
+    <div id="blocTags"
+    class="blocPremierNiveau projets prototypes evenements marges"
+    style="display: none;"
+    >
+        <BOUCLE_groupes_mots_politiques(GROUPES_MOTS){id_groupe=19}>
+            <h3 class="#EDIT{descriptif}">#DESCRIPTIF</h3>
+        </BOUCLE_groupes_mots_politiques>
+        <BOUCLE_tags(MOTS){id_groupe=19}>
+            <button
+                    id="tag_[(#TITRE|nettoyer_nom_classe)]"
+                    class="boutonTag boutonTagInactif"
+                    onclick="toggleTag(this.id);modifierAffichageMiniBlcs();">
+                <div>
+                    #TITRE
+                    <div class="boutonTagEtat">
+                        <img src="#CHEMIN{img/cross_black.png}">
+                    </div>
+                </div>
+            </button>
+        </BOUCLE_tags>
+    </div>
+
+    <!-- Le bloc d'affichage projets. -->
+    <div id="miniBlocProjets"
+            class="blocPremierNiveau projets marges"
+            style="display: none;"
+    >
+        <BOUCLE_rubrique_parente_projets(RUBRIQUES){titre_mot=Projets}>
+            <BOUCLE_projets_exclus(RUBRIQUES){titre_mot=Archives}{doublons}>
+                [(#REM) Cette boucle sert à exclure les rubriques possédant le mot-clef « Archives ».]
+                [(#REM) Seule solution si on souhaite exclure des rubriques par mots-clef.]
+            </BOUCLE_projets_exclus>
+            <BOUCLE_rubriques_projets(RUBRIQUES){id_parent}{!par date}{tout}{doublons}>
+                <a href="#URL_RUBRIQUE" title="[(#TITRE)]">
+                    <div
+                            class="lazy projet blocGrille <BOUCLE_mots_clefs_projets(MOTS){id_rubrique}>[(#TITRE|nettoyer_nom_classe)] </BOUCLE_mots_clefs_projets>"
+                            style="background-size: cover;"
+                            data-bg="[(#LOGO_RUBRIQUE|image_reduire{250, 250}|extraire_attribut{src}|url_absolue))]"
+                    >
+                            <div>
+                                <p class="titreMiniBlocProjet #EDIT{titre}">[(#TITRE|troncature_propre{35, '...'})]</p>
+                            </div>
+                    </div>
+                </a>
+            </BOUCLE_rubriques_projets>
+        </BOUCLE_rubrique_parente_projets>
+    </div>
+
+    <!-- Le bloc d'affichage des prototypes. -->
+    <div id="miniBlocPrototypes"
+    class="blocPremierNiveau prototypes marges"
+    style="display: none;"
+    >
+        <BOUCLE_rubrique_parente_prototypes(RUBRIQUES){titre_mot=protos}>
+            <BOUCLE_prototypes_exclus(ARTICLES){titre_mot=Archives}{doublons}>
+            [(#REM) Cette boucle sert à exclure les articles possédant le mot-clef « Archives ».]
+            [(#REM) Seule solution si on souhaite exclure des articles par mots-clef.]
+            </BOUCLE_prototypes_exclus>
+            <BOUCLE_articles_prototypes(ARTICLES){id_rubrique}{statut=publie}{!par maj}{tout}{doublons}>
+                <a href="#URL_ARTICLE" title="[(#TITRE)]">
+                    <div
+                            class="lazy prototype blocGrille <BOUCLE_mots_clefs_prototypes(MOTS){id_article}>[(#TITRE|nettoyer_nom_classe)] </BOUCLE_mots_clefs_prototypes>"
+                            style="background-size: cover;"
+                            data-bg="[(#LOGO_ARTICLE_RUBRIQUE|image_reduire{250, 250}|extraire_attribut{src}|url_absolue))]""
+                    >
+                        <div>
+                            <p class="titreMiniBlocPrototype #EDIT{titre}">[(#TITRE|troncature_propre{35, '...'})]</p>
+                            <p class="dateMiniBlocPrototype">[(#DATE|affdate)]</p>
+                        </div>
+                    </div>
+                </a>
+            </BOUCLE_articles_prototypes>
+        </BOUCLE_rubrique_parente_prototypes>
+    </div>
+
+    <!-- Le bloc d'affichage des actu. -->
+    <div id="miniBlocEvenements"
+            class="blocPremierNiveau evenements marges"
+            style="display: none;"
+    >
+        <BOUCLE_actus_exclus(ARTICLES){titre_mot=Archives}{doublons}>
+            [(#REM) Cette boucle sert à exclure les articles possédant le mot-clef « Archives ».]
+            [(#REM) Seule solution si on souhaite exclure des articles par mots-clef.]
+        </BOUCLE_actus_exclus>
+        <BOUCLE_articles__toutes_actus(ARTICLES){!par date}{0,10}{statut=publie}{titre_mot=actus}{doublons}>
+        <a href="#URL_ARTICLE" title="[(#TITRE)]">
+            <div class="blocEvenementAccueil blocGrille <BOUCLE_mots_clefs_actus(MOTS){id_article}>[(#TITRE|nettoyer_nom_classe)] </BOUCLE_mots_clefs_actus> <BOUCLE_mots_clefs_rubrique_parente(MOTS){id_rubrique}>[(#TITRE|nettoyer_nom_classe)] </BOUCLE_mots_clefs_rubrique_parente>">
+                <p class="blocEvenementTitre">[(#TITRE|troncature_propre{35, '...'})]</p>
+                <p class="blocEvenementChrono">[(#MAJ|affdate)]</p>
+                <p class="blocEvenementContenu">[(#TEXTE|couper{120, '...'})]</p>
+            </div>
+        </a>
+        </BOUCLE_articles__toutes_actus>
+    </div>
+
+    <!--###################################### QUI SOMMES NOUS ##################################################-->
+
+    <!-- Le bloc de présentation de l'urbanlab. -->
+    <BOUCLE_entete_quisommesnous(RUBRIQUES){titre_mot=presentation-apropos}>
+        <div id="enTeteQuiSommesNous" class="blocPremierNiveau quisommesnous">
+            <div id="contenuEnTeteQuiSommesNous">
+                <h2 class="#EDIT{titre} titre">#TITRE</h2>
+                <p class="texteEnTeteQuiSommesNous #EDIT{texte} texte">[(#TEXTE|textebrut)]</p>
+            </div>
+            <button class="boutonRetour" onclick="boutonMenu('erasme');">
+                <svg width="9" height="15" viewBox="0 0 9 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8.49484 1.01685L1.37109 7.80815L8.49484 14.077" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <p>Retour</p>
+            </button>
+        </div>
+    </BOUCLE_entete_quisommesnous>
+
+    <!-- Le bloc équipe. -->
+    <div id="blocTrombinoscope" class="blocPremierNiveau quisommesnous marges" style="display: none;">
+        <BOUCLE_nouveau_trombinoscope(ARTICLES){titre_mot=presentation-trombinoscope}>
+        <h1 class="#EDIT{titre} titre">#TITRE</h1>
+            [(#REM) Un article avec le mot-clef presentation-trombinoscope a pour auteurs ceux qu'on veut dans le trombinoscope.]
+            <BOUCLE_membres_trombinoscope(AUTEURS){id_article}>
+                <a href="#URL_AUTEUR">
+                    <div
+                            class="lazy trombine"
+                            style="background-size: cover;"
+                            data-bg="[(#LOGO_AUTEUR|image_reduire{0, 320}|extraire_attribut{src}|url_absolue)]"
+                    >
+                        <div class="contenu">
+                            <p class="titreTrombine">#NOM</p>
+                        </div>
+                    </div>
+                </a>
+            </BOUCLE_membres_trombinoscope>
+        </BOUCLE_nouveau_trombinoscope>
+    </div>
+
+    <!--Bloc Partenaires -->
+    <div id="blockPartenaires" class="blocPremierNiveau quisommesnous marges">
+        <BOUCLE_titre_partenaire(RUBRIQUES){titre_mot=presentation-partenaires}>
+        <h1 class="#EDIT{titre} titre">#TITRE</h1>
+        </BOUCLE_titre_partenaire>
+        <!-- Slider main container -->
+        <div class="partnenaire-slider">
+            <!-- Additional required wrapper -->
+                <!-- Slides -->
+                <BOUCLE_partenaires(MOTS mots_articles){id_groupe IN 13,15}{par hasard}{id_article>0}>
+                    [(#REM) Pour sélectionner uniquement les mots-clef ayant au moins un article lié.]
+                    [(#REM) https://contrib.spip.net/Ne-pas-afficher-les-mots-cles-qui]
+                    <a href="#URL_MOT"><img src="[(#LOGO_MOT|image_reduire{250, 250}|extraire_attribut{src}|url_absolue)]" width="auto" height="100px"></a>
+                </BOUCLE_partenaires>
+        </div>
+    </div>
+    
+    <!-- Bloc urbanlab + contact -->
+    <div id="blocUrbanlabEtContact" class="blocPremierNiveau quisommesnous marges" style="display: none">
+        <div id="sousBlocUrbanLab" style="float: left">
+            <BOUCLE_urbanlab_et_contact(RUBRIQUES){titre_mot=presentation-urbanlab}>
+            <h1 class="#EDIT{titre} titre">#TITRE</h1>
+            <h3 class="#EDIT{descriptif} descriptif">#DESCRIPTIF</h3>
+            <p class="#EDIT{texte} texte">#TEXTE</p>
+            <BOUCLE_urbanlab_en_savoir_plus(ARTICLES){titre_mot=presentation-urbanlab}>
+            <a href="#URL_ARTICLE"><div class="btn"><button><p>#TITRE</p></button></div></a>
+            </BOUCLE_urbanlab_en_savoir_plus>
+        </div>
+
+        <div id="sousBlocFormulaireContact">
+            <div id="formulaire_contact_auteur contact">
+                <h1>Contacter le lab</h1>
+                <BOUCLE_form_contact(AUTEURS){id_auteur=1039}>
+                    #FORMULAIRE_ECRIRE_AUTEUR
+                </BOUCLE_form_contact>
+            </div>
+        </div>
+        </BOUCLE_urbanlab_et_contact>
+    </div>
+    <!-- Le bloc quelques chiffres. -->
+    <div id="blocChiffresPresentation" class="blocPremierNiveau quisommesnous marges" style="position: relative;">
+        <h1>Quelques chiffres</h1>
+        <BOUCLE_participants(ARTICLES){titre_mot=statistiques_accueil}{par titre}{0,1}>
+        <div
+            id="sousBlocGauche"
+            class="sousBlocPresentation"
+            style="
+                background: url('[(#LOGO_ARTICLE_RUBRIQUE|image_reduire{0, 500}|extraire_attribut{src}|url_absolue)]') no-repeat;
+                background-size: cover;"
+        >
+            <p>
+                <span id="sousBlocGaucheSurTitre">#SURTITRE</span>
+            </p>
+            <p>
+                <span id="sousBlocGaucheTitre">#TITRE</span>
+            </p>
+            <p>
+                <span id="sousBlocGaucheSousTitre">#SOUSTITRE</span>
+            </p>
+        </div>
+        </BOUCLE_participants>
+
+        <div id="sousBlocMilieu" class="sousBlocPresentation">
+            <BOUCLE_ccn(ARTICLES){titre_mot=statistiques_accueil}{par titre}{1,1}>
+            <div
+                id="sousBlocMilieuHaut"
+                style="
+                background: url('[(#LOGO_ARTICLE_RUBRIQUE|image_reduire{0, 250}|extraire_attribut{src}|url_absolue)]') no-repeat;
+                background-size: cover;"
+            >
+                <p>
+                    <span id="sousBlocMilieuHautSurTitre">#SURTITRE</span><br>
+                    <span id="sousBlocMilieuHautTitre">#TITRE</span><br>
+                    <span id="sousBlocMilieuHautSousTitre">#SOUSTITRE</span><br>
+                </p>
+            </div>
+            </BOUCLE_ccn>
+
+            <BOUCLE_incubations(ARTICLES){titre_mot=statistiques_accueil}{par titre}{2,1}>
+                <div
+                    id="sousBlocMilieuBas"
+                    style="
+                    background: url('[(#LOGO_ARTICLE_RUBRIQUE|image_reduire{0, 230}|extraire_attribut{src}|url_absolue)]') no-repeat;
+                    background-size: cover;"
+                >
+                    <p>
+                        <span id="sousBlocMilieuBasSurTitre">#SURTITRE</span><br>
+                        <span id="sousBlocMilieuBasTitre">#TITRE</span><br>
+                        <span id="sousBlocMilieuBasSousTitre">#SOUSTITRE</span><br>
+                    </p>
+                </div>
+            </BOUCLE_incubations>
+        </div>
+
+        <div
+            id="sousBlocDroite"
+            class="sousBlocPresentation"
+            <BOUCLE_proto(ARTICLES){titre_mot=statistiques_accueil}{par titre}{3,1}>
+            style="
+            background: url('[(#LOGO_ARTICLE_RUBRIQUE|image_reduire{0, 250}|extraire_attribut{src}|url_absolue)]') no-repeat;
+            background-size: cover;"
+            </BOUCLE_proto>
+        >
+            [(#REM) Nous voulons le nombre de prototypes : articles VALIDÉS de la rubrique « Prototypes » (id 286) ]
+            <BOUCLE_rubrique_proto(RUBRIQUES){titre_mot=Protos}>
+                <BOUCLE_articles_proto(ARTICLES){id_rubrique}{statut=publie}>
+                #SET{count_proto,#TOTAL_BOUCLE}
+                </BOUCLE_articles_proto>
+            </BOUCLE_rubrique_proto>
+                <p>
+                    <span id="sousBlocDroiteSurTitre">#GET{count_proto}</span>
+                </p>
+                <p>
+                    <span id="sousBlocDroiteTitre">Prototypes</span>
+                </p>
+                <p>
+                    <span id="sousBlocDroiteSousTitre">Créés lors des sprints</span>
+                </p>
+        </div>
+    </div>
+</div>
+
+<script>
+    /**
+     * Lancement d'isotope au chargement de la page.
+     */
+    function miseAJourInitialeIsotope() {
+        isoGeneral = new Isotope( '#pageSommaire', {
+            itemSelector: '.blocPremierNiveau',
+            layoutMode: 'fitRows',
+            transitionDuration: '0'
+        });
+        /*
+            Deux cas de figure :
+            - on arrive sur la page principale directement -> affichage erasme
+            - on arrive sur la page via le menu et depuis une autre page du site -> affichage du paramètre contenu dans l'url
+         */
+        const urlParts   = document.URL.split('#');
+        let ancre = (urlParts.length > 1) ? urlParts[1] : null;
+        if (ancre == null) {
+            boutonMenu('erasme');
+        }
+        else{
+            boutonMenu(ancre);
+        }
+
+    }
+
+    /**
+     * En fonction du bouton de menu qui aura été cliqué, on affichera un bloc différent.
+     * On déplacera aussi la vue de l'utilisateur sur une ancre.
+     * @param texte
+     */
+    function boutonMenu(texte) {
+        location.hash = texte;
+        blocCourant=texte;
+        isoGeneral.arrange({
+            filter: function( index, itemElem ) {
+                if(itemElem.classList.contains(texte)){
+                    itemElem.style.display='inline-block';
+                }
+                return itemElem.classList.contains(texte);
+            },
+            transitionDuration: '0.4s',
+            hiddenStyle: {
+                opacity: 0
+            },
+            visibleStyle: {
+                opacity: 1
+            }
+        });
+
+        /*
+            Une action sur le bouton du menu doit également remettre à 0 les tags.
+            Ce qui signifie :
+            - vider le tableau des tags (mettre ses valeurs à false)
+            - mettre les boutons des tags en inactif
+         */
+
+        // Valeurs du tableau à false.
+        for (let tag in listeTagsProjets) {
+            listeTagsProjets[tag]=false;
+        }
+
+        // Tags en mode inactif
+        let tags = document.getElementsByClassName('boutonTag');
+        for (let i = 0; i < tags.length; i++) {
+            tags[i].classList.remove('boutonTagActif');
+            tags[i].classList.add('boutonTagInactif')
+        }
+        // Et on remet la vue utilisateur en haut de la page.
+        deplacerVueEnHaut(texte);
+    }
+</script>

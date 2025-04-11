@@ -1,0 +1,14 @@
+<div id="liste_articles">
+    <div id="newsletter" class="all medium isotope_single article_single article_single_#ID_SECTEUR">
+        <BOUCLE_article(ARTICLES){id_article}>
+        <h1 class="titre #EDIT{titre}">#TITRE</h1>
+        <span class="texte #EDIT{texte}">#TEXTE</span>
+        </BOUCLE_article>
+
+        <p>
+            #FORMULAIRE_NEWSLETTER_SUBSCRIBE{"infolettre"}
+            <br />
+        </p>
+    </div>
+    <div class="v-spacer"></div>
+</div>

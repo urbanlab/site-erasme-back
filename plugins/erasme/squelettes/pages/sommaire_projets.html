@@ -1,0 +1,78 @@
+<script>
+    const listeTagsProjets={<BOUCLE_mots_tags(MOTS){id_groupe=19}>"[(#TITRE|nettoyer_nom_classe)]":false,</BOUCLE_mots_tags>};
+    const blocCourant='projets';
+</script>
+
+<div id="pageSommaire">
+    <!--###################################### Accueil ##################################################-->
+
+    <!--
+        La section « Projets » de la page d'accueil se compose :
+        -> d'un en-tête
+        -> d'un bloc de boutons-filtres
+        -> d'un bloc affichant la liste des projets
+    -->
+
+    <!-- Le bloc d'en-tête. -->
+    <BOUCLE_entete_projet(RUBRIQUES){titre_mot=Projets}>
+    <div id="enTeteProjet">
+        <div id="contenuEnTeteProjet" style="[color: #(#LOGO_RUBRIQUE|couleur_extraire|couleur_extreme|couleur_inverser);] ">
+            <h2 class="#EDIT{titre}">#TITRE</h2>
+            <p class="texteEnTeteProjet #EDIT{texte} texte">[(#TEXTE|textebrut)]</p>
+        </div>
+        <a href="#URL_SITE_SPIP">
+            <button class="boutonRetour">
+                <svg width="9" height="15" viewBox="0 0 9 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8.49484 1.01685L1.37109 7.80815L8.49484 14.077" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <p>Retour</p>
+            </button>
+        </a>
+    </div>
+    </BOUCLE_entete_projet>
+
+    <!-- Le bloc des filtres. -->
+    <div id="blocTags" class="marges">
+        <BOUCLE_groupes_mots_politiques(GROUPES_MOTS){id_groupe=19}>
+        <h3 class="#EDIT{descriptif}">#DESCRIPTIF</h3>
+        </BOUCLE_groupes_mots_politiques>
+        <BOUCLE_tags(MOTS){id_groupe=19}>
+        <button
+                id="tag_[(#TITRE|nettoyer_nom_classe)]"
+                class="boutonTag boutonTagInactif"
+                onclick="toggleTag(this.id);modifierAffichageMiniBlocs();">
+            <div>
+                #TITRE
+                <div class="boutonTagEtat">
+                    <img src="#CHEMIN{img/cross_black.png}">
+                </div>
+            </div>
+        </button>
+        </BOUCLE_tags>
+    </div>
+
+    <!-- Le bloc d'affichage projets. -->
+    <div id="miniBlocProjets"
+         class="marges"
+    >
+        <BOUCLE_rubrique_parente_projets(RUBRIQUES){titre_mot=Projets}>
+        <BOUCLE_projets_exclus(RUBRIQUES){titre_mot=Archives}{doublons}>
+        [(#REM) Cette boucle sert à exclure les rubriques possédant le mot-clef « Archives ».]
+        [(#REM) Seule solution si on souhaite exclure des rubriques par mots-clef.]
+        </BOUCLE_projets_exclus>
+        <BOUCLE_rubriques_projets(RUBRIQUES){id_parent}{!par date}{tout}{doublons}>
+        <a href="#URL_RUBRIQUE" title="[(#TITRE)]">
+            <div
+                    class="lazy projet blocGrille <BOUCLE_mots_clefs_projets(MOTS){id_rubrique}>[(#TITRE|nettoyer_nom_classe)] </BOUCLE_mots_clefs_projets>"
+                    style="background-size: cover;"
+                    data-bg="[(#LOGO_RUBRIQUE|image_reduire{250, 250}|extraire_attribut{src}|url_absolue))]"
+            >
+                <div>
+                    <p class="titreMiniBlocProjet #EDIT{titre}">[(#TITRE|troncature_propre{35, '...'})]</p>
+                </div>
+            </div>
+        </a>
+        </BOUCLE_rubriques_projets>
+        </BOUCLE_rubrique_parente_projets>
+    </div>
+</div>

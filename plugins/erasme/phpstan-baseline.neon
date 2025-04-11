@@ -1,0 +1,46 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Function cextras_api_upgrade not found\\.$#"
+			count: 5
+			path: era_administrations.php
+
+		-
+			message: "#^Function include_spip not found\\.$#"
+			count: 3
+			path: era_administrations.php
+
+		-
+			message: "#^Function maj_plugin not found\\.$#"
+			count: 1
+			path: era_administrations.php
+
+		-
+			message: "#^Function spip_log not found\\.$#"
+			count: 1
+			path: era_administrations.php
+
+		-
+			message: "#^Function sql_getfetsel not found\\.$#"
+			count: 35
+			path: era_administrations.php
+
+		-
+			message: "#^Function sql_insertq not found\\.$#"
+			count: 30
+			path: era_administrations.php
+
+		-
+			message: "#^Function sql_updateq not found\\.$#"
+			count: 5
+			path: era_administrations.php
+
+		-
+			message: "#^Function include_spip not found\\.$#"
+			count: 1
+			path: era_fonctions.php
+
+		-
+			message: "#^Function restreindre_extras not found\\.$#"
+			count: 1
+			path: era_fonctions.php

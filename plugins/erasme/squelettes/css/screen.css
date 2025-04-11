@@ -1,0 +1,729 @@
+/***********************************************************************************************************************
+                                                        MÀJ V2
+***********************************************************************************************************************/
+/*
+    TABLE DES MATIÈRES :
+
+    - tronc commun
+      - Général
+      - Menu
+      - Footer
+    - accueil
+    - qui sommes nous
+    - page rubrique
+    - article/breve
+    - article projet
+    - page auteur
+    - filtres
+    - article prototype
+
+*/    
+
+
+
+/********** CORECTIF MARGE - A SUPPRIMER APRES ECLATEMENT ISOTOPE ***********/
+@media screen and (max-width: 1440px) {
+    .marges {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+    #BlocApproche ul {
+        margin-left: -100px;
+    }
+    #BlocHistoire img {
+        width: 91%;
+        height: auto;
+        margin-left: 0;
+    }
+
+    #nosServicesMobile {
+        width: 90%;
+        padding-left: 0;
+    }
+
+    .bloc_container.small .bloc {
+        height: 315px;
+    }
+
+    .bloc_container.large .bloc {
+        height: 645px;
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    .marges {
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+}
+
+
+@media screen and (max-width: 1600px) {
+    #BlocApproche ul,
+    #BlocHistoire .timeline {
+        /*overflow-y: scroll;*/
+    }
+
+    #sousBlocServiceGauche {
+        width: 26% !important;
+    }
+    #sousBlocServiceMilieu {
+        width: 47% !important;
+    }
+
+    #sousBlocServiceDroite {
+        width: 73% !important;
+        margin-top: 20px;
+        height: 390px;
+    }
+
+    .bloc_container {
+        flex-direction: row;
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    #nosServicesMobile {
+        padding-left: 6px;
+        display: flex;
+        flex-direction: column;
+    }
+    .bloc_container.small,
+    .bloc_container.large
+    {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .bloc_container.large a, 
+    .bloc_container.large .bloc.incubation
+    {
+        width: 100%;
+        margin: 0;
+    }
+
+    .bloc {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+}
+
+@media screen and (max-width: 1060px) {
+    
+    /* Page prototypes */
+    #developpement .line {
+        display: none;
+    }
+    /*#developpement .line.mobile {
+        display: block;
+    }
+    #developpement .timeline {
+        border-left: solid 2px;
+    }*/
+    #developpement .timeline ul {
+        flex-direction: column;
+        padding: 0;
+    }
+
+    #developpement .timeline .event .circle {
+        display: none;
+    }
+
+    #developpement .timeline .event .circle.mobile {
+        display: block;
+        margin: 0;
+        left: -18px;
+    }
+
+    #developpement .timeline .event .date {
+        margin: 10px 0 25px 0;
+    }
+
+    #methodos .card-container {
+        flex-direction: column;
+    }
+    #methodos .card {
+        width: 95%;
+        margin: 0 0px 25px;
+    }
+
+}
+
+@media screen and (max-width: 595px) {
+
+    /*Corriger des que possible*/
+    html {
+        overflow-x: hidden;
+    }
+    
+    #blocPremierNiveau {
+        width: 80% i !important;
+    }
+
+    h1 {
+        font-size: 36px;
+    }
+
+    .marges {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    /*Correction marges en mobile*/
+    #blocTags,
+    #miniBlocProjets,
+    #miniBlocPrototypes
+    {
+        padding-left: 2px;
+    }
+
+    #miniBlocEvenements
+    {
+        padding-left: 6px;
+    }
+
+    /*Menu*/
+
+    #logo_erasme_entete {
+        display: none;
+    }
+    
+    #logo_erasme_entete_mobile {
+        display: block;
+    }
+
+    #logo_erasme_entete_mobile img{
+        width: 60%;
+        margin: auto;
+        padding-top: 12px;
+        margin-left: 10%;
+    }
+
+
+
+
+    /*Footer*/
+
+    #footer_mobile {
+        display: flex;
+        height: auto;
+        flex-direction: column;
+    }
+
+    #formulaireRechercheEnTete {
+        display: none;
+    }
+
+    #footer {
+        display: none;
+    }
+
+    #footer_mobile .icon-metro {
+        width: initial;
+    }
+    /*ACCUEIL*/
+
+    .blocEvenementAccueil, .resultatBreve {
+        width: 95vw;
+    }
+
+    #BlocPresentation .texte{
+        width: max-content;
+        max-width: 95%;
+    }
+
+    #BlocApproche ul {
+        margin-left: 0;
+    }
+
+    #BlocHistoire img {
+        width: 280%;
+    }
+
+    .bloc_container.large .bloc {
+        height: 450px;
+    }
+
+    /*Section nos services*/
+    .bloc.incubation h2 {
+        font-size: 69px;
+        margin-left: 15px;
+    }
+
+    /* Newsletter */
+    .newsletter-subscription-form-container {
+        float: left;
+        height: initial;
+        padding: 15px 20px 25px;
+    }
+
+    #formulaire_inscription_infolettre input[type="submit"] {
+        text-align: center;
+        float: inherit !important;
+    }
+
+    #newsletter .boutons input {
+        font-size: 16px;
+    }
+
+    #newsletter {
+        height: 450px;
+    }
+
+    .v-spacer {
+        height: 0;
+    }
+
+    #session_email {
+        margin-bottom: 15px;
+        margin-left: 0;
+        width: 78%;
+    }
+
+    #pageSommaire .btn.actu {
+        display: none;
+    }
+
+    #sousBlocGauche, #sousBlocMilieu, #sousBlocMilieuBas, #sousBlocDroite {
+        float: left;
+        width: 100%;
+        margin-bottom: 20px;
+        height: auto;
+    }
+
+    #sousBlocMilieu {
+        padding: 0;
+    }
+
+    .newsletter-main-text {
+        font-size: 39px;
+    }
+
+    #formulaire_inscription_infolettre input[type="submit"] {
+        font-size: 13px;
+        float: left;
+    }
+
+    .projet, 
+    .articleDeCetAuteur, 
+    .prototype, 
+    .resultatArticle, 
+    .resultatRubrique {
+        width: 100%;
+    }
+
+    /*Qui sommes nous*/
+
+    #enTeteQuiSommesNous h2 {
+        top: 40px;
+        width: 59%;
+    }
+
+    #blocGaucheUrbanlab,
+    #bloCentralUrbanlabHaut,
+    #bloCentralUrbanlab,
+    #blocDroiteUrbanlab {
+        width: 100%;
+    }
+
+    #bloCentralUrbanlabBas,
+    #blocGaucheUrbanlab,
+    #blocDroiteUrbanlab
+    {
+        height: 325px;
+        margin-bottom: 20px;
+    }
+
+    #blocGaucheUrbanlab .surtitre {
+        font-size: 35px;
+    }
+
+    #blocTrombinoscope {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .trombine {
+        width: 100%;
+    }
+
+    .trombine .titreTrombine, 
+    .trombine .sousTitreTrombine {
+        opacity: 1;
+    }
+
+    .partnenaire-slider .slick-prev,
+    .partnenaire-slider .slick-next
+    {
+        display: none !important;
+    }
+
+
+    /* Contacter le lab */
+    #blocUrbanlabEtContact {
+        flex-direction: column;
+    }
+    #blocUrbanlabEtContact #sousBlocUrbanLab {
+        width: 93%;
+    }
+    #blocUrbanlabEtContact #sousBlocFormulaireContact {
+        width: 97%;
+        margin: 0;
+    }
+
+    .enTeteRubriqueProjet {
+        height: initial;
+        padding-bottom: 20px;
+    }
+
+    .bloc_article {
+        width: 100%;
+    }
+
+    /*Page Rubrique*/
+
+    #enTeteProjet, 
+    #enTetePrototype, 
+    #enTeteEvenement, 
+    #enTeteArticle, 
+    #enTeteTrombinoscope {
+        margin-bottom: 0;
+    }
+
+
+    .texteEnTeteProjet,
+    .texteEnTetePrototype,
+    .texteEnTeteActu,
+    .texteEnTeteRubriqueProjet
+    {
+        display: none;
+    }
+
+
+    /* Page sous Rubrique  */
+    #contenuEnTeteRubriqueProjet h2 {
+        margin: 15px 0 100px 3%;
+    }
+
+    .enTeteRubriqueProjet .boutonRetour {
+        top: 204px;
+    }
+
+    /* Page Article */
+
+    #page-article .article_single {
+        width: 89%;
+    }
+
+    #page-article #boutonMenuEnTete {
+        width: 80px;
+    }
+
+    #contenuEnTeteArticle {
+        padding: 55px 0 0 0px;
+    }
+    #contenuEnTeteArticle h2, #contenuEnTeteArticle p {
+        width: initial;
+        font-size: 25px;
+        line-height: 37px;
+    }
+
+    #enTeteArticle .boutonRetour {
+        top: 300px;
+    }
+
+    .article_single {
+        width: 100%;
+    }
+
+    .article_single h1 {
+        width: inherit;
+    }
+
+
+    .article_single .auteurs_article {
+        width: 100%;
+    }
+
+    #enTeteProjet, 
+    #enTetePrototype, 
+    #enTeteEvenement, 
+    #enTeteArticle, 
+    #enTeteTrombinoscope {
+        height: 300px;
+    }
+
+    /* Page Prototype */
+
+    /*Entête*/
+    .hero .hero-content {
+        margin: 50% 0 0 0;
+    }
+
+    .hero .hero-txt {
+        padding: 5px 15px 5px 10px;
+    }
+
+    .hero .hero-soustitre {
+        margin: 90px 0 0 10px;
+        width: 94%;
+    }
+
+    .padding {
+        padding: 15px 10% 50px 10%;
+    }
+
+    #page-article-projets .projet-marges {
+        width: 91vw;
+    }
+
+    #page-article-projets img :not(#footer_mobile img) {
+        float: inherit !important;
+        width: 100% !important;
+
+    }
+
+    /*Articles Liés*/
+    .blocArticlesLies{
+        flex-direction: column;
+    }
+
+    #desc_1 img,
+    #desc_2 img,
+    #desc_3 img,
+    #desc_4 img
+    {
+        width: 100%;
+    }
+
+    /*Section chiffre clés*/
+    #stats, #chiffres {
+        padding: 60px 0px 0px 0;
+    }
+
+    .chiffre-container {
+        flex-direction: column;
+    }
+    .chiffre-container .chiffre {
+        max-width: 80%;
+    }
+    .chiffre-container p {
+        margin: 10px 0 20px 0;
+    }
+
+    /* Section Slider */
+    .slider .slick-prev,
+    .slider .slick-next
+    {
+        display: none;
+    }
+
+    /*Affichage partenaires*/
+    #tree-partenaires .backgroundColor, 
+    #tree-entreprises .backgroundColor, 
+    #tree-utilisateurs .backgroundColor {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    #section-pictoFields .row .col-md-4 {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+
+    /* Page Auteur */
+    #blocEnTeteAuteur {
+        height: max-content;
+        padding-bottom: 15px;
+    }
+
+    #blocEnTeteAuteur #nomAuteur {
+        width: max-content;
+    }
+
+    #blocGaucheEnTeteAuteur {
+        width: 100%;
+        height: 250px;
+    }
+    #blocDroiteEnTeteAuteur {
+        display: block;
+    }
+    #contenuAuteur .boutonRetour {
+        display: none;
+    }
+
+    #blocEnTeteAuteur #nomAuteur {
+        position: absolute;
+    }
+
+    #blocEnTeteAuteur #reseauxSociauxAuteur {
+        margin: 15px 0 0 10px;
+    }
+
+    #blocEnTeteAuteur #infosAuteur {
+        width: 90%;
+    }
+
+    #auteur_contact {
+        left: 3vw;
+        width: 91%;
+        height: 66vh;
+        overflow: scroll;
+    }
+
+    #auteur_contact label {
+        display: block;
+    }
+
+    #auteur_contact textarea {
+        width: 70vw;
+    }
+
+    #auteur_contact .boutons {
+        justify-content: left;
+    }
+
+    #blocContenantArticles {
+        padding-top: 30px;
+    }
+
+
+    /* Filtres */
+    .boutonTag {
+        width: 100%;
+    }
+
+    .boutonTagEtat {
+        display: none;
+    }
+
+
+    /*article prototype*/
+
+    #prototypes #protoHeader .text {
+        left: 0;
+        width: auto;
+    }
+
+    #prototypes .subnav {
+        display: none;
+    }
+    #prototypes .padding {
+        padding: 15px 5% 50px 5%;
+    }
+
+    #prototypes #methodos .card-container {
+        flex-direction: column;
+    }
+    #prototypes #methodos .card {
+        width: 70%;
+        margin-bottom: 20px;
+    }
+
+    #prototypes .chiffre-container {
+        flex-direction: column;
+    }
+
+    #prototypes #descTech .col {
+        width: 100%;
+    }
+
+
+    /*article prototype section ecosystème */
+
+    #tree-title {
+        width:80%;
+        font-size:28px;
+        background:transparent;
+      }
+  
+      .tree, #tree-utilisateurs, #tree-partenaires, #tree-entreprises {
+        position: relative;
+        width: 80%;
+        height: auto;
+        top: 0;
+        left: 0;
+        z-index: 10;
+        margin: 0 auto;
+      }
+  
+      #tree-utilisateurs {
+        margin-top:50px;
+      }
+  
+      .tree ul {
+        margin:0;
+      }
+  
+      .tree ul li {
+        position:relative !important;
+        left:0 !important;
+        top:0 !important;
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 4px;
+        background: transparent;
+        text-align: center;
+        vertical-align: middle;
+        line-height: 20px;
+        padding: 8px 15px;
+        background:rgba(0,0,0,.05);
+        margin-bottom:2px
+      }
+      .tree ul li span {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 20px;
+        width: 100%;
+        overflow: hidden;
+        font-size: 16px;
+        color: rgb(50,50,50);
+      }
+  
+      .tree ul li.img {
+        border: none;
+        background: #FFF;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        height: 200px;
+      }
+  
+      .tree h3 {
+        position:relative;
+        top:0;
+        left:0;
+        margin:0;
+        width: 100%;
+        height: auto;
+        line-height: 20px;
+        border-radius: 4px;
+        color: #FFF;
+        padding:15px;
+        text-align: center;
+        font-family: 'Oswald';
+        margin:15px 0
+      }
+  
+      .project-tree {
+        position: relative;
+        padding: 100px 0 50px 0;
+      }
+
+}
+
+@media screen and (max-height: 450px) {
+    .overlay a {
+        font-size: 20px
+    }
+
+    .overlay .closebtn {
+        font-size: 40px;
+        top: 15px;
+        right: 35px;
+    }
+}

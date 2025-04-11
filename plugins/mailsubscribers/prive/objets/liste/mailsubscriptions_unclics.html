@@ -1,0 +1,35 @@
+[(#SET{defaut_tri,#ARRAY{
+	email,1,
+	nb,-1,
+}})]
+#SET{unclics_to_send,#ENV{id_mailsubscribinglist}|mailsubscribers_mailsubscriptions_unclics}
+#SET{unclics_to_send,#ENV{id_mailsubscribinglist}|mailsubscribers_filter_optins_to_send{#GET{unclics_to_send}}}
+<B_mailsubscriptions>
+#ANCRE_PAGINATION
+<div class="liste-objets mailsubscriptions_optins">
+<table class='spip liste'>
+	[<caption><strong class="caption">(#ENV*{titre,#GRAND_TOTAL|singulier_ou_pluriel{mailsubscriptions:info_1_mailsubscriptions_unclic,mailsubscriptions:info_nb_mailsubscriptions_unclics}})</strong></caption>]
+	<thead>
+		<tr class='first_row'>
+			<th class='email' scope='col'>[(#TRI{email,<:mailsubscriber:label_email:>,ajax})]</th>
+			<th class='liste' scope='col'>[(#TRI{nb,<:mailsubscriptions:nombre_envois:>,ajax})]</th>
+		</tr>
+	</thead>
+	<tbody>
+	<BOUCLE_mailsubscriptions(DATA)
+		{source tableau,#GET{unclics_to_send}}
+		{tri #ENV{par,email},#GET{defaut_tri}}
+		{pagination #ENV{nb,10}}
+	>
+		<tr class='[(#COMPTEUR_BOUCLE|alterner{row_odd,row_even})]'>
+			<td class='email principal'><a href="[(#ID_MAILSUBSCRIBER|generer_url_entite{mailsubscriber}|parametre_url{email,#EMAIL})]">#EMAIL</a></td>
+			<td class='liste secondaire'>#NB</td>
+		</tr>
+	</BOUCLE_mailsubscriptions>
+	</tbody>
+</table>
+[<nav class='pagination'>(#PAGINATION{prive})</nav>]
+</div>
+</B_mailsubscriptions>[
+<div class="liste-objets mailsubscriptions_optins caption-wrap"><strong class="caption">(#ENV*{sinon,''})</strong></div>
+]<//B_mailsubscriptions>

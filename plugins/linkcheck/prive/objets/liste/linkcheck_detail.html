@@ -1,0 +1,41 @@
+<BOUCLE_Link(LINKCHECKS){id_linkcheck}>
+<tr class="row-odd row-etat_#ETAT" id="linkcheck_#ID_LINKCHECK">
+	<td class="url principale">
+		[(#URL|linkcheck_en_url{#DISTANT}|inserer_attribut{target,_blank})]
+	</td>
+	<td class="redirection">[(#REDIRECTION|oui)
+		#SET{link,#REDIRECTION|linkcheck_en_url}
+		<a href="[(#GET{link}|extraire_attribut{href})]"[
+		   class="(#GET{link}|extraire_attribut{class})"][
+		   title="<:linkcheck:redirection|attribut_html:> (#GET{link}|textebrut|trim)"][
+		   rel="(#GET{link}|extraire_attribut{rel})"]>[(#CHEMIN_IMAGE{redirect-16.svg}|balise_img)]</a>]
+	</td>
+	<td class="code"><tt>#CODE</tt></td>
+	<td class="etat">
+		[(#VAL{linkcheck:etat_}|concat{#ETAT}|_T)] <br />
+		[(#ETAT|=={malade}|oui)
+			#SET{code,''}
+			[(#CODE|is_numeric|oui)(<:erreur:> #CODE)#SET{code,oui}]
+			[(#CODE|=={prepa}|oui)(<:texte_statut_propose_evaluation:>)#SET{code,oui}]
+			[(#CODE|=={prop}|oui)(<:texte_statut_en_cours_redaction:>)#SET{code,oui}]
+			[(#GET{code}|=={''}|oui)([(#CODE)])]
+		<br />]
+		[(#BOUTON_ACTION{<:linkcheck:bouton_tester_lien:>,#URL_ACTION_AUTEUR{linkcheck_test,#ID_LINKCHECK,#SELF|parametre_url{id_test,#ID_LINKCHECK}},btn_secondaire btn_mini ajax noscroll})]
+		[(#REDIRECTION|oui)[(#BOUTON_ACTION{<:linkcheck:bouton_modifier_lien:>,#URL_ACTION_AUTEUR{linkcheck_modifier,#ID_LINKCHECK,#SELF},btn_secondaire btn_mini ajax noscroll})]]
+	</td>
+	<td class="utilise">
+		<B_liens>
+		<a href='#' onclick="jQuery(this).next().show();$(this).hide();return false;">
+			[(#TOTAL_BOUCLE|singulier_ou_pluriel{medias:une_utilisation,medias:des_utilisations})]</a><div style='display: none;'>
+		<BOUCLE_liens(linkchecks_liens){id_linkcheck}{'<br />'}>
+		[(#OBJET|objet_icone{16})] [(#ID_OBJET|generer_objet_lien{#OBJET})]
+		</BOUCLE_liens>
+		</div>
+		</B_liens>
+	</td>
+	<td class='date secondaire'>
+		[(#MAJ|date_relative)]
+	</td>
+	<td class="id">#ID_LINKCHECK</td>
+</tr>
+</BOUCLE_Link>

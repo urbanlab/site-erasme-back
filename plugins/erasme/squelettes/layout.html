@@ -1,0 +1,42 @@
+<!doctype html>
+<head>
+	<meta name="author" content="Erasme, le laboratoire d'innovation ouverte de la Métropole de Lyon">
+	<meta charset="utf-8">
+	<meta name="description" content="<BOUCLE_descr(ARTICLES){id_article}>#SOUSTITRE</BOUCLE_descr>">
+	<meta name="title" content="Erasme - <BOUCLE_titre1(RUBRIQUES){id_rubrique}>#TITRE</BOUCLE_titre1><BOUCLE_titre2(ARTICLES){id_article}>#TITRE</BOUCLE_titre2>">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>ERASME - <BOUCLE_titre_rubrique(RUBRIQUES){id_rubrique}>#TITRE</BOUCLE_titre_rubrique><BOUCLE_titre_article(ARTICLES){id_article}>#TITRE</BOUCLE_titre_article></title>
+
+	#INSERT_HEAD
+	<link rel="stylesheet" type="text/css" href="#URL_PAGE{styles}">
+	[(#REM)<link rel="stylesheet" href="#CHEMIN{plugins/jquery.jtweet/jquery.jtweet.css}">]
+	<!-- Notre feuille css concernant uniquement la V2. (pour le contenu statique) -->
+	<link rel="stylesheet" type="text/css" href="[(#CHEMIN{css/erasmeV2-static.css})]">
+	<!--Feullle css dédiée à la gestion du responsive-->
+	<link rel="stylesheet" type="text/css" href="[(#CHEMIN{css/screen.css})]">
+	<!-- Slick slider -->
+	<link rel="stylesheet" type="text/css" href="[(#CHEMIN{css/slick-theme.css})]">
+	<link rel="stylesheet" type="text/css" href="[(#CHEMIN{css/slick.css})]">
+
+	<link rel="icon" href="[(#CHEMIN{img/erasme_favicon.ico})]" />
+
+	[(#REM)<script src="https://code.jquery.com/jquery-migrate-1.2.1.js"></script>]
+	[(#REM)<script src="#CHEMIN{plugins/jquery.isotope/jquery.isotope.min.js}"></script>]
+
+	<script src="#CHEMIN{js/lazyload.min.js}"></script>
+
+	<script src="[(#CHEMIN{js/slick.min.js})]"></script>
+
+	[(#REM)<script src="#CHEMIN{js/scripts.js}"></script>]
+	<!-- Notre code js concernant uniquement la V2. -->
+	<script src="[(#CHEMIN{js/scriptsV2-static.js})]"></script>
+
+	<noscript>#liste_articles {display:block}</noscript>
+</head>
+
+<body id="page-#ENV{page}">
+	<INCLURE{fond=noisettes/header,env} />
+	<INCLURE{fond=pages/#ENV{page},env} />
+	<INCLURE{fond=noisettes/footer} />
+</body>

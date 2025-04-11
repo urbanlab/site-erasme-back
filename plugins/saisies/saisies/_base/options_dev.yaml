@@ -1,0 +1,40 @@
+-
+  saisie: 'input'
+  options:
+    nom: 'inserer_debut'
+    label: '<:saisies:option_inserer_debut_label:>'
+-
+  saisie: 'input'
+  options:
+    nom: 'inserer_fin'
+    label: '<:saisies:option_inserer_fin_label:>'
+-
+  saisie: 'input'
+  options:
+    nom: 'id'
+    label: '<:saisies:option_id_label:>'
+    explication: '<:saisies:option_id_explication:>'
+-
+  saisie: 'input'
+  options:
+    nom: 'attributs'
+    label: '<:saisies:option_attributs_label:>'
+    explication: '<:saisies:option_attributs_explication:>'
+-
+  saisie: 'input'
+  options:
+    nom: 'attributs_data'
+    label: '<:saisies:option_attributs_data_label:>'
+    explication: '<:saisies:option_attributs_data_explication:>'
+-
+  saisie: 'input'
+  options:
+    nom: 'label_class'
+    label: '<:saisies:option_label_class_label:>'
+    size: 50
+-
+  saisie: 'input'
+  options:
+    nom: 'env'
+    label: '<:saisies:option_env_label:>'
+    explication: '<:saisies:option_env_explication:>'

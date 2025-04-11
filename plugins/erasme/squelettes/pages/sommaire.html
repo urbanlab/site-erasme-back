@@ -1,0 +1,33 @@
+<script>
+	/*
+	Il est nécessaire de faire quelques redirections car certaines personnes utilisent encore les anciennes urls.
+	Réfléchir à supprimer dans deux ans (vers juin 2023) ?
+	 */
+	const urlCourante = document.URL;
+	const urlMorceaux = urlCourante.split('#');
+	let ancre = '';
+	if (urlMorceaux.length > 1) {
+		ancre = urlMorceaux[urlMorceaux.length - 1];
+	}
+
+	let urlOuRediriger='';
+	switch (ancre) {
+		case "projets":
+			urlOuRediriger = "<BOUCLE_sommaire_projets(RUBRIQUES){titre_mot=presentation-sommaire-projets}>#URL_RUBRIQUE</BOUCLE_sommaire_projets>";
+			break;
+		case "prototypes":
+			urlOuRediriger = "<BOUCLE_sommaire_prototypes(RUBRIQUES){titre_mot=presentation-sommaire-prototypes}>#URL_RUBRIQUE</BOUCLE_sommaire_prototypes>";
+			break;
+		case "evenements":
+			urlOuRediriger = "<BOUCLE_sommaire_evenements(RUBRIQUES){titre_mot=presentation-sommaire-actualites}>#URL_RUBRIQUE</BOUCLE_sommaire_evenements>";
+			break;
+		case "quisommesnous":
+			urlOuRediriger = "<BOUCLE_sommaire_quisommesnous(RUBRIQUES){titre_mot=presentation-sommaire-qui-sommes-nous}>#URL_RUBRIQUE</BOUCLE_sommaire_quisommesnous>";
+			break;
+		default:
+			urlOuRediriger = "<BOUCLE_sommaire_accueil(RUBRIQUES){titre_mot=presentation-sommaire-accueil}>#URL_RUBRIQUE</BOUCLE_sommaire_accueil>";
+			break;
+	}
+	urlOuRediriger = urlOuRediriger.replaceAll('&amp;', '&');
+	window.location.href = urlOuRediriger;
+</script>
