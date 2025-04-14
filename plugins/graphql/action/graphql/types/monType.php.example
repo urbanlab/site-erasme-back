@@ -1,0 +1,27 @@
+<?php
+
+if (!defined('_ECRIRE_INC_VERSION')) {
+    return;
+}
+
+use GraphQL\Type\Definition\Type;
+
+// https://webonyx.github.io/graphql-php/type-definitions/object-types/#configuration-options
+return [
+    // Description du type
+    'description' => 'Un type pour faire un test',
+
+    // Champs du type
+    'fields' => [
+        'champ1' => Type::string(),
+        'champ2' => Type::string()
+    ],
+
+    // Interfaces du type
+    // 'interfaces' => [],
+
+    // Fonction de résolution du type
+    // 'resolveField' => function ($rootValue, array $args, array $context, ResolveInfo $info) {
+    //     return 'Salut ' . $args['texte'] . ' !';
+    // }
+];

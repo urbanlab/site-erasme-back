@@ -1,0 +1,28 @@
+<paquet
+	prefix="graphql"
+	categorie="outil"
+	version="1.0.1"
+	etat="test"
+	compatibilite="[4.0.0;4.*.*]"
+	logo="prive/themes/spip/images/graphql-64.png"
+	documentation="https://git.spip.net/spip-contrib-extensions/graphql"
+	schema="1.0.0"
+>
+	<nom>Endpoint graphQL</nom>
+
+	<auteur mail="paidge_cs@hotmail.com">Pierre-jean CHANCELLIER</auteur>
+
+	<licence>GNU/GPL v3</licence>
+
+	<necessite nom="saisies" compatibilite="[4.7.1;]" />
+	<necessite nom="yaml" compatibilite="[3.0.0;]" />
+
+    <menu nom="graphql" titre="graphql:titre_page_configurer_graphql" icone="images/graphql-16.png" parent="menu_publication" action="graphiql" />
+
+	<onglet nom="graphql_ide" titre="graphql:titre_graphiql" icone="" parent="graphql" action="graphiql" />
+	<onglet nom="graphql_configurer" titre="graphql:titre_graphql_configurer" icone="" parent="graphql" action="configurer_graphql" />
+	<onglet nom="graphql_expositions" titre="graphql:titre_graphql_expositions" icone="" parent="graphql" action="graphql_expositions" />
+
+	<pipeline nom="header_prive" inclure="graphql_pipelines.php" />
+	<pipeline nom="autoriser" inclure="graphql_autorisations.php" />
+</paquet>

@@ -1,0 +1,42 @@
+[(#AUTORISER{graphql}|sinon_interdire_acces)]
+[(#VAL{graphql}|barre_onglets{graphql_ide})]
+<div id="graphiql">Loading...</div>
+<script
+      src="https://unpkg.com/graphiql/graphiql.min.js"
+      crossorigin="anonymous"
+    ></script>
+	<script
+      src="https://unpkg.com/@graphiql/plugin-explorer@0.1.12/dist/graphiql-plugin-explorer.umd.js"
+      crossorigin="anonymous"
+    ></script>
+
+<script>
+      var fetcher = GraphiQL.createFetcher({
+        url: "/spip.php?action=graphql",
+      });
+
+      function GraphiQLWithExplorer() {
+        var [query, setQuery] = React.useState(
+          'query articles {\n  articles {\n    pagination {\n      current\n      total\n    }\n    result {\n      id\n      titre\n    }\n  }\n}',
+        );
+        var explorerPlugin = GraphiQLPluginExplorer.useExplorerPlugin({
+          query: query,
+          onEdit: setQuery,
+        });
+        return React.createElement(GraphiQL, {
+          fetcher: fetcher,
+          defaultEditorToolsVisibility: true,
+          plugins: [explorerPlugin],
+          query: query,
+          onEditQuery: setQuery,
+        });
+      }
+
+      ReactDOM.render(
+        React.createElement(GraphiQLWithExplorer),
+        document.getElementById('graphiql'),
+      );
+
+	  console.log($('.graphiql-explorer-root'))
+	  $('.graphiql-explorer-root > div').css('overflow','auto')
+    </script>

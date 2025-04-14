@@ -1,0 +1,83 @@
+<script type="text/javascript">
+  // Blocs dépliables
+  $(function () {
+    $(".formulaire_configurer_collections .deplier_collection").on(
+      "click",
+      function (e) {
+        e.preventDefault()
+        const collection = $(this).data("collection")
+        const isOpen = $(".config_" + collection + ".ouvert")[0] ? true : false
+
+        $(".formulaire_configurer_collections .ouvert").removeClass("ouvert")
+
+        if (!isOpen) {
+          $(".config_" + collection).addClass("ouvert")
+        }
+      }
+    )
+  })
+
+  function generateUUID() {
+    var d = new Date().getTime()
+
+    if (window.performance && typeof window.performance.now === "function") {
+      d += performance.now()
+    }
+
+    var uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+      /[xy]/g,
+      function (c) {
+        var r = (d + Math.random() * 16) % 16 | 0
+        d = Math.floor(d / 16)
+        return (c == "x" ? r : (r & 0x3) | 0x8).toString(16)
+      }
+    )
+
+    return uuid
+  }
+
+  function apiKeyAction(e, action) {
+    var jetonField = document.getElementById("champ_jeton")
+    var tooltip = $(e.target).children("span.tooltiptext")[0]
+
+    switch (action) {
+      case "copy":
+        jetonField.select()
+        jetonField.setSelectionRange(0, 99999) // For mobile devices
+
+        if (window.isSecureContext && navigator.clipboard) {
+          navigator.clipboard.writeText(content)
+        } else {
+          document.execCommand("copy")
+        }
+        $(tooltip).text("<?=_T('graphql:copied') ?>")
+        break
+      case "generate":
+        var text = generateUUID()
+        $(jetonField).val(text)
+        $(tooltip).text("<?=_T('graphql:generated') ?>")
+        break
+    }
+  }
+
+  function outapiKeyAction(e, action) {
+    var tooltip = $(e.target).children("span.tooltiptext")[0]
+
+    switch (action) {
+      case "copy":
+        $(tooltip).text("<?=_T('graphql:copier') ?>")
+        break
+      case "generate":
+        $(tooltip).text("<?=_T('graphql:generate') ?>")
+        break
+    }
+  }
+
+  function selectAllFields(e) {
+    e.preventDefault()
+    $(e.target)
+      .parentsUntil("fieldset")
+      .find("select option")
+      .prop("selected", true)
+  }
+</script>

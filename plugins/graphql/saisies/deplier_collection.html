@@ -1,0 +1,8 @@
+<div style="display: flex; justify-content: flex-start; align-items: center; gap: 2rem;">
+	[<button class="deplier_collection" data-collection="#ENV{collection}">
+		<:graphql:collection:>&nbsp;(#ENV{collection}|majuscules)
+	</button>]
+	<div [class="(#ENV{estActif}|=={oui}|?{actif, inactif})"]>
+		[(#ENV{estActif}|=={oui}|?{<:graphql:actif_oui:>, <:graphql:actif_non:>})]
+	</div>
+</div>

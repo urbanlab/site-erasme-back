@@ -1,0 +1,178 @@
+[(#REM)
+
+	Ce squelette definit les styles de l'espace prive
+
+	Note: l'entete "Vary:" sert a repousser l'entete par
+	defaut "Vary: Cookie,Accept-Encoding", qui est (un peu)
+	genant en cas de "rotation du cookie de session" apres
+	un changement d'IP (effet de clignotement).
+
+	ATTENTION: il faut absolument le charset sinon Firefox croit que
+	c'est du text/html !
+	<style>
+]
+#CACHE{3600*100,cache-client}
+#HTTP_HEADER{Content-Type: text/css; charset=iso-8859-15}
+#HTTP_HEADER{Vary: Accept-Encoding}
+
+
+#graphiql {
+	min-height: 450px;
+    height: 70vh;
+}
+
+#graphiql .graphiql-doc-explorer-argument,
+#graphiql .graphiql-doc-explorer-item {
+	background: var(--spip-color-theme-lightest);
+	padding: 0.5rem 1rem;
+	margin-top: 5px;
+	border-radius: 7px;
+}
+
+.graphiql-markdown-description {
+	font-style: italic;
+	color: hsla(var(--spip-color-theme-light--hsl),1);
+}
+
+/* Containers */
+#graphiql .graphiql-container {
+	--color-primary: var(--spip-color-theme-dark--hsl);
+	--editor-background: hsla(var(--spip-color-theme-light--hsl),var(--alpha-background-light));
+}
+
+#graphiql .graphiql-container .graphiql-sessions {
+	--color-neutral: var(--spip-color-theme-darker--hsl);
+}
+
+/* Boutons */
+#graphiql .graphiql-tab.graphiql-tab-active {
+	background-color: unset;
+}
+
+#graphiql button.graphiql-tab-button {
+	padding: var(--px-4) var(--px-8);
+}
+
+#graphiql button.graphiql-un-styled {
+	background-color: var(--spip-color-gray-lighter);
+	color: var(--spip-color-theme-dark);
+}
+
+#graphiql button.graphiql-un-styled.active {
+	background-color: var(--spip-color-theme-dark);
+	color: var(--spip-color-white);
+}
+
+/* svg icons */
+#graphiql button.graphiql-tab-add > svg,
+#graphiql .graphiql-container .graphiql-chevron-icon,
+#graphiql .graphiql-toolbar-icon {
+	--color-neutral: var(--spip-color-theme-dark--hsl);
+}
+
+/* Editeur de texte */
+#graphiql .cm-s-graphiql .cm-punctuation {
+	  --color-neutral: var(--spip-color-theme--80);
+}
+
+#graphiql .cm-s-graphiql .CodeMirror-linenumber {
+	--color-neutral: var(--spip-color-theme--70);
+}
+
+.loading * {
+	pointer-events: none;
+	user-select: none;
+}
+
+.api_key_buttons > .btn > svg {
+	pointer-events: none;
+	fill: white;
+	width: 20px;
+}
+
+.tooltip {
+	position: relative;
+}
+
+.tooltip .tooltiptext {
+	visibility: hidden;
+	width: 140px;
+	background-color: #555;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px;
+	position: absolute;
+	z-index: 10;
+	bottom: 150%;
+	left: 50%;
+	margin-left: -75px;
+	opacity: 0;
+	transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+	content: "";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	margin-left: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+	visibility: visible;
+	opacity: 1;
+}
+
+.formulaire_spip div.choix.choix_actif {
+	border: 0;
+	padding: 0 0 0 var(--spip-form-input-padding-x);
+}
+
+/* Boîtes dépliables */
+.formulaire_configurer_collections .avec_sous_saisies {
+	display: grid;
+	grid-template-rows: 0fr;
+	transition: grid-template-rows .2s linear;
+	border: none;
+	margin: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+.formulaire_configurer_collections .avec_sous_saisies.ouvert {
+	grid-template-rows: 1fr;
+}
+
+.formulaire_configurer_collections .avec_sous_saisies > .editer-groupe {
+	overflow: hidden;
+}
+
+/* Statut des collections exposées */
+.formulaire_configurer_collections .actif,
+.formulaire_configurer_collections .inactif {
+	display: flex;
+	align-items: center;
+	gap: .25rem;
+}
+
+.formulaire_configurer_collections .inactif::before,
+.formulaire_configurer_collections .actif::before {
+	content: '';
+	border: 1px solid grey;
+	border-radius: 50%;
+	width: 1rem;
+	height: 1rem;
+	display: inline-block;
+}
+
+.formulaire_configurer_collections .actif::before {
+	background-color: green;
+}
+
+.formulaire_configurer_collections .inactif::before {
+	background-color: red;
+}

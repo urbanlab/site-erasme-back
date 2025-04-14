@@ -1,0 +1,32 @@
+<?php
+
+if (!defined('_ECRIRE_INC_VERSION')) {
+    return;
+}
+
+use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\NonNull;
+use GraphQL\Type\Definition\ResolveInfo;
+
+// https://webonyx.github.io/graphql-php/type-definitions/object-types/#field-configuration-options
+return [
+    // Type de retour de la requête
+    'type' => $this->get('monType'),
+    // Description de la requête
+    'description' => 'Une requête pour faire un test',
+    // Arguments de la requête
+    'args' => [
+        'texte' => [
+            'type' => new NonNull(Type::string()),
+            'description' => 'Un paramètre de  texte',
+            'defaultValue' => 'tout le monde'
+        ]
+    ],
+    // Fonction de résolution de la requête
+    'resolve' => function ($rootValue, array $args, array $context, ResolveInfo $info) {
+        return [
+            'champ1' => "Salut",
+            'champ2' => $args['texte']
+        ];
+    }
+];
