@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/mailshot?lang_cible=pt_br
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// B
 	'bouton_acquiter_alerte' => 'Reativar os envios',
@@ -132,5 +128,5 @@ Verifique o seu serviço de envio antes de reativar os envios.',
 	'titre_mailshot' => 'Envios em massa',
 	'titre_mailshots' => 'Emvios em massa',
 	'titre_menu_mailshots' => 'Acompanhamento dos envios em massa',
-	'titre_page_configurer_mailshot' => 'MailShot'
-);
+	'titre_page_configurer_mailshot' => 'MailShot',
+];

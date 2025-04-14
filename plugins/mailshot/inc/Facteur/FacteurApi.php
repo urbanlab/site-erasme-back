@@ -73,6 +73,8 @@ class FacteurApi extends FacteurMail {
 	protected $checkSentRecheckDelay = 300;
 	protected $checkSentMaxTry = 5;
 
+	protected $mailer = '';
+
 	protected $recipients = [
 		'to' => [/*['email' => '','name' => '']*/],
 		'cc' => [/*['email' => '','name' => '']*/],
@@ -245,8 +247,8 @@ class FacteurApi extends FacteurMail {
 
 	/**
 	 * Verifier si il faut envoyer le mail d'alerte
-	 * @param mixed $res
-	 * @return mixed
+	 * @param bool|array $res
+	 * @return bool|array
 	 */
 	protected function sendAlertIfNeeded($res) {
 		$this->log("sendAlertIfNeeded " . json_encode($res), _LOG_DEBUG);

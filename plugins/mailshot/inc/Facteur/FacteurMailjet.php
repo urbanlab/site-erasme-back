@@ -342,7 +342,7 @@ class FacteurMailjet extends FacteurApi {
 
 
 	/**
-	 * @return bool
+	 * @return bool|array
 	 * @throws \Exception
 	 */
 	public function Send(){

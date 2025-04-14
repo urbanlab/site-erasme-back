@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/newsletter?lang_cible=ja
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// B
 	'bouton_envoyer' => 'Envoyer !', # MODIF
@@ -22,5 +18,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// L
 	'label_email_test' => 'à l’adresse email', # MODIF
-	'label_liste' => 'aux abonnés de ' # MODIF
-);
+	'label_liste' => 'aux abonnés de ', # MODIF
+];

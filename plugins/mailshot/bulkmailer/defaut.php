@@ -51,7 +51,7 @@ function &bulkmailer_defaut_dist($to_send,$options=array()){
 		);
 
 		// envoyeur
-		if ($config['adresse_envoi']=='oui'){
+		if (($config['adresse_envoi'] ?? '') === 'oui'){
 			$defaut['adresse_envoi_nom'] = $config['adresse_envoi_nom'];
 			$defaut['adresse_envoi_email'] = $config['adresse_envoi_email'];
 		}

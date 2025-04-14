@@ -56,7 +56,7 @@ class FacteurBulkSparkpost extends FacteurApi {
 	/**
 	 * utilise $this->send_options options d'envoi
 	 *     string tracking_id
-	 * @return bool
+	 * @return bool|array
 	 */
 	public function Send(){
 

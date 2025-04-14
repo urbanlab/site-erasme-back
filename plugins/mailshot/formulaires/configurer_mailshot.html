@@ -68,7 +68,7 @@
 						[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)checked="checked"] />
 						<label for="#GET{name}_#GET{val}">[(#GET{fl}|concat{':label_',#GET{name},'_',#GET{val}}|_T)]</label>
 					</div>
-					<p class="explication"><:mailshot:explication_check_fail_ratio{ratio=#ENV{_fail_ratio}}:></p>
+					<p class="explication"><:mailshot:explication_check_fail_ratio{ratio=#ENV{_fail_ratio,''}}:></p>
 				</div>
 
 			</div>

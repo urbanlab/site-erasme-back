@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/mailshot?lang_cible=en
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// B
 	'bouton_acquiter_alerte' => 'Restart sendings', # RELIRE
@@ -128,5 +124,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_mailshot' => 'Bulk mailing',
 	'titre_mailshots' => 'Bulk mailings',
 	'titre_menu_mailshots' => 'Bulk mailings status', # RELIRE
-	'titre_page_configurer_mailshot' => 'Mailshot'
-);
+	'titre_page_configurer_mailshot' => 'Mailshot',
+];

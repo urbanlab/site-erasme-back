@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/mailshot?lang_cible=ja
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// C
 	'cfg_exemple' => '例',
@@ -117,5 +113,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_mailshot' => '多数で送信',
 	'titre_mailshots' => '多数で送信',
 	'titre_menu_mailshots' => 'メールは多数で送信されたことを検査する',
-	'titre_page_configurer_mailshot' => 'MailShot'
-);
+	'titre_page_configurer_mailshot' => 'MailShot',
+];

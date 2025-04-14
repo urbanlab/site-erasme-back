@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/mailshot?lang_cible=es
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// B
 	'bouton_acquiter_alerte' => 'Reactivar los envíos',
@@ -128,5 +124,5 @@ Esto puede representar un gran volumen de datos si realiza muchos envíos y es r
 	'titre_mailshot' => 'Envío masivo',
 	'titre_mailshots' => 'Envíos masivos',
 	'titre_menu_mailshots' => 'Seguimiento de envíos masivos',
-	'titre_page_configurer_mailshot' => 'Configurar MailShot'
-);
+	'titre_page_configurer_mailshot' => 'Configurar MailShot',
+];

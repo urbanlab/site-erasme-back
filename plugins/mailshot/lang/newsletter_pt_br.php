@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/newsletter?lang_cible=pt_br
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// B
 	'bouton_envoyer' => 'Enviar!',
@@ -24,5 +20,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_date_start' => 'Planejar o envio',
 	'label_email_test' => 'para o endereço de e-mail',
 	'label_liste' => 'para os assinantes de',
-	'label_resend_oui' => 'Reenviar para os destinatários que já receberam'
-);
+	'label_resend_oui' => 'Reenviar para os destinatários que já receberam',
+];

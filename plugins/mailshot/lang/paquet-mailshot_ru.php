@@ -3,13 +3,9 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/paquet-mailshot?lang_cible=ru
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// M
 	'mailshot_description' => 'Массовая отправка емейлов',
-	'mailshot_slogan' => 'Массовая отправка емейлов'
-);
+	'mailshot_slogan' => 'Массовая отправка емейлов',
+];

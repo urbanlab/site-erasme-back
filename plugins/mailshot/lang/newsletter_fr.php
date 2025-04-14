@@ -1,11 +1,8 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
 // Fichier source, a modifier dans https://git.spip.net/spip-contrib-extensions/mailshot.git
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
 
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// B
 	'bouton_envoyer' => 'Envoyer !',
@@ -22,5 +19,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_date_start' => 'Planifier l’envoi',
 	'label_email_test' => 'à l’adresse email',
 	'label_liste' => 'aux abonnés de ',
-	'label_resend_oui' => 'Envoyer à nouveau aux destinataires qui l’ont déjà reçue'
-);
+	'label_resend_oui' => 'Envoyer à nouveau aux destinataires qui l’ont déjà reçue',
+];

@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/mailshot?lang_cible=de
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// B
 	'bouton_acquiter_alerte' => 'Versand reaktivieren',
@@ -127,5 +123,5 @@ Dies führt bei zahlreichem Versenden zu einer großen Datenmenge, weshalb es ra
 	'titre_mailshot' => 'Mailing',
 	'titre_mailshots' => 'Mailings',
 	'titre_menu_mailshots' => 'Mailing-Verwaltung',
-	'titre_page_configurer_mailshot' => 'MailShot'
-);
+	'titre_page_configurer_mailshot' => 'MailShot',
+];

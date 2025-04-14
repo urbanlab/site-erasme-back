@@ -57,7 +57,7 @@ function newsletter_send_dist($destinataire,$corps,$options=array()){
 	// refuser si pas de reglage specifique d'envoi mailshot et que facteur est configure pour utiliser mail()
 	if ($config['mailer']=='defaut' AND lire_config("facteur_smtp")=='non'){
 		$url_config = generer_url_ecrire("configurer_mailshot");
-		spip_log("mailer non configure pour l'envoi de $corps a ".$destinataire['email'],'mailshot_send'._LOG_ERREUR);
+		spip_log("mailer non configure pour l'envoi à ".$destinataire['email']." du mail « ".substr(print_r($corps, true), 0, 500)." »",'mailshot_send'._LOG_ERREUR);
 		return _T('mailshot:erreur_aucun_service_configure',array('url'=>$url_config));
 	}
 
@@ -107,13 +107,11 @@ function newsletter_send_dist($destinataire,$corps,$options=array()){
 		$corps_cont['sujet'] = "["._T('newsletter:info_test_sujet')."] " . $corps_cont['sujet'];
 
 	// TODO : ajouter le tracking (1 image tracker + clic tracking sur les liens)
-
-
-
+	
 	// ---- Envoi proprement dit
-	if (!function_exists('nettoyer_titre_email'))
-		$envoyer_mail = charger_fonction('envoyer_mail','inc'); // pour nettoyer_titre_email()
-
+	if (!function_exists('nettoyer_titre_email')) {
+		include_spip('inc/envoyer_mail');    // pour nettoyer_titre_email()
+	}
 	$sujet = nettoyer_titre_email($corps_cont['sujet']);
 	$sujet = filtrer_entites($sujet);
 	$sujet = str_replace('&amp;','&', $sujet);

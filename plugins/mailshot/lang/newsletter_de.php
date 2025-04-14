@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/newsletter?lang_cible=de
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// B
 	'bouton_envoyer' => 'Senden !',
@@ -24,5 +20,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_date_start' => 'Geplanter Versand',
 	'label_email_test' => 'Mailadresse',
 	'label_liste' => 'an die Abonnenten von ',
-	'label_resend_oui' => 'Erneut an Empfänger versenden, die ihn bereits erhalten haben'
-);
+	'label_resend_oui' => 'Erneut an Empfänger versenden, die ihn bereits erhalten haben',
+];

@@ -3,13 +3,9 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/paquet-mailshot?lang_cible=nl
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// M
 	'mailshot_description' => 'Stuur een groot aantal e-mail',
-	'mailshot_slogan' => 'Stuur een groot aantal e-mails'
-);
+	'mailshot_slogan' => 'Stuur een groot aantal e-mails',
+];

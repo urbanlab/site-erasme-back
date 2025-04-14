@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/newsletter?lang_cible=eu
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// B
 	'bouton_envoyer' => '送信する',
@@ -25,5 +21,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_email_test' => 'メールアドレスに',
 	'label_liste' => 'の購読者に',
 	'label_resend_oui' => 'Envoyer à nouveau aux destinataires qui l’ont déjà reçue
-すでに受信している購読者に再送信する'
-);
+すでに受信している購読者に再送信する',
+];

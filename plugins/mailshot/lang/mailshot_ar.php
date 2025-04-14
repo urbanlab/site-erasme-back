@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/mailshot?lang_cible=ar
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// C
 	'cfg_exemple' => 'مثال',
@@ -116,5 +112,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_mailshot' => 'إرسال بالجملة',
 	'titre_mailshots' => 'إرسالات بالجملة',
 	'titre_menu_mailshots' => 'متابعة إرسال البريد بالجملة',
-	'titre_page_configurer_mailshot' => 'البريد الدعائي'
-);
+	'titre_page_configurer_mailshot' => 'البريد الدعائي',
+];

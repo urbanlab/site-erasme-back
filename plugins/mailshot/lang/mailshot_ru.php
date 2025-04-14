@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/mailshot?lang_cible=ru
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// C
 	'cfg_exemple' => 'Пример',
@@ -116,5 +112,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_mailshot' => 'Масовая рассылка',
 	'titre_mailshots' => 'Массовые рассылки',
 	'titre_menu_mailshots' => 'Настройка рассылки',
-	'titre_page_configurer_mailshot' => 'Mailshot'
-);
+	'titre_page_configurer_mailshot' => 'Mailshot',
+];

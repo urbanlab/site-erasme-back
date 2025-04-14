@@ -1,11 +1,8 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
 // Fichier source, a modifier dans https://git.spip.net/spip-contrib-extensions/mailshot.git
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
 
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// B
 	'bouton_acquiter_alerte' => 'Réactiver les envois',
@@ -126,5 +123,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_mailshot' => 'Envoi en nombre',
 	'titre_mailshots' => 'Envois en nombre',
 	'titre_menu_mailshots' => 'Suivi des envois de mails en nombre',
-	'titre_page_configurer_mailshot' => 'MailShot'
-);
+	'titre_page_configurer_mailshot' => 'MailShot',
+];
