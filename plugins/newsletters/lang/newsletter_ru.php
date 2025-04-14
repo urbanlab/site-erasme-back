@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/newsletter-newsletters?lang_cible=ru
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// A
 	'ajouter_lien_newsletter' => 'Добавить рассылку',
@@ -74,5 +70,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_logo_newsletter' => 'Лого рассылки',
 	'titre_newsletter' => 'Рассылка',
 	'titre_newsletters' => 'Рассылки',
-	'titre_newsletters_rubrique' => 'Рассылка раздела'
-);
+	'titre_newsletters_rubrique' => 'Рассылка раздела',
+];

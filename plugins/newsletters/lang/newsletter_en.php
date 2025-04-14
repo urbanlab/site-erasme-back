@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/newsletter-newsletters?lang_cible=en
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// A
 	'ajouter_lien_newsletter' => 'Add this newsletter',
@@ -77,5 +73,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_newsletters_prepa' => 'Newsletters pending',
 	'titre_newsletters_publie' => 'Newsletters published',
 	'titre_newsletters_refuse' => 'Newsletters rejected',
-	'titre_newsletters_rubrique' => 'Newsletters of the section'
-);
+	'titre_newsletters_rubrique' => 'Newsletters of the section',
+];

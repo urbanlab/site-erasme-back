@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/newsletter-newsletters?lang_cible=es
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// A
 	'ajouter_lien_newsletter' => 'Añadir este boletín',
@@ -77,5 +73,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_newsletters_prepa' => 'Boletines en preparación',
 	'titre_newsletters_publie' => 'Boletines publicados',
 	'titre_newsletters_refuse' => 'Boletines rechazados',
-	'titre_newsletters_rubrique' => 'Boletines de la sección'
-);
+	'titre_newsletters_rubrique' => 'Boletines de la sección',
+];

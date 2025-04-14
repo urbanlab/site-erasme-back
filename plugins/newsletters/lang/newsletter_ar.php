@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/newsletter-newsletters?lang_cible=ar
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// A
 	'ajouter_lien_newsletter' => 'إضافة هذه النشرة', # RELIRE
@@ -74,5 +70,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_logo_newsletter' => 'رمز هذه النشرة', # RELIRE
 	'titre_newsletter' => 'نشرة بريدية', # RELIRE
 	'titre_newsletters' => 'نشرات بريدية', # RELIRE
-	'titre_newsletters_rubrique' => 'نشرات القسم' # RELIRE
-);
+	'titre_newsletters_rubrique' => 'نشرات القسم', # RELIRE
+];

@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/when?lang_cible=de
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// I
 	'info_1_fois' => 'Einmal',
@@ -52,5 +48,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_freq_YEARLY_nb' => 'Alle @nb@ Jahre',
 	'info_nb_fois' => '@nb@ Mal',
 	'info_until_date' => 'bis zum @date@',
-	'info_wkst_day' => 'Woche beginnt am @day@'
-);
+	'info_wkst_day' => 'Woche beginnt am @day@',
+];

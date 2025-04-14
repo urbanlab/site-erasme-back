@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/newsletters?lang_cible=nl
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// C
 	'cfg_exemple' => 'Voorbeeld',
@@ -18,5 +14,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'newsletters_titre' => 'Nieuwsbrieven',
 
 	// T
-	'titre_page_configurer_newsletters' => 'Configureren van Nieuwsbrieven'
-);
+	'titre_page_configurer_newsletters' => 'Configureren van Nieuwsbrieven',
+];

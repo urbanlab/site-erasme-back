@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/newsletter-newsletters?lang_cible=eu
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// A
 	'ajouter_lien_newsletter' => 'Berripapera hau gehitu',
@@ -66,5 +62,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_logo_newsletter' => 'Berripaper honen logoa',
 	'titre_newsletter' => 'Berripapera',
 	'titre_newsletters' => 'Berripaperak',
-	'titre_newsletters_rubrique' => 'Atalaren berripaperak'
-);
+	'titre_newsletters_rubrique' => 'Atalaren berripaperak',
+];

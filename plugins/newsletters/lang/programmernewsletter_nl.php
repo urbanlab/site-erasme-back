@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/programmernewsletter?lang_cible=nl
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// E
 	'erreur_date_incorrecte' => 'Deze datum is onjuist',
@@ -47,5 +43,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'legend_recurrence' => 'Herhaling',
 
 	// T
-	'texte_programmer_newsletter' => 'Programmeren van een nieuwsbrief'
-);
+	'texte_programmer_newsletter' => 'Programmeren van een nieuwsbrief',
+];

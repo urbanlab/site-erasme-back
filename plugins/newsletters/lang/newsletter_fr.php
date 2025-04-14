@@ -1,11 +1,8 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
 // Fichier source, a modifier dans https://git.spip.net/spip-contrib-extensions/newsletters.git
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
 
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// A
 	'ajouter_lien_newsletter' => 'Ajouter cette infolettre',
@@ -75,5 +72,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_newsletters_prepa' => 'Infolettres en préparation',
 	'titre_newsletters_publie' => 'Infolettres publiées',
 	'titre_newsletters_refuse' => 'Infolettres refusées',
-	'titre_newsletters_rubrique' => 'Infolettres de la rubrique'
-);
+	'titre_newsletters_rubrique' => 'Infolettres de la rubrique',
+];

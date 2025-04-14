@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/newsletter-newsletters?lang_cible=nl
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// A
 	'ajouter_lien_newsletter' => 'Voeg deze nieuwsbrief toe',
@@ -74,5 +70,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_logo_newsletter' => 'Logo van deze nieuwsbrief',
 	'titre_newsletter' => 'Nieuwsbrief',
 	'titre_newsletters' => 'Nieuwsbrieven',
-	'titre_newsletters_rubrique' => 'Nieuwsbrieven van de rubriek'
-);
+	'titre_newsletters_rubrique' => 'Nieuwsbrieven van de rubriek',
+];

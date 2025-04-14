@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/when?lang_cible=ja
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// I
 	'info_1_fois' => '一回',
@@ -52,5 +48,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_freq_YEARLY_nb' => '@nb@年ごとに',
 	'info_nb_fois' => '@nb@回',
 	'info_until_date' => '@date@まで',
-	'info_wkst_day' => '週の開始曜日：@day@'
-);
+	'info_wkst_day' => '週の開始曜日：@day@',
+];

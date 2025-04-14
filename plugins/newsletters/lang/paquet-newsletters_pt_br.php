@@ -3,14 +3,10 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/paquet-newsletters?lang_cible=pt_br
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// N
 	'newsletters_description' => '',
 	'newsletters_nom' => 'Newsletters',
-	'newsletters_slogan' => 'Criar Newsletters'
-);
+	'newsletters_slogan' => 'Criar Newsletters',
+];

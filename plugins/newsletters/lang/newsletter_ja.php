@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/newsletter-newsletters?lang_cible=ja
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// A
 	'ajouter_lien_newsletter' => 'このニュースレターを追加',
@@ -73,5 +69,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_logo_newsletter' => 'このニュースレターのロゴ',
 	'titre_newsletter' => 'ニュースレター',
 	'titre_newsletters' => 'ニュースレター',
-	'titre_newsletters_rubrique' => 'セクションのニュースレター'
-);
+	'titre_newsletters_rubrique' => 'セクションのニュースレター',
+];

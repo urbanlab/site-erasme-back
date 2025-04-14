@@ -1,11 +1,8 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
 // Fichier source, a modifier dans https://git.spip.net/spip-contrib-extensions/newsletters.git
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
 
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// I
 	'info_1_fois' => '1 fois',
@@ -50,5 +47,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_freq_YEARLY_nb' => 'Tous les @nb@ ans',
 	'info_nb_fois' => '@nb@ fois',
 	'info_until_date' => 'jusqu’au @date@',
-	'info_wkst_day' => 'semaine commençant le @day@'
-);
+	'info_wkst_day' => 'semaine commençant le @day@',
+];
