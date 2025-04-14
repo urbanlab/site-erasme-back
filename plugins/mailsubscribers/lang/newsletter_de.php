@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/newsletter-mailsubscribers-674?lang_cible=de
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// B
 	'bouton_reconsent_abort' => 'Mich abmelden',
@@ -35,5 +31,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'subscribe_message_ok_confirm_invite_singulier' => 'Eine Einladungs-E-Mail an @email@ wurde versandt.',
 
 	// U
-	'unsubscribe_message_ok' => 'Die Adresse @email@ wurde aus der Empfängerliste gestrichen.'
-);
+	'unsubscribe_message_ok' => 'Die Adresse @email@ wurde aus der Empfängerliste gestrichen.',
+];

@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/newsletter-mailsubscribers-674?lang_cible=nl
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// B
 	'bouton_subscribe' => 'Inschrijven op deze nieuwsbrief',
@@ -30,5 +26,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'subscribe_message_ok_confirm_invite_singulier' => 'Een e-mail werd verstuurd naar @email@ als uitnodiging voor inschrijving.',
 
 	// U
-	'unsubscribe_message_ok' => 'Het adres @email@ is geschrapt van de nieuwsbrief.'
-);
+	'unsubscribe_message_ok' => 'Het adres @email@ is geschrapt van de nieuwsbrief.',
+];

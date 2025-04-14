@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/mailsubscriberscfg?lang_cible=ru
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// C
 	'cfg_titre_parametrages' => 'Настройка рассылок',
@@ -37,5 +33,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// T
 	'texte_config_anonymiser' => 'В письмах с подтвержением заменить название рассылки на ее номер',
-	'titre_page_configurer_mailsubscriber' => 'Подписка на рассылку'
-);
+	'titre_page_configurer_mailsubscriber' => 'Подписка на рассылку',
+];

@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/mailsubscriberscfg?lang_cible=uk
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// C
 	'cfg_titre_parametrages' => 'Налаштування підписки ',
@@ -37,5 +33,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// T
 	'texte_config_anonymiser' => 'В листі з підтвердженням заміть теми листа написати числа для підтвердження.',
-	'titre_page_configurer_mailsubscriber' => 'Підписка на розсилку'
-);
+	'titre_page_configurer_mailsubscriber' => 'Підписка на розсилку',
+];

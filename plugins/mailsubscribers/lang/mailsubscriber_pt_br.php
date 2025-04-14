@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/mailsubscriber?lang_cible=pt_br
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// A
 	'aucune_liste' => 'Nenhuma lista',
@@ -168,5 +164,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'unsubscribe_texte_email_liste_1' => 'O endereço de e-mail @email@ foi excluído da lista de difusão da newsletter <b>@titre_liste@</b>.',
 	'unsubscribe_texte_email_listes_1' => 'O endereço de e-mail @email@ foi excluído das listas de difusão das newsletters <b>@titre_liste@</b>.',
 	'unsubscribe_titre_email' => 'Cancelamento da assinatura da Newsletter',
-	'unsubscribe_titre_email_liste' => 'Cancelamento da assinatura da newsletter <b>@titre_liste@</b>'
-);
+	'unsubscribe_titre_email_liste' => 'Cancelamento da assinatura da newsletter <b>@titre_liste@</b>',
+];

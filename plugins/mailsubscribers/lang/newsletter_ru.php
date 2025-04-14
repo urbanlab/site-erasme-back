@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/newsletter-mailsubscribers-674?lang_cible=ru
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// B
 	'bouton_subscribe' => 'Подписаться на рассылку',
@@ -30,5 +26,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'subscribe_message_ok_confirm_invite_singulier' => 'Приглашение подписаться было отправлено на емейл @email@ .',
 
 	// U
-	'unsubscribe_message_ok' => 'Емейл @email@ был убран из рассылки.'
-);
+	'unsubscribe_message_ok' => 'Емейл @email@ был убран из рассылки.',
+];

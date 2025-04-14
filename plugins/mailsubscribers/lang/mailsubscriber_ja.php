@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/mailsubscriber?lang_cible=ja
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// B
 	'bouton_actualiser_segments' => 'セグメントを最新にする',
@@ -144,5 +140,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 ',
 	'unsubscribe_titre_email' => 'ニュースレターの購読を停止する',
-	'unsubscribe_titre_email_liste' => 'メーリングリスト「@titre_liste@」の購読を停止する'
-);
+	'unsubscribe_titre_email_liste' => 'メーリングリスト「@titre_liste@」の購読を停止する',
+];

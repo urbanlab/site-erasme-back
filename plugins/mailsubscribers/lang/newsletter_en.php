@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/newsletter-mailsubscribers-674?lang_cible=en
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// B
 	'bouton_subscribe' => 'Subscribe to the Newsletter',
@@ -30,5 +26,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'subscribe_message_ok_confirm_invite_singulier' => 'A mail has been sent to email @email@ with an invitation to subscribe.',
 
 	// U
-	'unsubscribe_message_ok' => 'The address @email@ has been delisted from the Newsletter'
-);
+	'unsubscribe_message_ok' => 'The address @email@ has been delisted from the Newsletter',
+];

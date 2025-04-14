@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/mailsubscriber?lang_cible=nl
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// B
 	'bouton_actualiser_segments' => 'De segmenten actualiseren',
@@ -142,5 +138,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'unsubscribe_texte_email_liste_1' => 'Het e-mailadres @email@ is verwijderd uit onze lijst "@titre_liste@".',
 	'unsubscribe_texte_email_listes_1' => 'Het e-mailadres @email@ werd verwijderd uit de distributielijst voor <b>@titre_liste@</b>.',
 	'unsubscribe_titre_email' => 'Afmelding Nieuwsbrief',
-	'unsubscribe_titre_email_liste' => 'Uitschrijving uit lijst "<b>@titre_liste@</b>"'
-);
+	'unsubscribe_titre_email_liste' => 'Uitschrijving uit lijst "<b>@titre_liste@</b>"',
+];

@@ -1,11 +1,8 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
 // Fichier source, a modifier dans https://git.spip.net/spip-contrib-extensions/mailsubscribers.git
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
 
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// B
 	'bouton_reconsent_abort' => 'Me désinscrire',
@@ -33,5 +30,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'subscribe_message_ok_confirm_invite_singulier' => 'Un email a été envoyé à @email@ pour l’inviter à s’inscrire.',
 
 	// U
-	'unsubscribe_message_ok' => 'L’adresse @email@ a été désinscrite de la newsletter.'
-);
+	'unsubscribe_message_ok' => 'L’adresse @email@ a été désinscrite de la newsletter.',
+];

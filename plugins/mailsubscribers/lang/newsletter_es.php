@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/newsletter-mailsubscribers-674?lang_cible=es
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// B
 	'bouton_reconsent_abort' => 'Darme de baja',
@@ -35,5 +31,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'subscribe_message_ok_confirm_invite_singulier' => 'Se ha enviado un correo electrónico a @email@ invitándolo a registrarse.',
 
 	// U
-	'unsubscribe_message_ok' => 'La dirección @email@ ha sido dada de baja del boletín'
-);
+	'unsubscribe_message_ok' => 'La dirección @email@ ha sido dada de baja del boletín',
+];

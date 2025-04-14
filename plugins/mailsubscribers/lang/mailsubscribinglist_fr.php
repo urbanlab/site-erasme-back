@@ -1,12 +1,8 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
 // Fichier source, a modifier dans svn://zone.spip.org/spip-zone/_plugins_/mailsubscribinglists/trunk/lang/
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
 
-$GLOBALS[$GLOBALS['idx_lang']] = array(
-
+return [
 	// B
 	'bouton_update' => 'Mettre à jour',
 
@@ -49,5 +45,4 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_mailsubscribinglist' => 'Liste de diffusion',
 	'titre_mailsubscribinglists' => 'Listes de diffusion',
 	'titre_copie' => 'Copie de : ',
-
-);
+];

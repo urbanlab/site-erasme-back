@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/mailsubscriptions-mailsubscribers?lang_cible=de
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// I
 	'info_1_envoi' => '1 Versand',
@@ -21,5 +17,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_nb_mailsubscriptions_unreads' => '@nb@ Abonnenten haben  nie gelesen',
 
 	// N
-	'nombre_envois' => 'Anzahl der Versendungen'
-);
+	'nombre_envois' => 'Anzahl der Versendungen',
+];

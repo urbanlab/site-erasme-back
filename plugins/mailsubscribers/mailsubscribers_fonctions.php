@@ -327,37 +327,37 @@ function mailsubscribers_afficher_valeur_informations_liees($k, $v, $declaration
 	} elseif (isset($declaration[$k]['options']['label'])) {
 		$titre = typo(supprimer_numero($declaration[$k]['options']['label']));
 	}
-	if (is_string($v) and strpos($v, ',') !== false) {
-		$v = explode(',', $v);
+
+	if (test_plugin_actif('saisies') && isset($declaration[$k]['saisie'])) {
+		$saisie = [
+			'saisie' => $declaration[$k]['saisie'],
+			'options' => $declaration[$k]['options'],
+		];
+		$saisie['options']['label'] = ' ';
+		$vue = saisies_generer_vue($saisie, [$k => $v]);
+	}
+	else {
+		if (is_string($v) && strpos($v, ',') !== false) {
+			$v = explode(',', $v);
+		}
+		$valeur = $v;
+		if (!is_array($valeur)) {
+			$valeur = [$valeur];
+		}
+		foreach ($valeur as $i => $va) {
+			if (isset($declaration[$k]['valeurs'][$va])) {
+				$valeur[$i] = typo(supprimer_numero($declaration[$k]['valeurs'][$va]));
+			}
+		}
+		$vue = implode(', ', $valeur);
+	}
+	if ($html) {
+		$out = "<tr><th scope='row'>$titre</th><td>" . $vue . '</td></tr>';
+	}
+	else {
+		$out = "$titre&nbsp;: " . strip_tags($vue);
 	}
 
-	if (test_plugin_actif('saisies')) {
-		if (isset($declaration[$k]['saisie'])) {
-			$saisie = [
-				'saisie' => $declaration[$k]['saisie'],
-				'options' => $declaration[$k]['options'],
-			];
-			$saisie['options']['label'] = ' ';
-			$vue = saisies_generer_vue($saisie, [$k => $v]);
-		}
-		else {
-			$valeur = $v;
-			if (!is_array($valeur)) { $valeur = [$valeur];
-			}
-			foreach ($valeur as $i => $va) {
-				if (isset($declaration[$k]['valeurs'][$va])) {
-					$valeur[$i] = typo(supprimer_numero($declaration[$k]['valeurs'][$va]));
-				}
-			}
-			$vue = implode(', ', $valeur);
-		}
-		if ($html) {
-			$out = "<tr><th scope='row'>$titre</th><td>" . $vue . '</td></tr>';
-		}
-		else {
-			$out = "$titre&nbsp;: " . strip_tags($vue);
-		}
-	}
 	return $out;
 }
 

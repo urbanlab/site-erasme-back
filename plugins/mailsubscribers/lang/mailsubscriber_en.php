@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/mailsubscriber?lang_cible=en
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// A
 	'aucune_liste' => 'No mailing list', # RELIRE
@@ -168,5 +164,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'unsubscribe_texte_email_liste_1' => 'Email @email@ has been unsubscribed from the newsletter <b>@titre_liste@</b>.', # RELIRE
 	'unsubscribe_texte_email_listes_1' => 'The email “@email@” has been properly unsubscribed from the newsletters “<b>@titre_liste@</b>” mailing lists.', # RELIRE
 	'unsubscribe_titre_email' => 'Unsubscribing from the Newsletter', # RELIRE
-	'unsubscribe_titre_email_liste' => 'Unsubscribing from the newsletter <b>@titre_liste@</b>' # RELIRE
-);
+	'unsubscribe_titre_email_liste' => 'Unsubscribing from the newsletter <b>@titre_liste@</b>', # RELIRE
+];

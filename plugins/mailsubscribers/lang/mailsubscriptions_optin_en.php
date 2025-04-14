@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/mailsubscriptions_optin-mailsubscribers?lang_cible=en
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// B
 	'bouton_envoyer_demande_optin' => 'Send an opt-in request to these @nb@ subscribers',
@@ -45,5 +41,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'selection_mailinglist' => 'Please select a mailing list.',
 
 	// T
-	'titre_inscrits_sans_demande_optin' => 'Subscribers without an opt-in request'
-);
+	'titre_inscrits_sans_demande_optin' => 'Subscribers without an opt-in request',
+];

@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/mailsubscriber?lang_cible=ru
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// B
 	'bouton_actualiser_segments' => 'Обновить сегмент',
@@ -112,5 +108,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 @url_subscribe@',
 	'unsubscribe_texte_email_liste_1' => 'Емейл @email@ успешно удален из рассылки <b>@titre_liste@</b>.',
 	'unsubscribe_titre_email' => 'Отписаться от рассылки',
-	'unsubscribe_titre_email_liste' => 'Отписаться от рассылки <b>@titre_liste@</b>'
-);
+	'unsubscribe_titre_email_liste' => 'Отписаться от рассылки <b>@titre_liste@</b>',
+];

@@ -1,11 +1,8 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
 // Fichier source, a modifier dans https://git.spip.net/spip-contrib-extensions/mailsubscribers.git
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
 
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// I
 	'info_1_envoi' => '1 envoi',
@@ -19,5 +16,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_nb_mailsubscriptions_unreads' => '@nb@ inscrits n’ont jamais lu',
 
 	// N
-	'nombre_envois' => 'Nombre d’envois'
-);
+	'nombre_envois' => 'Nombre d’envois',
+];

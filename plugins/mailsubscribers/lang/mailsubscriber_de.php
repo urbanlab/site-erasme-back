@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/mailsubscriber?lang_cible=de
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// A
 	'aucune_liste' => 'Keine Liste',
@@ -167,5 +163,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'unsubscribe_texte_email_liste_1' => 'Die E-Mailadresse @email@ wurde von unserer Verteilerliste für den Newsletter <b>@titre_liste@</b> entfernt.',
 	'unsubscribe_texte_email_listes_1' => 'Die E-Mailadresse « @email@ » wurde von den Verteilerlisten für die Newsletter « <b>@titre_liste@</b> » entfernt.',
 	'unsubscribe_titre_email' => 'Newsletter Abmeldung',
-	'unsubscribe_titre_email_liste' => 'Abmeldung vom Newsletter <b>@titre_liste@</b>'
-);
+	'unsubscribe_titre_email_liste' => 'Abmeldung vom Newsletter <b>@titre_liste@</b>',
+];

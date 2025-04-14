@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/newsletter-mailsubscribers-674?lang_cible=uk
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// B
 	'bouton_subscribe' => 'Підписатися на розсилку',
@@ -30,5 +26,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'subscribe_message_ok_confirm_invite_singulier' => 'На ємейл @email@ було надіслано запрошення підписатися.',
 
 	// U
-	'unsubscribe_message_ok' => 'Ємейл @email@ був видалений з розсилки.'
-);
+	'unsubscribe_message_ok' => 'Ємейл @email@ був видалений з розсилки.',
+];

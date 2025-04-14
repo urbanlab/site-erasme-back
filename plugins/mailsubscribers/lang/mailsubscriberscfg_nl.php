@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/mailsubscriberscfg?lang_cible=nl
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// C
 	'cfg_titre_parametrages' => 'Configuratie van inschrijving op de nieuwsbrief',
@@ -37,5 +33,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// T
 	'texte_config_anonymiser' => 'Vervang de titel van de lijst door zijn nummer in bevestigings-email.',
-	'titre_page_configurer_mailsubscriber' => 'Inschrijving op de nieuwsbrief'
-);
+	'titre_page_configurer_mailsubscriber' => 'Inschrijving op de nieuwsbrief',
+];

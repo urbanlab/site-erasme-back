@@ -1,11 +1,8 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
 // Fichier source, a modifier dans https://git.spip.net/spip-contrib-extensions/mailsubscribers.git
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
 
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// C
 	'cfg_titre_parametrages' => 'Configuration des inscriptions à la Newsletter',
@@ -35,5 +32,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// T
 	'texte_config_anonymiser' => 'Dans les mails de confirmation, remplacer le titre de la liste par son numéro.',
-	'titre_page_configurer_mailsubscriber' => 'Inscriptions à la Newsletter'
-);
+	'titre_page_configurer_mailsubscriber' => 'Inscriptions à la Newsletter',
+];

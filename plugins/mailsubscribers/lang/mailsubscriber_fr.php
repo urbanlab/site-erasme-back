@@ -1,11 +1,8 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
 // Fichier source, a modifier dans https://git.spip.net/spip-contrib-extensions/mailsubscribers.git
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
 
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// A
 	'aucune_liste' => 'Aucune liste',
@@ -166,5 +163,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'unsubscribe_texte_email_liste_1' => 'L’adresse email @email@ a bien été retirée de la liste de diffusion de la newsletter <b>@titre_liste@</b>.',
 	'unsubscribe_texte_email_listes_1' => 'L’adresse email @email@ a bien été retirée des listes de diffusion aux newsletters <b>@titre_liste@</b>.',
 	'unsubscribe_titre_email' => 'Désinscription de la Newsletter',
-	'unsubscribe_titre_email_liste' => 'Désinscription de la newsletter <b>@titre_liste@</b>'
-);
+	'unsubscribe_titre_email_liste' => 'Désinscription de la newsletter <b>@titre_liste@</b>',
+];

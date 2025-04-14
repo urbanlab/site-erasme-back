@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/mailsubscriberscfg?lang_cible=de
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// C
 	'cfg_titre_parametrages' => 'Konfiguration der Newsletter-Anmeldung',
@@ -37,5 +33,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// T
 	'texte_config_anonymiser' => 'In den Bestätigungs-E-Mails den Namen der Liste durch die Nummer der Liste ersetzen.',
-	'titre_page_configurer_mailsubscriber' => 'Abonnieren des Newsletter'
-);
+	'titre_page_configurer_mailsubscriber' => 'Abonnieren des Newsletter',
+];

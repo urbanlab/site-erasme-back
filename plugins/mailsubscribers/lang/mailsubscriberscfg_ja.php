@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/mailsubscriberscfg?lang_cible=ja
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// C
 	'cfg_titre_parametrages' => 'ニュースレターの購読を設定する',
@@ -37,5 +33,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// T
 	'texte_config_anonymiser' => '確認Ｅメールでは、リストの題名をその番号に置き換えます。',
-	'titre_page_configurer_mailsubscriber' => 'ニュースレターへの購読'
-);
+	'titre_page_configurer_mailsubscriber' => 'ニュースレターへの購読',
+];

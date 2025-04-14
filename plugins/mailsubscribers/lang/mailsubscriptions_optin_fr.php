@@ -1,11 +1,8 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
 // Fichier source, a modifier dans https://git.spip.net/spip-contrib-extensions/mailsubscribers.git
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
 
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// B
 	'bouton_envoyer_demande_optin' => 'Envoyer une demande d’optin à ces @nb@ inscrits',
@@ -43,5 +40,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'selection_mailinglist' => 'Veuillez sélectionner une liste de diffusion.',
 
 	// T
-	'titre_inscrits_sans_demande_optin' => 'Inscrits sans demande d’optin'
-);
+	'titre_inscrits_sans_demande_optin' => 'Inscrits sans demande d’optin',
+];

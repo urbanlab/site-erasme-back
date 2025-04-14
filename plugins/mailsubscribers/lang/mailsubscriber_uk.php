@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/mailsubscriber?lang_cible=uk
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// B
 	'bouton_actualiser_segments' => 'Оновити сегмент',
@@ -148,5 +144,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'unsubscribe_texte_email_liste_1' => 'Ємейл @email@ успішно видалено з бази підписників розсилки <b>@titre_liste@</b>.',
 	'unsubscribe_texte_email_listes_1' => 'Ємейл @email@ виделано з бази підписників розсилки <b>@titre_liste@</b>.',
 	'unsubscribe_titre_email' => 'Скасувати підписку на розсилку',
-	'unsubscribe_titre_email_liste' => 'Скасувати підписку на розсилку <b>@titre_liste@</b>'
-);
+	'unsubscribe_titre_email_liste' => 'Скасувати підписку на розсилку <b>@titre_liste@</b>',
+];
