@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/nospam?lang_cible=pt_br
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// E
 	'erreur_attributs_html_interdits' => 'Não é permitido inserir figuras nem utilizar atributos html <tt>class</tt> ou <tt>style</tt>',
@@ -22,8 +18,11 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'forum_saisie_texte_info' => 'Para a formatação da sua mensagem, este formulário aceita apenas os atalhos SPIP <code>[-&gt;url] {{negrito}} {itálico} &lt;quote&gt; &lt;code&gt;</code> &lt;cadre&gt;</cadre> e o código HTML <code>&lt;q&gt; &lt;del&gt; &lt;ins&gt;</code>. Para criar parágrafos , deixe simplesmente linhas vazias.',
 
 	// I
+	'info_alt_antispam' => 'Antispam silencioso - nenhum conteúdo exibido',
 	'info_ip_suspecte' => 'Seu endereço IP é suspeito de realizar SPAM. Obrigado de confirmar a sua boa intenção.',
 
 	// L
-	'label_message_licite' => 'Esta mensagem não é abusiva'
-);
+	'label_je_ne_suis_pas_un_robot' => 'Eu não sou um robô',
+	'label_message_licite' => 'Esta mensagem não é abusiva',
+	'libelle_je_ne_suis_pas_un_robot' => 'Clique para confirmar que você não é um robô',
+];

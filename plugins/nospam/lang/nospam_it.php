@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/nospam?lang_cible=it
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// E
 	'erreur_attributs_html_interdits' => 'Non è permesso l’inserimento di immagini ne l’utilizzo degli attributi html <tt>class</tt> o <tt>style</tt>',
@@ -28,5 +24,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// L
 	'label_je_ne_suis_pas_un_robot' => 'Non sono un robot',
 	'label_message_licite' => 'Questo non è un messaggio offensivo',
-	'libelle_je_ne_suis_pas_un_robot' => 'Clicca per confermare di non essere un robot'
-);
+	'libelle_je_ne_suis_pas_un_robot' => 'Clicca per confermare di non essere un robot',
+];

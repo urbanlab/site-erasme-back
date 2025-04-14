@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/nospam?lang_cible=sk
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// E
 	'erreur_attributs_html_interdits' => 'Nie je povolené vkladať obrázky ani používať atribúty html <tt>class</tt> alebo <tt>style</tt>',
@@ -25,5 +21,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_ip_suspecte' => 'Vaša IP adresa je podozrivá z vytvárania SPAMU. Ďakujeme, že potvrdíte svoj dobrý úmysel.',
 
 	// L
-	'label_message_licite' => 'Toto nie je nevhodná správa'
-);
+	'label_message_licite' => 'Toto nie je nevhodná správa',
+];

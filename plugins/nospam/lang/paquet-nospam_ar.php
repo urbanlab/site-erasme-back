@@ -3,12 +3,8 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/paquet-nospam?lang_cible=ar
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// N
-	'nospam_description' => 'توقف المتطفل! فلتر البريد المزعج في الرسائل ، دون ازعاج لمستخدم صادق.' # MODIF
-);
+	'nospam_description' => 'توقف المتطفل! فلتر البريد المزعج في الرسائل ، دون ازعاج لمستخدم صادق.', # MODIF
+];

@@ -3,13 +3,9 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/paquet-nospam?lang_cible=de
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// N
 	'nospam_description' => 'SPAM stoppen! Ein Filter ohne Nebenwirkungen für ehrliche Nutzer.', # MODIF
-	'nospam_slogan' => 'Begrenzt das SPAM-Risiko in Foren' # MODIF
-);
+	'nospam_slogan' => 'Begrenzt das SPAM-Risiko in Foren', # MODIF
+];

@@ -6,7 +6,7 @@
 	source="https://git.spip.net/spip-contrib-extensions/nospam.git"
 	reference="fr">
 	<langue code="ar" url="https://trad.spip.net/tradlang_module/nospam?lang_cible=ar" total="13" traduits="5" relire="0" modifs="0" nouveaux="8" pourcent="38.46">
-		<traducteur nom="George" lien="https://trad.spip.net/auteur/جورج-قندلفت" />
+		<traducteur nom="George" lien="https://trad.spip.net/auteur/george" />
 	</langue>
 	<langue code="de" url="https://trad.spip.net/tradlang_module/nospam?lang_cible=de" total="13" traduits="10" relire="0" modifs="0" nouveaux="3" pourcent="76.92">
 		<traducteur nom="klaus++" lien="https://trad.spip.net/auteur/klaus" />
@@ -32,13 +32,20 @@
 	<langue code="it" url="https://trad.spip.net/tradlang_module/nospam?lang_cible=it" total="13" traduits="13" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
 		<traducteur nom="Alberto" lien="https://trad.spip.net/auteur/alberto" />
 	</langue>
+	<langue code="mg" url="https://trad.spip.net/tradlang_module/nospam?lang_cible=mg" total="13" traduits="13" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
+		<traducteur nom="iBesorongola" lien="https://trad.spip.net/auteur/ibesorongola" />
+	</langue>
 	<langue code="nl" url="https://trad.spip.net/tradlang_module/nospam?lang_cible=nl" total="13" traduits="13" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
 		<traducteur nom="Hanjo" lien="https://trad.spip.net/auteur/hanjo" />
 	</langue>
-	<langue code="pt_br" url="https://trad.spip.net/tradlang_module/nospam?lang_cible=pt_br" total="13" traduits="10" relire="0" modifs="0" nouveaux="3" pourcent="76.92">
+	<langue code="pt_br" url="https://trad.spip.net/tradlang_module/nospam?lang_cible=pt_br" total="13" traduits="13" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
 		<traducteur nom="filipaun" lien="https://trad.spip.net/auteur/filipaun" />
+		<traducteur nom="Ricardo Porto" lien="https://trad.spip.net/auteur/ricardo-porto" />
 	</langue>
 	<langue code="sk" url="https://trad.spip.net/tradlang_module/nospam?lang_cible=sk" total="13" traduits="10" relire="0" modifs="0" nouveaux="3" pourcent="76.92">
 		<traducteur nom="jaro" lien="https://trad.spip.net/auteur/jaro" />
+	</langue>
+	<langue code="uk" url="https://trad.spip.net/tradlang_module/nospam?lang_cible=uk" total="13" traduits="13" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
+		<traducteur nom="Serge Markitanenko" lien="https://trad.spip.net/auteur/serge-markitanenko" />
 	</langue>
 </traduction>

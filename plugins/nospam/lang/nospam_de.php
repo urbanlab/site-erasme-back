@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/nospam?lang_cible=de
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// E
 	'erreur_attributs_html_interdits' => 'Bilder sowie die HTML-Attribute <tt>class</tt> und <tt>style</tt> sind verboten.',
@@ -25,5 +21,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_ip_suspecte' => 'Ihre IP-Adresse setht unter SPAM-Verdacht. Bitte bestätign Sie Ihre guten Absichten.',
 
 	// L
-	'label_message_licite' => 'Dies ist kein mißbräuchlicher Beitrag.'
-);
+	'label_message_licite' => 'Dies ist kein mißbräuchlicher Beitrag.',
+];

@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/nospam?lang_cible=nl
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// E
 	'erreur_attributs_html_interdits' => 'HTML-attributen <tt>class</tt> of <tt>style</tt> zijn niet toegestaan!',
@@ -28,5 +24,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// L
 	'label_je_ne_suis_pas_un_robot' => 'Ik ben geen robot',
 	'label_message_licite' => 'Dit is geen verkeerd bericht',
-	'libelle_je_ne_suis_pas_un_robot' => 'Klik om aan te geven dat je geen robot bent'
-);
+	'libelle_je_ne_suis_pas_un_robot' => 'Klik om aan te geven dat je geen robot bent',
+];

@@ -3,13 +3,9 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/paquet-nospam?lang_cible=pt_br
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// N
 	'nospam_description' => 'Basta de spam! Filtre os spams nos formulários, sem incomodar os usuários legítimos.',
-	'nospam_slogan' => 'Limitar o risco de spams nos formulários'
-);
+	'nospam_slogan' => 'Limitar o risco de spams nos formulários',
+];
