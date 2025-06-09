@@ -1,4 +1,5 @@
 <?php
+
 if (!defined('_ECRIRE_INC_VERSION')) {
 	return;
 }
@@ -26,16 +27,16 @@ function formulaires_configurer_meta_saisies_dist() {
 
 function formulaires_configurer_meta_charger_dist() {
 	$valeurs = [];
-	$meta = lire_config('/meta_graphql/meta', "");
+	$meta = lire_config('/meta_graphql/meta', '');
 
-	$valeurs["meta"] = $meta;
+	$valeurs['meta'] = $meta;
 
 	return $valeurs;
 }
 
 function formulaires_configurer_meta_traiter_dist() {
 	$ret = [];
-	$metas = is_null(_request('meta')) ? [] : _request('meta');
+	$metas = _request('meta') ?? [];
 
 	if (ecrire_config('/meta_graphql/meta', $metas)) {
 		$ret['message_ok'] = _T('config_info_enregistree');

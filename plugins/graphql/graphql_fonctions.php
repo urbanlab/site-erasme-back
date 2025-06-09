@@ -4,18 +4,18 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 	return;
 }
 
-function graphql_verif_jeton($headers) {
+function graphql_verif_jeton($headers) {spip_log($_SERVER, 'test');
 	$token_param = lire_config('/meta_graphql/securite/jeton', '');
 	if ($token_param == '') {
 		return true;
 	}
 
 	$token_envoye = '';
-	if (isset($headers["X_AUTH_TOKEN"])) {
-		$token_envoye = $headers["X_AUTH_TOKEN"];
+	if (isset($headers['X_AUTH_TOKEN'])) {
+		$token_envoye = $headers['X_AUTH_TOKEN'];
 	}
 
-	return ($token_envoye == $token_param);
+	return $token_envoye == $token_param;
 }
 
 function graphql_getCollectionInfos(string $collection): array {

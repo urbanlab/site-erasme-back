@@ -6,5 +6,7 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'SpipLeague\\EasyCodingStandard\\' => array($vendorDir . '/spip-league/easy-coding-standard/src'),
+    'SpipLeague\\Component\\Rector\\' => array($vendorDir . '/spip-league/rector/src', $vendorDir . '/spip-league/rector/rules'),
     'GraphQL\\' => array($vendorDir . '/webonyx/graphql-php/src'),
 );

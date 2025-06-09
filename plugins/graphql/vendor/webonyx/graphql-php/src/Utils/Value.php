@@ -2,6 +2,7 @@
 
 namespace GraphQL\Utils;
 
+use GraphQL\Error\ClientAware;
 use GraphQL\Error\CoercionError;
 use GraphQL\Error\Error;
 use GraphQL\Error\InvariantViolation;
@@ -36,7 +37,7 @@ class Value
      *
      * @throws InvariantViolation
      */
-    public static function coerceInputValue($value, InputType $type, array $path = null): array
+    public static function coerceInputValue($value, InputType $type, ?array $path = null): array
     {
         if ($type instanceof NonNull) {
             if ($value === null) {
@@ -61,7 +62,10 @@ class Value
             try {
                 return self::ofValue($type->parseValue($value));
             } catch (\Throwable $error) {
-                if ($error instanceof Error) {
+                if (
+                    $error instanceof Error
+                    || ($error instanceof ClientAware && $error->isClientSafe())
+                ) {
                     return self::ofErrors([
                         CoercionError::make($error->getMessage(), $path, $value, $error),
                     ]);
@@ -193,7 +197,7 @@ class Value
     }
 
     /**
-     * @param array<int, CoercionError>       $errors
+     * @param array<int, CoercionError> $errors
      * @param CoercionError|array<int, CoercionError> $errorOrErrors
      *
      * @return array<int, CoercionError>

@@ -160,6 +160,8 @@ class QueryComplexity extends QuerySecurityRule
     }
 
     /**
+     * Will the given field be executed at all, given the directives placed upon it?
+     *
      * @throws \Exception
      * @throws \ReflectionException
      * @throws InvariantViolation
@@ -177,13 +179,7 @@ class QueryComplexity extends QuerySecurityRule
                 $this->getRawVariableValues()
             );
             if ($errors !== null && $errors !== []) {
-                throw new Error(\implode(
-                    "\n\n",
-                    \array_map(
-                        static fn (Error $error): string => $error->getMessage(),
-                        $errors
-                    )
-                ));
+                throw new Error(implode("\n\n", array_map(static fn (Error $error): string => $error->getMessage(), $errors)));
             }
 
             if ($directiveNode->name->value === Directive::INCLUDE_NAME) {
@@ -219,7 +215,7 @@ class QueryComplexity extends QuerySecurityRule
     }
 
     /** @param array<string, mixed>|null $rawVariableValues */
-    public function setRawVariableValues(array $rawVariableValues = null): void
+    public function setRawVariableValues(?array $rawVariableValues = null): void
     {
         $this->rawVariableValues = $rawVariableValues ?? [];
     }
@@ -246,13 +242,7 @@ class QueryComplexity extends QuerySecurityRule
             );
 
             if (is_array($errors) && $errors !== []) {
-                throw new Error(\implode(
-                    "\n\n",
-                    \array_map(
-                        static fn ($error) => $error->getMessage(),
-                        $errors
-                    )
-                ));
+                throw new Error(implode("\n\n", array_map(static fn ($error) => $error->getMessage(), $errors)));
             }
 
             $args = Values::getArgumentValues($fieldDef, $node, $variableValues);

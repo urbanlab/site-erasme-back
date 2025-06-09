@@ -92,7 +92,7 @@ class Printer
     }
 
     /** @throws \JsonException */
-    protected function p(?Node $node, bool $isDescription = false): string
+    protected function p(?Node $node): string
     {
         if ($node === null) {
             return '';
@@ -100,6 +100,7 @@ class Printer
 
         switch (true) {
             case $node instanceof ArgumentNode:
+            case $node instanceof ObjectFieldNode:
                 return $this->p($node->name) . ': ' . $this->p($node->value);
 
             case $node instanceof BooleanValueNode:
@@ -115,7 +116,7 @@ class Printer
 
                 $noIndent = true;
                 foreach ($argStrings as $argString) {
-                    if (\strpos($argString, "\n") !== false) {
+                    if (strpos($argString, "\n") !== false) {
                         $noIndent = false;
                         break;
                     }
@@ -166,6 +167,9 @@ class Printer
                 );
 
             case $node instanceof EnumValueNode:
+            case $node instanceof FloatValueNode:
+            case $node instanceof IntValueNode:
+            case $node instanceof NameNode:
                 return $node->value;
 
             case $node instanceof FieldDefinitionNode:
@@ -176,7 +180,7 @@ class Printer
 
                 $noIndent = true;
                 foreach ($argStrings as $argString) {
-                    if (\strpos($argString, "\n") !== false) {
+                    if (strpos($argString, "\n") !== false) {
                         $noIndent = false;
                         break;
                     }
@@ -218,9 +222,6 @@ class Printer
                     ],
                     ' '
                 );
-
-            case $node instanceof FloatValueNode:
-                return $node->value;
 
             case $node instanceof FragmentDefinitionNode:
                 // Note: fragment variable definitions are experimental and may be changed or removed in the future.
@@ -310,17 +311,11 @@ class Printer
                     ' '
                 );
 
-            case $node instanceof IntValueNode:
-                return $node->value;
-
             case $node instanceof ListTypeNode:
                 return '[' . $this->p($node->type) . ']';
 
             case $node instanceof ListValueNode:
                 return '[' . $this->printList($node->values, ', ') . ']';
-
-            case $node instanceof NameNode:
-                return $node->value;
 
             case $node instanceof NamedTypeNode:
                 return $this->p($node->name);
@@ -330,9 +325,6 @@ class Printer
 
             case $node instanceof NullValueNode:
                 return 'null';
-
-            case $node instanceof ObjectFieldNode:
-                return $this->p($node->name) . ': ' . $this->p($node->value);
 
             case $node instanceof ObjectTypeDefinitionNode:
                 return $this->addDescription($node->description, $this->join(
@@ -422,7 +414,7 @@ class Printer
                     return BlockString::print($node->value);
                 }
 
-                return \json_encode($node->value, JSON_THROW_ON_ERROR);
+                return json_encode($node->value, JSON_THROW_ON_ERROR);
 
             case $node instanceof UnionTypeDefinitionNode:
                 $typesStr = $this->printList($node->types, ' | ');
@@ -496,7 +488,7 @@ class Printer
      */
     protected function printListBlock(NodeList $list): string
     {
-        if (\count($list) === 0) {
+        if (count($list) === 0) {
             return '';
         }
 
@@ -511,7 +503,7 @@ class Printer
     /** @throws \JsonException */
     protected function addDescription(?StringValueNode $description, string $body): string
     {
-        return $this->join([$this->p($description, true), $body], "\n");
+        return $this->join([$this->p($description), $body], "\n");
     }
 
     /**
@@ -533,12 +525,12 @@ class Printer
             return '';
         }
 
-        return '  ' . \str_replace("\n", "\n  ", $string);
+        return '  ' . str_replace("\n", "\n  ", $string);
     }
 
     /** @param array<string|null> $parts */
     protected function join(array $parts, string $separator = ''): string
     {
-        return \implode($separator, \array_filter($parts));
+        return implode($separator, array_filter($parts, static fn (?string $part) => $part !== '' && $part !== null));
     }
 }
