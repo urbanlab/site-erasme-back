@@ -73,8 +73,13 @@ function newsletters_liens_absolus($texte, $base='') {
 		$base_racine_https = '';
 	}
 
+	$adresse_principale = rtrim($GLOBALS['meta']['adresse_site'], '/') . '/';
+	if ($base_racine === $adresse_principale) {
+		$adresse_principale = '';
+	}
+
 	$balises = [
-		'href' => ['a', 'ling', 'image'],
+		'href' => ['a', 'link', 'image'],
 		'src' => ['img', 'script'],
 	];
 	foreach ($balises as $att => $tags) {
@@ -89,8 +94,8 @@ function newsletters_liens_absolus($texte, $base='') {
 					elseif(strncmp($href, "//", 2) === 0) {
 						$abs = "$protocole_racine:" . $href;
 					}
-					elseif(strpos($href, $GLOBALS['meta']['adresse_site']) === 0) {
-						$abs = str_replace($GLOBALS['meta']['adresse_site'], $base_racine, $href);
+					elseif($adresse_principale && strpos($href, $adresse_principale) === 0) {
+						$abs = str_replace($adresse_principale, $base_racine, $href);
 					}
 					else {
 						$abs = url_absolue($href, $base);
