@@ -1,0 +1,105 @@
+stages:
+  - check
+  - build
+  - test
+
+default:
+  image: php:latest
+  cache:
+    paths:
+      - vendor/
+  before_script:
+    # Install git
+    - apt update -yqq
+    - apt install git libzip-dev -yqq
+    - docker-php-ext-install zip
+
+    # Install composer
+    - curl -sS https://getcomposer.org/installer | php
+
+    # Install all project dependencies
+    - php composer.phar install
+
+# d’abord vérifier rapidement les fichiers
+job:check:php:
+  stage: check
+  when: on_success
+  only:
+    - main
+    - merge_requests
+  before_script:
+    - curl -o /usr/local/bin/parallel-lint -fsL https://github.com/php-parallel-lint/PHP-Parallel-Lint/releases/latest/download/parallel-lint.phar
+  script:
+    - php /usr/local/bin/parallel-lint --exclude .git --exclude vendor .
+
+job:build:
+  stage: build
+  only:
+    - main
+    - merge_requests
+  script:
+    # Security check of dependencies
+    - php composer.phar audit
+
+job:test:php-latest:
+  stage: test
+  when: on_success
+  only:
+    - main
+    - merge_requests
+  before_script:
+    - !reference [ default, before_script ]
+    # pcov pour le code-coverage
+    - pecl install pcov
+    - docker-php-ext-enable pcov
+  script:
+    - php -d memory_limit=-1 -d pcov.enabled=1 -d pcov.directory=. vendor/bin/phpunit --coverage-text --colors=never --coverage-cobertura .phpunit.cache/corbertura/report.xml
+  coverage: /^\s*Lines:\s*\d+.\d+\%/
+  artifacts:
+    paths:
+      - .phpunit.cache/html
+    expire_in: 2 days
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: .phpunit.cache/corbertura/report.xml
+
+job:test:php-8.2:
+  stage: test
+  needs:
+    - job:test:php-latest
+  when: on_success
+  only:
+    - main
+    - merge_requests
+  image: php:8.2
+  script:
+    - vendor/bin/phpunit --no-coverage
+
+job:test:ecs:
+  stage: test
+  when: on_success
+  only:
+    - main
+    - merge_requests
+  script:
+    - php -d display_errors=0 vendor/bin/ecs check --output-format=gitlab > ecs-quality-report.json
+  artifacts:
+    paths:
+      - ecs-quality-report.json
+    reports:
+      codequality: ecs-quality-report.json
+
+job:test:phpstan:
+  stage: test
+  when: on_success
+  only:
+    - main
+    - merge_requests
+  script:
+    - php -d memory_limit=-1 vendor/bin/phpstan analyse --error-format gitlab > phpstan-quality-report.json
+  artifacts:
+    paths:
+      - phpstan-quality-report.json
+    reports:
+      codequality: phpstan-quality-report.json
