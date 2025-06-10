@@ -11,8 +11,8 @@ function graphql_verif_jeton($headers) {
 	}
 
 	$token_envoye = '';
-	if (isset($headers['X-Auth-Token'])) {
-		$token_envoye = $headers['X-Auth-Token'];
+	if (isset($headers['X_AUTH_TOKEN'])) {
+		$token_envoye = $headers['X_AUTH_TOKEN'];
 	}
 
 	return $token_envoye == $token_param;

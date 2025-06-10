@@ -1,6 +1,0 @@
-vendor/bin/
-vendor/phpstan/
-vendor/rector/
-vendor/spip-league/
-vendor/symplify/
-composer.lock
