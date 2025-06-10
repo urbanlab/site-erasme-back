@@ -4,15 +4,15 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 	return;
 }
 
-function graphql_verif_jeton($headers) {spip_log($_SERVER, 'test');
+function graphql_verif_jeton($headers) {
 	$token_param = lire_config('/meta_graphql/securite/jeton', '');
 	if ($token_param == '') {
 		return true;
 	}
 
 	$token_envoye = '';
-	if (isset($headers['X_AUTH_TOKEN'])) {
-		$token_envoye = $headers['X_AUTH_TOKEN'];
+	if (isset($headers['X-Auth-Token'])) {
+		$token_envoye = $headers['X-Auth-Token'];
 	}
 
 	return $token_envoye == $token_param;
