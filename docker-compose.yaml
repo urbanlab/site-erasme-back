@@ -11,7 +11,7 @@ services:
       - MYSQL_PASSWORD=${SPIP_DB_PASS}
 
   app:
-    image: erasme/erasme.org:dev
+    image: erasme/erasme.org-v2:dev
     restart: always
     env_file:
       - .env
