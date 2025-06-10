@@ -1,14 +1,11 @@
 <?php
 
 use Spip\Cli\Console\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\ProgressHelper;
 
-
-class linkcheckUrlsPurger extends Command {
+class linkcheckUrlsPurger extends Command
+{
 	protected function configure() {
 		$this
 			->setName('linkcheck:urls:purger')
@@ -19,12 +16,12 @@ class linkcheckUrlsPurger extends Command {
 	protected function execute(InputInterface $input, OutputInterface $output) {
 		include_spip('inc/linkcheck');
 
-		$this->io->title("Purger la base des URLs");
+		$this->io->title('Purger la base des URLs');
 		if (sql_countsel('spip_linkchecks')) {
 			linkcheck_purger();
-			$this->io->check("Purge de la base");
+			$this->io->check('Purge de la base');
 		} else {
-			$this->io->care("Base déjà vide");
+			$this->io->care('Base déjà vide');
 		}
 
 		$status = linkcheckParcourir::statusParcours();

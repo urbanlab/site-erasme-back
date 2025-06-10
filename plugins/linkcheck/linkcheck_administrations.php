@@ -17,7 +17,7 @@ if (!defined('_ECRIRE_INC_VERSION')) {
  * - insérer du pre-contenu,
  * - installer des valeurs de configuration,
  * - mettre à jour la structure SQL
-**/
+ **/
 function linkcheck_upgrade($nom_meta_base_version, $version_cible) {
 	$maj = [];
 
@@ -28,36 +28,28 @@ function linkcheck_upgrade($nom_meta_base_version, $version_cible) {
 		['ecrire_config', 'linkcheck_dernier_objet', 0],
 		['ecrire_config', 'linkcheck_etat_parcours', false],
 		['ecrire_config', 'linkcheck/notifier_courriel', 'on'],
-		['ecrire_config', 'linkcheck/afficher_alerte', 'on']
+		['ecrire_config', 'linkcheck/afficher_alerte', 'on'],
 	];
 
 	/**
 	 * Ajout du champ redirection sur spip_linkchecks
 	 */
-	$maj['1.0.1'] = [
-		['maj_tables', ['spip_linkchecks', 'spip_linkchecks_liens']]
-	];
+	$maj['1.0.1'] = [['maj_tables', ['spip_linkchecks', 'spip_linkchecks_liens']]];
 
 	/**
 	 * Ajout du champ publie sur spip_linkchecks_liens
 	 */
-	$maj['1.4.0'] = [
-		['maj_tables', ['spip_linkchecks', 'spip_linkchecks_liens']]
-	];
+	$maj['1.4.0'] = [['maj_tables', ['spip_linkchecks', 'spip_linkchecks_liens']]];
 
 	/**
 	 * Ajout de l'autoincrement sur la table spip_linkckecks si manquant
 	 * Relancer la première récupération de liens
 	 */
-	$maj['1.4.4'] = [
-		['linkcheck_maj_autoinc'],
-		['linkcheck_init']
-	];
+	$maj['1.4.4'] = [['linkcheck_maj_autoinc'], ['linkcheck_init']];
 
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);
 }
-
 
 function linkcheck_maj_autoinc() {
 	sql_alter('TABLE spip_linkchecks MODIFY COLUMN id_linkcheck bigint(21) AUTO_INCREMENT');
@@ -73,7 +65,7 @@ function linkcheck_init() {
  * Vous devez :
  * - nettoyer toutes les données ajoutées par le plugin et son utilisation
  * - supprimer les tables et les champs créés par le plugin.
-**/
+ **/
 function linkcheck_vider_tables($nom_meta_base_version) {
 	sql_drop_table('spip_linkchecks');
 	sql_drop_table('spip_linkchecks_liens');

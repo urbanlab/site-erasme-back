@@ -1,25 +1,17 @@
 <?php
 
 use Spip\Cli\Console\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\ProgressHelper;
 
-
-class linkcheckObjetRecenser extends Command {
+class linkcheckObjetRecenser extends Command
+{
 	protected function configure() {
 		$this
 			->setName('linkcheck:objet:recenser')
 			->setDescription('Recenser les liens d\'un objet en particulier')
-			->addOption(
-				'objet',
-				null,
-				InputOption::VALUE_REQUIRED,
-				'objet',
-				null
-			)
+			->addOption('objet', null, InputOption::VALUE_REQUIRED, 'objet', null)
 			->addOption(
 				'id_objet',
 				null,
@@ -35,7 +27,7 @@ class linkcheckObjetRecenser extends Command {
 
 		$objet = $input->getOption('objet');
 		if (!$objet) {
-			$output->writeln("<error>Indiquez un objet a analyser</error>");
+			$output->writeln('<error>Indiquez un objet a analyser</error>');
 			return self::FAILURE;
 		}
 
@@ -52,7 +44,7 @@ class linkcheckObjetRecenser extends Command {
 			$id_objets = array_filter($id_objets);
 		}
 		if (!$id_objets) {
-			$output->writeln("<error>Indiquez un ou des id_objet a analyser (séparés par des virgules)</error>");
+			$output->writeln('<error>Indiquez un ou des id_objet a analyser (séparés par des virgules)</error>');
 			return self::FAILURE;
 		}
 
@@ -61,9 +53,9 @@ class linkcheckObjetRecenser extends Command {
 			$liens = linkcheck_objet_recenser_liens($objet, $id_objet);
 
 			if (empty($liens)) {
-				$this->io->care("Aucun lien trouvé");
+				$this->io->care('Aucun lien trouvé');
 			} else {
-				$this->io->check(count($liens) . " lien(s) trouvé(s)");
+				$this->io->check(count($liens) . ' lien(s) trouvé(s)');
 				$this->io->listing($liens);
 			}
 		}

@@ -1,14 +1,32 @@
 <?php
 
 use Spip\Cli\Console\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\ProgressHelper;
 
+class linkcheckParcourir extends Command
+{
+	public static function statusParcours() {
+		$status = [];
+		include_spip('linkcheck_fonctions');
+		include_spip('inc/filtres');
+		$stats = linkcheck_chiffre();
+		$status[] = ($stats['nb_lien'] ? singulier_ou_pluriel(
+			$stats['nb_lien'],
+			'linkcheck:info_1_linkcheck',
+			'linkcheck:info_nb_linkchecks'
+		) : _T('linkcheck:info_aucun_lien'));
+		$status[] = ($stats['parcours_progress'] >= 0.01 ? _T('linkcheck:info_parcours_en_cours', ['progress' => $stats['parcours_progress']]) : _T('linkcheck:info_parcours_todo'));
+		$status[] = ($stats['parcours_objets_total'] ? singulier_ou_pluriel(
+			$stats['parcours_objets_total'],
+			'linkcheck:info_1_objet_a_parcourir',
+			'linkcheck:info_nb_objets_a_parcourir'
+		) : _T('linkcheck:info_aucun_objet_a_parcourir'));
 
-class linkcheckParcourir extends Command {
+		return $status;
+	}
+
 	protected function configure() {
 		$this
 			->setName('linkcheck:parcourir')
@@ -30,30 +48,18 @@ class linkcheckParcourir extends Command {
 		;
 	}
 
-	public static function statusParcours() {
-		$status = [];
-		include_spip('linkcheck_fonctions');
-		include_spip('inc/filtres');
-		$stats = linkcheck_chiffre();
-		$status[] = ($stats['nb_lien'] ? singulier_ou_pluriel($stats['nb_lien'], 'linkcheck:info_1_linkcheck', 'linkcheck:info_nb_linkchecks') : _T('linkcheck:info_aucun_lien'));
-		$status[] = ($stats['parcours_progress'] >= 0.01 ? _T('linkcheck:info_parcours_en_cours', ['progress' => $stats['parcours_progress']]) : _T('linkcheck:info_parcours_todo'));
-		$status[] = ($stats['parcours_objets_total'] ? singulier_ou_pluriel($stats['parcours_objets_total'], 'linkcheck:info_1_objet_a_parcourir', 'linkcheck:info_nb_objets_a_parcourir') : _T('linkcheck:info_aucun_objet_a_parcourir'));
-
-		return $status;
-	}
-
 	protected function execute(InputInterface $input, OutputInterface $output) {
 		include_spip('inc/linkcheck');
 		include_fichiers_fonctions();
 
-		$this->io->title("Parcourir le site pour lister les URLs");
+		$this->io->title('Parcourir le site pour lister les URLs');
 
 		$purge = $input->getOption('purge');
 		if ($purge) {
 			linkcheck_purger();
-			$this->io->check("Purge de la base");
+			$this->io->check('Purge de la base');
 		} else {
-			$status = linkcheckParcourir::statusParcours();
+			$status = self::statusParcours();
 			foreach ($status as $s) {
 				$this->io->care($s);
 			}
@@ -61,12 +67,12 @@ class linkcheckParcourir extends Command {
 
 		$id_branche = $input->getOption('id_branche');
 		if ($id_branche = intval($id_branche)) {
-			$this->io->care("Limiter à la branche id_rubrique=" . $id_branche);
+			$this->io->care('Limiter à la branche id_rubrique=' . $id_branche);
 		}
 
 		$tables_a_traiter = linkcheck_tables_a_traiter();
 		$liste_tables = array_keys($tables_a_traiter);
-		$this->io->care(count($liste_tables)." tables à traiter : " . implode(', ', $liste_tables));
+		$this->io->care(count($liste_tables) . ' tables à traiter : ' . implode(', ', $liste_tables));
 
 		$stats = linkcheck_chiffre();
 		$this->io->progressStart($stats['parcours_objets_total']);

@@ -10,11 +10,11 @@ if (!defined('_ECRIRE_INC_VERSION')) {
  *
  * @param array|int $linkcheck
  * @param bool $force
- * @return $set
+ * @return
  */
 function linkcheck_tester_un_linkcheck($linkcheck, $force = false) {
 	if (is_numeric($linkcheck)) {
-		$linkcheck = sql_fetsel('*', 'spip_linkchecks', 'id_linkcheck='.intval($linkcheck));
+		$linkcheck = sql_fetsel('*', 'spip_linkchecks', 'id_linkcheck=' . intval($linkcheck));
 	}
 
 	//si le champ est inférieur à 6
@@ -32,7 +32,7 @@ function linkcheck_tester_un_linkcheck($linkcheck, $force = false) {
 				'etat' => $status['etat'],
 				'code' => $status['code'],
 				'redirection' => $status['redirection'] ?? '',
-				'essais' => ($status['etat'] === 'malade' ? $linkcheck['essais'] + 1 : 0)
+				'essais' => ($status['etat'] === 'malade' ? $linkcheck['essais'] + 1 : 0),
 			];
 		}
 	} else {
@@ -47,18 +47,20 @@ function linkcheck_tester_un_linkcheck($linkcheck, $force = false) {
 
 	// updater le lien et a minima sa date de maj
 	$set['maj'] = date('Y-m-d H:i:s');
-	spip_log("linkcheck_tester_un_linkcheck: #".$linkcheck['id_linkcheck'] ." Update " . json_encode($set), 'linkcheck' . _LOG_DEBUG);
+	spip_log(
+		'linkcheck_tester_un_linkcheck: #' . $linkcheck['id_linkcheck'] . ' Update ' . json_encode($set),
+		'linkcheck' . _LOG_DEBUG
+	);
 	sql_updateq('spip_linkchecks', $set, 'id_linkcheck=' . intval($linkcheck['id_linkcheck']));
 	return $set;
 }
-
 
 /**
  * Retourne le statut de l'url externe
  *
  * @param string $url
  * 		L'url externe à tester
- * @return array $ret
+ * @return array
  */
 function linkcheck_tester_url_externe($url) {
 	static $dead_hosts = [];
@@ -88,27 +90,28 @@ function linkcheck_tester_url_externe($url) {
 	 */
 	$timeout = 10;
 	$contexte = [
-			'http' => [
-				'timeout' => $timeout,
-				'follow_location' => true,
-				'header' => "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.16 (KHTML, like Gecko) Chrome/24.0.1304.0 Safari/537.16\r\n" .
-							'Accept-Encoding: gzip, deflate',
-			],
-			'ssl' => [
-				'verify_peer' => false,
-				'verify_peer_name' => false,
-			]
-		];
+		'http' => [
+			'timeout' => $timeout,
+			'follow_location' => true,
+			'header' => "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.16 (KHTML, like Gecko) Chrome/24.0.1304.0 Safari/537.16\r\n" .
+						'Accept-Encoding: gzip, deflate',
+		],
+		'ssl' => [
+			'verify_peer' => false,
+			'verify_peer_name' => false,
+		],
+	];
 	if (!defined('_INC_DISTANT_USER_AGENT')) {
-		define('_INC_DISTANT_USER_AGENT', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.16 (KHTML, like Gecko) Chrome/24.0.1304.0 Safari/537.16');
+		define(
+			'_INC_DISTANT_USER_AGENT',
+			'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.16 (KHTML, like Gecko) Chrome/24.0.1304.0 Safari/537.16'
+		);
 	}
 	if (!defined('_INC_DISTANT_CONNECT_TIMEOUT')) {
 		define('_INC_DISTANT_CONNECT_TIMEOUT', $timeout);
 	}
 
-	stream_context_set_default(
-		$contexte
-	);
+	stream_context_set_default($contexte);
 	$t = time();
 	// récuperer un header décodé dans tous les cas
 	if ($head_lines = @get_headers($url)) {
@@ -148,7 +151,10 @@ function linkcheck_tester_url_externe($url) {
 				// TODO : adapter le flag distant en fonction de l'URL de redirection
 			}
 		} else {
-			spip_log("linkcheck_tester_url_externe: status introuvable dans le head pour $url :\n" . implode("\n", $header), 'linkcheck' . _LOG_ERREUR);
+			spip_log(
+				"linkcheck_tester_url_externe: status introuvable dans le head pour $url :\n" . implode("\n", $header),
+				'linkcheck' . _LOG_ERREUR
+			);
 			$statut = 503;
 			$ret['code'] = $statut;
 			$ret['etat'] = linkcheck_etats_liens($statut);
@@ -164,7 +170,6 @@ function linkcheck_tester_url_externe($url) {
 }
 
 /**
- *
  * @param string $url
  * @return array|false
  */
@@ -174,7 +179,7 @@ function linkcheck_get_headers($url) {
 	$url_get = $url;
 	$headers = false;
 	do {
-		list($f, $fopen) = init_http('GET', $url_get, false);
+		[$f, $fopen] = init_http('GET', $url_get, false);
 
 		if (!$f) {
 			spip_log("ECHEC init_http $url", 'linkcheck.' . _LOG_ERREUR);
@@ -208,7 +213,6 @@ function linkcheck_get_headers($url) {
  * si il y a une redirection, on va retrouver potentiellement tous les headers des redirections successives
  * il faut donc prendre en compte uniquement le statut final
  *
- * @param $lines
  * @return array|false
  */
 function linkcheck_recuperer_decoder_headers($lines, $url_base) {
@@ -237,7 +241,7 @@ function linkcheck_recuperer_decoder_headers($lines, $url_base) {
 		if (preg_match(',^([^:]*): *(.*)$,i', $s, $r)) {
 			[, $d, $v] = $r;
 			$d = strtolower(trim($d));
-			if ( $d === 'location' && $result['status'] >= 300 && $result['status'] < 400) {
+			if ($d === 'location' && $result['status'] >= 300 && $result['status'] < 400) {
 				if ($location = linkcheck_interpreter_location($v, $url_base)) {
 					$result['location'] = $location;
 				}
@@ -281,7 +285,7 @@ function linkcheck_interpreter_location($location, $url_base) {
 			if (is_array($url_dans_site)) {
 				$entite = array_shift($url_dans_site);
 				$contexte = array_shift($url_dans_site);
-				if (!empty($contexte[id_table_objet($entite)])) {
+				if ($entite && !empty($contexte[id_table_objet($entite)])) {
 					$location = $entite . $contexte[id_table_objet($entite)]; // article123
 				}
 			}
@@ -297,7 +301,7 @@ function linkcheck_interpreter_location($location, $url_base) {
  * @param string $url
  * 		L'url interne à tester
  *
- * @return array $ret
+ * @return array
  */
 function linkcheck_tester_url_interne($url) {
 	include_spip('inc/lien');
@@ -333,7 +337,7 @@ function linkcheck_tester_url_interne($url) {
 				$ret['code'] = 'publie';
 			}
 		} else {
-			$ret['etat'] =  linkcheck_etats_liens('poubelle');
+			$ret['etat'] = linkcheck_etats_liens('poubelle');
 			$ret['code'] = 'poubelle';
 		}
 	} else {

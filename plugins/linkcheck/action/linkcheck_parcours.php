@@ -9,7 +9,6 @@ function action_linkcheck_parcours_dist() {
 	include_spip('inc/queue');
 	include_spip('inc/config');
 
-
 	if (autoriser('webmestre')) {
 		$id_branche = _request('branche', 0);
 		$fini = linkcheck_parcourir($id_branche, time() + 20);

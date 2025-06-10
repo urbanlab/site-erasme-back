@@ -10,12 +10,11 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 	return;
 }
 
-
 function linkcheck_pre_propre($texte) {
 	if (!function_exists('lire_config')) {
 		include_spip('inc/config');
 	}
-	if (lire_config('linkcheck/traiter_propre',0)) {
+	if (lire_config('linkcheck/traiter_propre', 0)) {
 		$texte = linkcheck_pre_propre_nettoyer_liens_connus($texte);
 	}
 	return $texte;
@@ -27,7 +26,7 @@ function linkcheck_pre_propre_nettoyer_liens_connus($texte) {
 		foreach ($liens as $lien) {
 			//var_dump(entites_html($lien));
 			$href = extraire_attribut($lien, 'href');
-			if ($linkcheck = sql_fetsel('*', 'spip_linkchecks', "url=".sql_quote($href))) {
+			if ($linkcheck = sql_fetsel('*', 'spip_linkchecks', 'url=' . sql_quote($href))) {
 				if ($linkcheck_remplacer_lien = charger_fonction('linkcheck_remplacer_lien_' . $linkcheck['etat'], 'inc', true)) {
 					$lien_corrige = $linkcheck_remplacer_lien($lien, $linkcheck);
 					$texte = str_replace($lien, $lien_corrige, $texte);
@@ -51,17 +50,15 @@ function linkcheck_post_edition($flux) {
 	  && !empty($flux['args']['id_objet'])
 	) {
 		include_spip('inc/linkcheck');
-		linkcheck_objet_verifier(isset($flux['args']['objet']) ? $flux['args']['objet'] : $flux['args']['type'], $flux['args']['id_objet']);
+		linkcheck_objet_verifier($flux['args']['objet'] ?? $flux['args']['type'], $flux['args']['id_objet']);
 	}
 	return $flux;
 }
-
 
 /**
  * Pipeline qui ajoute des taches automatiques
  *
  * @param array $taches
- * @return $taches
  */
 function linkcheck_taches_generales_cron($taches) {
 	$taches['linkcheck_tester_base'] = 300; // toutes les 5 minutes on regarde si il y a des sites à tester
@@ -90,12 +87,14 @@ function linkcheck_alertes_auteur($flux) {
 				$texte = _T(
 					'linkcheck:liens_invalides',
 					[
-						'mort' => (isset($comptes['nb_lien_mort']) ? $comptes['nb_lien_mort'] : '0'),
-						'malade' => (isset($comptes['nb_lien_malade']) ? $comptes['nb_lien_malade'] : '0'),
-						'deplace' => (isset($comptes['nb_lien_deplace']) ? $comptes['nb_lien_deplace'] : '0')
+						'mort' => ($comptes['nb_lien_mort'] ?? '0'),
+						'malade' => ($comptes['nb_lien_malade'] ?? '0'),
+						'deplace' => ($comptes['nb_lien_deplace'] ?? '0'),
 					]
 				);
-				$flux['data'][] = $texte . " <a href='" . generer_url_ecrire('linkchecks') . "'>" . _T('linkcheck:linkcheck') . '</a>';
+				$flux['data'][] = $texte . " <a href='" . generer_url_ecrire(
+					'linkchecks'
+				) . "'>" . _T('linkcheck:linkcheck') . '</a>';
 			}
 		}
 	}
@@ -114,20 +113,20 @@ function linkcheck_affiche_enfants($flux) {
 		$tables_a_traiter = linkcheck_tables_a_traiter();
 		if (!empty($tables_a_traiter[$e['table_objet_sql']])
 			&& autoriser('modifier', $e['type'], $id_objet)) {
-			$id_linkchecks = sql_allfetsel('id_linkcheck', 'spip_linkchecks_liens', "objet=".sql_quote($e['type'])." AND id_objet=".intval($id_objet));
+			$id_linkchecks = sql_allfetsel(
+				'id_linkcheck',
+				'spip_linkchecks_liens',
+				'objet=' . sql_quote($e['type']) . ' AND id_objet=' . intval($id_objet)
+			);
 			if (!empty($id_linkchecks)) {
 				$id_linkchecks = array_column($id_linkchecks, 'id_linkcheck');
-				$flux['data'] .= "<div class='liste-linkchecks-par-objet'>".
-					recuperer_fond(
-					'prive/objets/liste/linkchecks',
-						[
-							'id_linkcheck' => $id_linkchecks,
-						],
-						[
-							'ajax' => true,
-						]
-					)
-					."</div>"
+				$flux['data'] .= "<div class='liste-linkchecks-par-objet'>" .
+					recuperer_fond('prive/objets/liste/linkchecks', [
+						'id_linkcheck' => $id_linkchecks,
+					], [
+						'ajax' => true,
+					])
+					. '</div>'
 				;
 			}
 		}
@@ -157,7 +156,10 @@ function linkcheck_optimiser_base_disparus($flux) {
 		'0,1000'
 	);
 	if (!empty($ids)) {
-		spip_log("linkcheck_optimiser_base_disparus: supprimer les linkchecks plus liés à rien : #".implode(', #', $ids), 'linkcheck');
+		spip_log(
+			'linkcheck_optimiser_base_disparus: supprimer les linkchecks plus liés à rien : #' . implode(', #', $ids),
+			'linkcheck'
+		);
 		$ids = array_column($ids, 'id_linkcheck');
 		sql_delete('spip_linkchecks', sql_in('id_linkcheck', $ids));
 		$flux['data'] += count($ids);

@@ -1,32 +1,18 @@
 <?php
 
 use Spip\Cli\Console\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\ProgressHelper;
 
-
-class linkcheckUrlsTester extends Command {
+class linkcheckUrlsTester extends Command
+{
 	protected function configure() {
 		$this
 			->setName('linkcheck:urls:tester')
 			->setDescription('Tester les URLs de la base')
-			->addOption(
-				'id_linkcheck',
-				null,
-				InputOption::VALUE_OPTIONAL,
-				'Pour tester un ou des IDs en particulier',
-				null
-			)
-			->addOption(
-				'etat',
-				null,
-				InputOption::VALUE_OPTIONAL,
-				'Pour tester les URLs d\'un état en particulier' ,
-				null
-			)
+			->addOption('id_linkcheck', null, InputOption::VALUE_OPTIONAL, 'Pour tester un ou des IDs en particulier', null)
+			->addOption('etat', null, InputOption::VALUE_OPTIONAL, 'Pour tester les URLs d\'un état en particulier', null)
 		;
 	}
 
@@ -39,15 +25,15 @@ class linkcheckUrlsTester extends Command {
 			$id_linkchecks = array_filter($id_linkchecks);
 			$id_linkchecks = array_unique($id_linkchecks);
 			if (empty($id_linkchecks)) {
-				$this->io->error("Indiquez un ou plusieurs ID non nuls dans --id_linkcheck");
+				$this->io->error('Indiquez un ou plusieurs ID non nuls dans --id_linkcheck');
 				return self::FAILURE;
 			}
 
-			$this->io->title("Tester des URLs");
+			$this->io->title('Tester des URLs');
 			$linkchecks = sql_allfetsel('*', 'spip_linkchecks', sql_in('id_linkcheck', $id_linkchecks));
-			$this->io->care(count($linkchecks) ." liens");
+			$this->io->care(count($linkchecks) . ' liens');
 			foreach ($linkchecks as $linkcheck) {
-				$this->io->section("#" . $linkcheck['id_linkcheck']. " " . $linkcheck['url']);
+				$this->io->section('#' . $linkcheck['id_linkcheck'] . ' ' . $linkcheck['url']);
 				$set = linkcheck_tester_un_linkcheck($linkcheck, true);
 				$this->io->atable([$set]);
 			}
@@ -57,10 +43,10 @@ class linkcheckUrlsTester extends Command {
 		$etat = $input->getOption('etat');
 		if (!empty($etat)) {
 			$this->io->title("Tester les URLs en état '$etat'");
-			$where = "etat=" . sql_quote($etat);
+			$where = 'etat=' . sql_quote($etat);
 			$order = 'maj DESC';
 		} else {
-			$this->io->title("Tester les URLs en état inconnu");
+			$this->io->title('Tester les URLs en état inconnu');
 			$where = "etat=''";
 			$order = 'id_linkcheck';
 		}
@@ -71,7 +57,14 @@ class linkcheckUrlsTester extends Command {
 		$this->io->progressStart($nb);
 		do {
 			// par défaut on veut tester les linkchecks en etat inconnu
-			$linkchecks = sql_allfetsel('*', 'spip_linkchecks', "$where AND maj < " . sql_quote($now_start), '', $order, "0,100");
+			$linkchecks = sql_allfetsel(
+				'*',
+				'spip_linkchecks',
+				"$where AND maj < " . sql_quote($now_start),
+				'',
+				$order,
+				'0,100'
+			);
 			foreach ($linkchecks as $linkcheck) {
 				//$this->io->care('#' . $linkcheck['id_linkcheck'] . ' ' . $linkcheck['url']);
 				linkcheck_tester_un_linkcheck($linkcheck);

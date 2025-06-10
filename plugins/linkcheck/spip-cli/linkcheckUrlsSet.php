@@ -1,14 +1,12 @@
 <?php
 
 use Spip\Cli\Console\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\ProgressHelper;
 
-
-class linkcheckUrlsSet extends Command {
+class linkcheckUrlsSet extends Command
+{
 	protected function configure() {
 		$this
 			->setName('linkcheck:urls:set')
@@ -20,13 +18,7 @@ class linkcheckUrlsSet extends Command {
 				'Pour affecter un ou des IDs en particulier',
 				null
 			)
-			->addOption(
-				'etat',
-				null,
-				InputOption::VALUE_OPTIONAL,
-				'Pour filtrer sur un un état en particulier',
-				null
-			)
+			->addOption('etat', null, InputOption::VALUE_OPTIONAL, 'Pour filtrer sur un un état en particulier', null)
 			->addOption(
 				'url-like',
 				null,
@@ -55,10 +47,9 @@ class linkcheckUrlsSet extends Command {
 		include_spip('inc/linkcheck');
 
 		if (!$status = $input->getOption('status')) {
-			$this->io->error("Indiquez un status HTTP à mettre sur les URLs concernées");
+			$this->io->error('Indiquez un status HTTP à mettre sur les URLs concernées');
 			return self::FAILURE;
 		}
-
 
 		$where = [];
 		if ($id_linkchecks = $input->getOption('id_linkcheck')) {
@@ -67,28 +58,28 @@ class linkcheckUrlsSet extends Command {
 			$id_linkchecks = array_filter($id_linkchecks);
 			$id_linkchecks = array_unique($id_linkchecks);
 			if (empty($id_linkchecks)) {
-				$this->io->error("Indiquez un ou plusieurs ID non nuls dans --id_linkcheck");
+				$this->io->error('Indiquez un ou plusieurs ID non nuls dans --id_linkcheck');
 				return self::FAILURE;
 			}
 			$where[] = sql_in('id_linkcheck', $id_linkchecks);
 		}
 
 		if (($etat = $input->getOption('etat')) !== null) {
-			$where[] = "etat=" . sql_quote($etat ?: '');
+			$where[] = 'etat=' . sql_quote($etat ?: '');
 		}
 
 		if (($url = $input->getOption('url-like'))) {
-			$where[] = "url LIKE " . sql_quote($url);
+			$where[] = 'url LIKE ' . sql_quote($url);
 		}
 		if (($url = $input->getOption('url-regpexp'))) {
-			$where[] = "url REGEXP " . sql_quote($url);
+			$where[] = 'url REGEXP ' . sql_quote($url);
 		}
 
-		$nb = sql_countsel("spip_linkchecks", $where);
+		$nb = sql_countsel('spip_linkchecks', $where);
 		$this->io->care(json_encode($where));
 
 		if (!$nb) {
-			$this->io->care("Aucune URL ne correspond");
+			$this->io->care('Aucune URL ne correspond');
 			return self::FAILURE;
 		}
 

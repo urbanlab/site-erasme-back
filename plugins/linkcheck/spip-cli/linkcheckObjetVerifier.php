@@ -1,25 +1,17 @@
 <?php
 
 use Spip\Cli\Console\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\ProgressHelper;
 
-
-class linkcheckObjetVerifier extends Command {
+class linkcheckObjetVerifier extends Command
+{
 	protected function configure() {
 		$this
 			->setName('linkcheck:objet:verifier')
 			->setDescription('Recenser et Verifier les liens d\'un objet en particulier')
-			->addOption(
-				'objet',
-				null,
-				InputOption::VALUE_REQUIRED,
-				'objet',
-				null
-			)
+			->addOption('objet', null, InputOption::VALUE_REQUIRED, 'objet', null)
 			->addOption(
 				'id_objet',
 				null,
@@ -35,7 +27,7 @@ class linkcheckObjetVerifier extends Command {
 
 		$objet = $input->getOption('objet');
 		if (!$objet) {
-			$output->writeln("<error>Indiquez un objet a analyser</error>");
+			$output->writeln('<error>Indiquez un objet a analyser</error>');
 			return self::FAILURE;
 		}
 
@@ -52,7 +44,7 @@ class linkcheckObjetVerifier extends Command {
 			$id_objets = array_filter($id_objets);
 		}
 		if (!$id_objets) {
-			$output->writeln("<error>Indiquez un ou des id_objet a analyser (séparés par des virgules)</error>");
+			$output->writeln('<error>Indiquez un ou des id_objet a analyser (séparés par des virgules)</error>');
 			return self::FAILURE;
 		}
 
@@ -60,9 +52,9 @@ class linkcheckObjetVerifier extends Command {
 			$this->io->section("Analyser $objet #$id_objet");
 			$id_linkchecks = linkcheck_objet_verifier($objet, $id_objet, false);
 			if (empty($id_linkchecks)) {
-				$this->io->care("Aucun lien trouvé");
+				$this->io->care('Aucun lien trouvé');
 			} else {
-				$this->io->check(count($id_linkchecks) . " lien(s) trouvé(s)");
+				$this->io->check(count($id_linkchecks) . ' lien(s) trouvé(s)');
 				$this->io->care('Vérification des liens...');
 
 				$res = linkcheck_objet_tester_liens($objet, $id_objet, $id_linkchecks);

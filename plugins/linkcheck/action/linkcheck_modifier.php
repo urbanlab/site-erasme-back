@@ -20,7 +20,18 @@ function action_linkcheck_modifier_dist() {
 	$search = $sel['url'];
 	$replace = $sel['redirection'];
 
-	$champs_exclus = ['extra', 'tables_liees', 'obligatoire', 'comite', 'minirezo', 'forum', 'mode', 'fichier', 'distant', 'media'];
+	$champs_exclus = [
+		'extra',
+		'tables_liees',
+		'obligatoire',
+		'comite',
+		'minirezo',
+		'forum',
+		'mode',
+		'fichier',
+		'distant',
+		'media',
+	];
 	$liens = sql_allfetsel('*', 'spip_linkchecks_liens', 'id_linkcheck = ' . intval($id_linkcheck));
 	foreach ($liens as $l) {
 
@@ -42,7 +53,7 @@ function action_linkcheck_modifier_dist() {
 		// et qui sont en texte
 		foreach ($champs as $c) {
 			if (!preg_match(',text|varchar,', $desc['field'][$c])) {
-				$champs = array_diff($champs, array($c));
+				$champs = array_diff($champs, [$c]);
 			}
 		}
 

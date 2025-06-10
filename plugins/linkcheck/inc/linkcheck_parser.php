@@ -6,7 +6,7 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 
 function linkcheck_parcourir($id_branche = null, $timeout = null) {
 	// on se donne 20 secondes pour parcourir les tables
-	if (is_null($timeout)) {
+	if ($timeout === null) {
 		$timeout = time() + 20;
 	}
 
@@ -30,7 +30,6 @@ function linkcheck_parcourir($id_branche = null, $timeout = null) {
 			array_shift($liste_tables);
 		}
 	}
-
 
 	foreach ($liste_tables as $table_sql) {
 		if ($do !== $table_sql) {
@@ -103,15 +102,7 @@ function linkcheck_parcourir($id_branche = null, $timeout = null) {
 		do {
 			// Recommencer à l'id ou l'on s'est arrêté
 			$where[] = $primary . '>' . intval($dio);
-			$objets = sql_allfetsel(
-				$select,
-				$table_sql,
-				$where,
-				'',
-				$primary . ' ASC',
-				'0,' . $limit,
-				$having
-			);
+			$objets = sql_allfetsel($select, $table_sql, $where, '', $primary . ' ASC', '0,' . $limit, $having);
 			array_pop($where);
 			//pour chaque objet
 			$objet = objet_type($table_sql);
@@ -133,7 +124,7 @@ function linkcheck_parcourir($id_branche = null, $timeout = null) {
 			//on renseigne les ids de reprise à la fin de chaque lot pour limiter le nombre d'ecritures
 			ecrire_config('linkcheck_dernier_id_objet', $dio);
 
-		} while(count($objets));
+		} while (count($objets));
 	}
 
 	//quand la fonction a été executée en entier on renseigne la base
@@ -143,12 +134,10 @@ function linkcheck_parcourir($id_branche = null, $timeout = null) {
 
 /**
  * Recenser les liens pour un objet/id_objet
- * @param string $objet
- * @param int $id_objet
  * @return array
  */
 function linkcheck_objet_recenser_liens(string $objet, int $id_objet, $champs = null) {
-	if (is_null($champs)) {
+	if ($champs === null) {
 		$table_sql = table_objet_sql($objet);
 		$tables_a_traiter = linkcheck_tables_a_traiter();
 		if (empty($tables_a_traiter[$table_sql])) {
@@ -162,7 +151,10 @@ function linkcheck_objet_recenser_liens(string $objet, int $id_objet, $champs = 
 	}
 
 	$liens = linkcheck_recenser_liens($objet, $champs);
-	spip_log("linkcheck_objet_recenser_liens: $objet #$id_objet " . count($liens) . " lien trouvés", 'linkcheck' . _LOG_DEBUG);
+	spip_log(
+		"linkcheck_objet_recenser_liens: $objet #$id_objet " . count($liens) . ' lien trouvés',
+		'linkcheck' . _LOG_DEBUG
+	);
 	return $liens;
 }
 
@@ -188,13 +180,13 @@ function linkcheck_recenser_liens($objet, $champs) {
 		// fonctions de parsing par défaut en fonction du type du champ
 		if (
 			($f = charger_fonction("linkcheck_recenser_liens_{$objet}_champ_type_url", 'inc', true))
-			|| ($f = charger_fonction("linkcheck_recenser_liens_champ_type_url", 'inc'))
+			|| ($f = charger_fonction('linkcheck_recenser_liens_champ_type_url', 'inc'))
 		) {
 			$fonctions_par_champ[$objet][0] = $f;
 		}
 		if (
 			($f = charger_fonction("linkcheck_recenser_liens_{$objet}_champ_type_texte", 'inc', true))
-			|| ($f = charger_fonction("linkcheck_recenser_liens_champ_type_texte", 'inc'))
+			|| ($f = charger_fonction('linkcheck_recenser_liens_champ_type_texte', 'inc'))
 		) {
 			$fonctions_par_champ[$objet][1] = $f;
 		}
@@ -228,11 +220,10 @@ function linkcheck_recenser_liens($objet, $champs) {
 	return $liens;
 }
 
-
 function linkcheck_completer_url_partielle($url_site) {
 	if (
-		strpos($url_site, 'http://')===0
-		|| strpos($url_site, 'https://')===0
+		strpos($url_site, 'http://') === 0
+		|| strpos($url_site, 'https://') === 0
 	) {
 		return $url_site;
 	}
@@ -258,17 +249,17 @@ function inc_linkcheck_recenser_liens_champ_type_texte_dist($champ_value) {
 	static $tab_expreg;
 	static $clean_right_preg;
 
-	if (is_null($tab_expreg)) {
+	if ($tab_expreg === null) {
 		/**
 		 * TODO : trouver une regexp mieux que cela et complète
-		 * @var string $classe_alpha
+		 * @var string
 		 */
 		$classe_alpha = 'a-zA-Z0-9\x{00a1}-\x{FFFF}\(\)';
 		$clean_right = ["'", '"', ' ', "\t", "\n", "\r", '.', ',', ';', '|', '->', ')', ']', ':', '?', '~'];
 		$clean_right_preg = implode('|', array_map('preg_quote', $clean_right));
 		$tab_expreg = [
 			"('|\"| |\.|\->|\]|,|;|\s)(((((http|https|ftp|ftps)://)?www\.)|((http|https|ftp|ftps)://(?:\S+(?::\S*)?@)?.([" . $classe_alpha . "'\-]*\.)?))(['" . $classe_alpha . "'0-9\-\+]*\.)+([a-zA-Z0-9]{2,9})(?::\d{2,5})?(/[" . $classe_alpha . "=.?&~_;\-\+\@\:\,/%#]*)?)($clean_right_preg)?",
-			'(\->)([a-zA-Z]{3,10}[0-9]{1,})\]'
+			'(\->)([a-zA-Z]{3,10}[0-9]{1,})\]',
 		];
 	}
 	$liens = [];
@@ -279,7 +270,10 @@ function inc_linkcheck_recenser_liens_champ_type_texte_dist($champ_value) {
 		foreach ($tab_expreg as $expreg) {
 			if (preg_match_all('`' . $expreg . '`u', ' ' . $champ_value . ' ', $matches) > 0) {
 				foreach ($matches[2] as $cle => $m) {
-					if (!empty($m) && !in_array(!empty($matches[11][$cle]) ? $matches[11][$cle] : [], ['invalid', 'test', 'localhost', 'example'])) {
+					if (!empty($m) && !in_array(
+						!empty($matches[11][$cle]) ? $matches[11][$cle] : [],
+						['invalid', 'test', 'localhost', 'example']
+					)) {
 						$lien_clean = trim($m);
 						while (preg_match("`($clean_right_preg)$`u", $lien_clean, $clean_match)) {
 							$lien_clean = trim(substr($lien_clean, 0, -strlen($clean_match[0])));
@@ -305,9 +299,6 @@ function inc_linkcheck_recenser_liens_champ_type_texte_dist($champ_value) {
 
 /**
  * Enlever les blocs de code, cadre, code markdown
- * 
- * @param string $texte
- * @return string
  */
 function linkcheck_nettoyer_texte(string $texte): string {
 	static $wheel = null;
@@ -321,7 +312,7 @@ function linkcheck_nettoyer_texte(string $texte): string {
 		if (class_exists('Textwheel')) {
 			$wheel = new TextWheel(
 				SPIPTextWheelRuleset::loader($GLOBALS['spip_wheels']['pre_echappe_html_propre'] ?? [])
-			);				
+			);
 		} else {
 			$wheel = false;
 		}
@@ -331,7 +322,7 @@ function linkcheck_nettoyer_texte(string $texte): string {
 			$texte = $wheel->text($texte);
 		} catch (Exception $e) {
 			// tant pis…
-		}		
+		}
 	}
 
 	return $texte;

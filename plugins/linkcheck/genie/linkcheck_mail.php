@@ -37,7 +37,7 @@ function genie_linkcheck_mail_dist() {
 				[
 					'html' => $cont,
 					'texte' => strip_tags($cont),
-					'nom_envoyeur' => 'Linkcheck'
+					'nom_envoyeur' => 'Linkcheck',
 				]
 			);
 

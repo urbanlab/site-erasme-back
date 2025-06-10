@@ -34,7 +34,7 @@ function linkcheck_detecter_type_champs($champs, $desc) {
  */
 function linkcheck_tables_a_traiter() {
 	static $tables;
-	if (is_null($tables)) {
+	if ($tables === null) {
 		$tables_config_linkcheck = lire_config('linkcheck/linkcheck_objets', ['spip_articles']);
 		$tables_spip = lister_tables_objets_sql();
 		$tables = [];
@@ -90,19 +90,19 @@ function linkcheck_etats_liens($status = null) {
 			'prepa' => 'malade',
 			'prop' => 'malade',
 			'refuse' => 'malade',
-			'poubelle' => 'mort'
-		]
+			'poubelle' => 'mort',
+		],
 	];
-	if(!is_null($status)) {
+	if ($status !== null) {
 		if (is_numeric($status)) {
 			if (isset($status_to_etat[0][$status])) {
 				return $status_to_etat[0][$status];
 			}
 			$first = substr(trim($status), 0, 1);
 			return $status_to_etat[0][$first] ?? 'malade';
-		} else {
-			return $status_to_etat[1][$status] ?? 'malade';
 		}
+		return $status_to_etat[1][$status] ?? 'malade';
+
 	}
 	return $status_to_etat;
 }

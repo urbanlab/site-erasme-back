@@ -5,7 +5,7 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 	return;
 }
 
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return[
 
 	// A
 	'afficher_alerte' => 'Afficher les alertes',
@@ -114,4 +114,4 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// U
 	'url' => 'URL',
 	'utilise' => 'Utilisé dans '
-);
+];

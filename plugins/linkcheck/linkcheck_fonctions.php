@@ -15,13 +15,12 @@ if (!defined('_ECRIRE_INC_VERSION')) {
  * systematiquement charges lors du calcul des squelettes.
  *
  * Il peut par exemple définir des filtres, critères, balises, …
- *
  */
 function linkcheck_en_url($url, $distant = null) {
 	$inc_lien = charger_fonction('lien', 'inc');
 
 	$retour = false;
-	if (is_null($distant)) {
+	if ($distant === null) {
 		$distant = (strpos($url, '://') === false ? false : true);
 	}
 	if (strlen($url) > 0) {
@@ -35,11 +34,11 @@ function linkcheck_en_url($url, $distant = null) {
 			}
 			$retour = "<a href=\"$url\" title=\""
 				. attribut_html(_T('linkcheck:ouvrenouvelonglet'))
-				."\" target=\"_blank\">$url{$titre}</a>";
+				. "\" target=\"_blank\">$url{$titre}</a>";
 		} else {
 			$retour = "<a href=\"$url\" class==\"spip_out\" rel=\"external\" title=\""
 				. attribut_html(_T('linkcheck:ouvrenouvelonglet'))
-				."\" target=\"_blank\">$url</a>";
+				. "\" target=\"_blank\">$url</a>";
 		}
 	}
 	return $retour;
@@ -56,7 +55,11 @@ function linkcheck_chiffre() {
 	if ($tab_chiffre['nb_lien'] > 0) {
 		$tab_chiffre['nb_lien_inconnu'] = sql_getfetsel('count(id_linkcheck)', 'spip_linkchecks', 'etat=\'\'');
 		foreach (['mort', 'malade', 'restreint', 'deplace', 'ok'] as $etat) {
-			$tab_chiffre['nb_lien_' . $etat] = sql_getfetsel('count(id_linkcheck)', 'spip_linkchecks', 'etat=' . sql_quote($etat));
+			$tab_chiffre['nb_lien_' . $etat] = sql_getfetsel(
+				'count(id_linkcheck)',
+				'spip_linkchecks',
+				'etat=' . sql_quote($etat)
+			);
 			$tab_chiffre['pct_lien_' . $etat] = $tab_chiffre['nb_lien_' . $etat] * 100 / $tab_chiffre['nb_lien'];
 		}
 	}
@@ -75,7 +78,7 @@ function linkcheck_chiffre() {
 		$nb = sql_countsel($table_sql);
 		$total += $nb;
 		if ($table_sql === $do) {
-			$done += sql_countsel($table_sql, "$primary<=".intval($dio));
+			$done += sql_countsel($table_sql, "$primary<=" . intval($dio));
 			$do = '';
 		} elseif ($do) {
 			$done += $nb;

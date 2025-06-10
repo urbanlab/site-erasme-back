@@ -15,7 +15,7 @@ function action_linkcheck_tester_base_dist() {
 	$linkchecks = sql_allfetsel('*', 'spip_linkchecks', "etat=''", '', 'id_linkcheck ASC', "0,$limit");
 	if (empty($linkchecks)) {
 		// si il y en a plus, on va tester les plus anciens, et du coup ça finira jamais
-		$linkchecks = sql_allfetsel('*', 'spip_linkchecks', "", '', 'maj DESC', "0,$limit");
+		$linkchecks = sql_allfetsel('*', 'spip_linkchecks', '', '', 'maj DESC', "0,$limit");
 	}
 	foreach ($linkchecks as $linkcheck) {
 		linkcheck_tester_un_linkcheck($linkcheck);
@@ -30,9 +30,9 @@ function action_linkcheck_tester_base_dist() {
 		include_spip('inc/action');
 		ajax_retour(json_encode($chiffres), 'application/json');
 		exit;
-	} else {
-		if ($redirect = _request('redirect')) {
-			$GLOBALS['redirect'] = parametre_url($redirect, 'message', 'check_ok', '&');
-		}
 	}
+	if ($redirect = _request('redirect')) {
+		$GLOBALS['redirect'] = parametre_url($redirect, 'message', 'check_ok', '&');
+	}
+
 }

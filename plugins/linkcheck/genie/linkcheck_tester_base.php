@@ -8,7 +8,7 @@ function genie_linkcheck_tester_base_dist($t) {
 	$tests = [
 		'' => [
 			'limit' => 30,
-			'order' => 'id_linkcheck'
+			'order' => 'id_linkcheck',
 		],
 		'ok' => [
 			'limit' => 20,
@@ -32,16 +32,13 @@ function genie_linkcheck_tester_base_dist($t) {
 		],
 	];
 
-
 	include_spip('inc/linkcheck');
 	$encore = false;
 	// on s'accorde 20s pour rester dans le timeout
 	$timeout = time() + 20;
 	foreach ($tests as $etat => $config) {
 		$limit = $config['limit'] ?? 30;
-		$where = [
-			'etat=' . sql_quote($etat),
-		];
+		$where = ['etat=' . sql_quote($etat)];
 		if (!empty($config['periode'])) {
 			$where[] = "maj < '" . date('Y-m-d H:i:s', time() - $config['periode']) . "'";
 		}
@@ -53,7 +50,10 @@ function genie_linkcheck_tester_base_dist($t) {
 			$encore = true;
 			array_pop($linkchecks);
 		}
-		spip_log("genie_linkcheck_tester_base_dist: verifier " . count($linkchecks) ." URLS en etat '$etat'", 'linkcheck' . _LOG_DEBUG);
+		spip_log(
+			'genie_linkcheck_tester_base_dist: verifier ' . count($linkchecks) . " URLS en etat '$etat'",
+			'linkcheck' . _LOG_DEBUG
+		);
 		foreach ($linkchecks as $linkcheck) {
 			linkcheck_tester_un_linkcheck($linkcheck);
 			if (time() > $timeout) {
@@ -64,8 +64,8 @@ function genie_linkcheck_tester_base_dist($t) {
 	}
 
 	if ($encore) {
-		spip_log("genie_linkcheck_tester_base_dist: on a pas fini, on se relance", 'linkcheck' . _LOG_DEBUG);
-		return -($t-300);
+		spip_log('genie_linkcheck_tester_base_dist: on a pas fini, on se relance', 'linkcheck' . _LOG_DEBUG);
+		return -($t - 300);
 	}
 	return 0;
 }
