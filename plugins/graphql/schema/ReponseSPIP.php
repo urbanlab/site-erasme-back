@@ -61,11 +61,12 @@ class ReponseSPIP
 	}
 
 	// Récupération d'une collection d'objets
-	public static function findCollection(string $collection, array $where, int $pagination, int $page = 1): ?array {
+	public static function findCollection(string $collection, array $where, int $pagination, int $page = 1, ?array $orderBy = null): ?array {
 		$retour_objets = [];
 		$table = table_objet_sql($collection);
 		$from = $table . ' AS collection';
 		$where = self::getWhere($table, $where);
+		$order = self::buildOrder($orderBy);
 		$offset = ($page - 1) * $pagination;
 		$limit = ($pagination == 0) ? '' : "$offset,$pagination";
 
@@ -74,7 +75,7 @@ class ReponseSPIP
 			$totalPages = ceil($totalObjets / $pagination);
 		}
 
-		$objets = sql_allfetsel(self::getSelect($table), $from, $where, '', '', $limit);
+		$objets = sql_allfetsel(self::getSelect($table), $from, $where, '', $order, $limit);
 
 		foreach ($objets as $objet) {
 			$retour_objets[] = self::findObjet((int) $objet['id'], $collection, $objet);
@@ -309,4 +310,22 @@ class ReponseSPIP
 
 		return $retour_where;
 	}
+	private static function buildOrder(?array $orderBy): string {
+		if (!$orderBy) {
+			return ''; // pas d'ordre
+		}
+
+		$orderClauses = [];
+		foreach ($orderBy as $clause) {
+			// Accepte des formats du type ["titre_ASC", "date_DESC"]
+			if (preg_match('/^([a-zA-Z0-9_]+)_(ASC|DESC)$/i', $clause, $matches)) {
+				$champ = addslashes($matches[1]);
+				$direction = strtoupper($matches[2]);
+				$orderClauses[] = "$champ $direction";
+			}
+		}
+
+		return implode(', ', $orderClauses);
+	}
+
 }

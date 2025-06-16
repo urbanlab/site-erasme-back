@@ -484,6 +484,7 @@ class SchemaSPIP
 			'resolve' => fn ($rootValue, array $args, array $context, ResolveInfo $info) => ReponseSPIP::findCollection(
 				$info->fieldDefinition->name,
 				$args['where'],
+				$args['orderby'],
 				$args['pagination'],
 				$args['page']
 			),
@@ -495,6 +496,11 @@ class SchemaSPIP
 			'where' => [
 				'type' => new NonNull(new ListOfType(new NonNull(Type::string()))),
 				'description' => _T('graphql:desc_arg_where'),
+				'defaultValue' => [],
+			],
+			'orderby' => [
+				'type' => new NonNull(new ListOfType(new NonNull(Type::string()))),
+				'description' => _T('graphql:desc_arg_orderby'),
 				'defaultValue' => [],
 			],
 			'pagination' => [

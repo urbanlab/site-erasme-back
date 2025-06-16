@@ -31,6 +31,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'desactiver' => 'Désactiver',
 	'desc_arg_id' => 'ID de l\'objet',
 	'desc_arg_lang' => 'Langue de la recherche',
+	'desc_arg_orderby' => 'ORDER BY de votre requête',
 	'desc_arg_page' => 'Page retournée pour la pagination',
 	'desc_arg_pagination' => 'Nombre d\'objets maximal retournés',
 	'desc_arg_texte' => 'Votre recherche',
