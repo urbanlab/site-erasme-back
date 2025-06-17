@@ -5,9 +5,9 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 declare (strict_types=1);
-namespace RectorPrefix202505\Nette\Utils;
+namespace RectorPrefix202506\Nette\Utils;
 
-use RectorPrefix202505\Nette;
+use RectorPrefix202506\Nette;
 /**
  * Finder allows searching through directory trees using iterator.
  *
@@ -278,7 +278,7 @@ class Finder implements \IteratorAggregate
             [, $operator, $date] = $matches;
             $operator = $operator ?: '=';
         }
-        $date = DateTime::from($date)->format('U');
+        $date = DateTime::from($date)->getTimestamp();
         return $this->filter(fn(FileInfo $file): bool => !$file->isFile() || Helpers::compare($file->getMTime(), $operator, $date));
     }
     /********************* iterator generator ****************d*g**/

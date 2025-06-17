@@ -5,6 +5,7 @@ namespace Rector\Renaming\NodeManipulator;
 
 use PhpParser\Node;
 use PhpParser\Node\AttributeGroup;
+use PhpParser\Node\Name;
 use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassLike;
@@ -74,8 +75,17 @@ final class ClassRenamer
     public function renameNode(Node $node, array $oldToNewClasses, ?Scope $scope) : ?Node
     {
         $oldToNewTypes = $this->createOldToNewTypes($oldToNewClasses);
+        // execute FullyQualified before Name on purpose so next Name check is pure Name node
         if ($node instanceof FullyQualified) {
             return $this->refactorName($node, $oldToNewClasses);
+        }
+        // Name as parent of FullyQualified executed for fallback annotation to attribute rename to Name
+        if ($node instanceof Name) {
+            $phpAttributeName = $node->getAttribute(AttributeKey::PHP_ATTRIBUTE_NAME);
+            if (\is_string($phpAttributeName)) {
+                return $this->refactorName(new FullyQualified($phpAttributeName), $oldToNewClasses);
+            }
+            return null;
         }
         $phpDocInfo = $this->phpDocInfoFactory->createFromNode($node);
         if ($phpDocInfo instanceof PhpDocInfo) {

@@ -210,7 +210,7 @@ class ReponseSPIP
 				$objet[$collection_liee] = self::findCollection(
 					$collection_liee,
 					$where,
-					(int) $collections_autorisees[$collection_liee]['pagination']
+					$collections_autorisees[$collection_liee]['pagination']
 				);
 			}
 		}

@@ -5,13 +5,18 @@ namespace Rector\Doctrine\TypedCollections\Rector\ClassMethod;
 
 use PhpParser\Node;
 use PhpParser\Node\Expr;
+use PhpParser\Node\Expr\ConstFetch;
+use PhpParser\Node\Name;
 use PhpParser\Node\Name\FullyQualified;
+use PhpParser\Node\NullableType;
 use PhpParser\Node\Stmt\ClassMethod;
 use PHPStan\PhpDocParser\Ast\PhpDoc\ParamTagValueNode;
 use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfo;
 use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfoFactory;
 use Rector\Doctrine\Enum\DoctrineClass;
 use Rector\Doctrine\TypedCollections\DocBlockAnalyzer\CollectionTagValueNodeAnalyzer;
+use Rector\NodeTypeResolver\Node\AttributeKey;
+use Rector\PHPUnit\NodeAnalyzer\TestsNodeAnalyzer;
 use Rector\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
@@ -23,13 +28,18 @@ final class CollectionSetterParamNativeTypeRector extends AbstractRector
     /**
      * @readonly
      */
+    private TestsNodeAnalyzer $testsNodeAnalyzer;
+    /**
+     * @readonly
+     */
     private PhpDocInfoFactory $phpDocInfoFactory;
     /**
      * @readonly
      */
     private CollectionTagValueNodeAnalyzer $collectionTagValueNodeAnalyzer;
-    public function __construct(PhpDocInfoFactory $phpDocInfoFactory, CollectionTagValueNodeAnalyzer $collectionTagValueNodeAnalyzer)
+    public function __construct(TestsNodeAnalyzer $testsNodeAnalyzer, PhpDocInfoFactory $phpDocInfoFactory, CollectionTagValueNodeAnalyzer $collectionTagValueNodeAnalyzer)
     {
+        $this->testsNodeAnalyzer = $testsNodeAnalyzer;
         $this->phpDocInfoFactory = $phpDocInfoFactory;
         $this->collectionTagValueNodeAnalyzer = $collectionTagValueNodeAnalyzer;
     }
@@ -81,6 +91,7 @@ CODE_SAMPLE
         if ($node->isAbstract()) {
             return null;
         }
+        $isInTests = $this->testsNodeAnalyzer->isInTestClass($node);
         $hasChanged = \false;
         $classMethodPhpDocInfo = $this->phpDocInfoFactory->createFromNode($node);
         if (!$classMethodPhpDocInfo instanceof PhpDocInfo) {
@@ -102,9 +113,19 @@ CODE_SAMPLE
             }
             $hasChanged = \true;
             $param->type = new FullyQualified(DoctrineClass::COLLECTION);
+            // fix reprint position of type
+            $param->setAttribute(AttributeKey::ORIGINAL_NODE, null);
+            // make nullable only 1st param, as others might require a null
             if ($param->default instanceof Expr) {
-                // remove default param, as no longer needed; empty collection should be passed instead
-                $param->default = null;
+                if ($isInTests === \false) {
+                    // remove default param, as no longer needed; empty collection should be passed instead
+                    $param->default = null;
+                } else {
+                    // make type explicitly nullable
+                    $collectionFullyQualified = new FullyQualified(DoctrineClass::COLLECTION);
+                    $param->type = new NullableType($collectionFullyQualified);
+                    $param->default = new ConstFetch(new Name('null'));
+                }
             }
         }
         if ($hasChanged) {

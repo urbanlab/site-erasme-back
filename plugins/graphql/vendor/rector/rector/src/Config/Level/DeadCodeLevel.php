@@ -13,6 +13,7 @@ use Rector\DeadCode\Rector\BooleanAnd\RemoveAndTrueRector;
 use Rector\DeadCode\Rector\Cast\RecastingRemovalRector;
 use Rector\DeadCode\Rector\ClassConst\RemoveUnusedPrivateClassConstantRector;
 use Rector\DeadCode\Rector\ClassLike\RemoveTypedPropertyNonMockDocblockRector;
+use Rector\DeadCode\Rector\ClassMethod\RemoveArgumentFromDefaultParentCallRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveEmptyClassMethodRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveNullTagValueNodeRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedConstructorParamRector;
@@ -52,6 +53,7 @@ use Rector\DeadCode\Rector\StaticCall\RemoveParentCallWithoutParentRector;
 use Rector\DeadCode\Rector\Stmt\RemoveUnreachableStatementRector;
 use Rector\DeadCode\Rector\Switch_\RemoveDuplicatedCaseInSwitchRector;
 use Rector\DeadCode\Rector\Ternary\TernaryToBooleanOrFalseToBooleanAndRector;
+use Rector\DeadCode\Rector\TryCatch\RemoveDeadCatchRector;
 use Rector\DeadCode\Rector\TryCatch\RemoveDeadTryCatchRector;
 /**
  * Key 0 = level 0
@@ -109,6 +111,7 @@ final class DeadCodeLevel
         RemoveUnusedPrivatePropertyRector::class,
         RemoveDuplicatedCaseInSwitchRector::class,
         RemoveDeadInstanceOfRector::class,
+        RemoveDeadCatchRector::class,
         RemoveDeadTryCatchRector::class,
         RemoveDeadIfForeachForRector::class,
         RemoveDeadStmtRector::class,
@@ -127,5 +130,6 @@ final class DeadCodeLevel
         RemoveUnusedConstructorParamRector::class,
         RemoveEmptyClassMethodRector::class,
         RemoveDeadReturnRector::class,
+        RemoveArgumentFromDefaultParentCallRector::class,
     ];
 }

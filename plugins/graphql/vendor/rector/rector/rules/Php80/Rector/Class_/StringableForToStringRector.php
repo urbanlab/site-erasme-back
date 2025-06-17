@@ -17,9 +17,9 @@ use PhpParser\Node\Stmt\Return_;
 use PhpParser\NodeVisitor;
 use Rector\FamilyTree\Reflection\FamilyRelationsAnalyzer;
 use Rector\NodeAnalyzer\ClassAnalyzer;
-use Rector\PhpParser\Node\BetterNodeFinder;
 use Rector\Rector\AbstractRector;
 use Rector\TypeDeclaration\TypeInferer\ReturnTypeInferer;
+use Rector\TypeDeclaration\TypeInferer\SilentVoidResolver;
 use Rector\ValueObject\MethodName;
 use Rector\ValueObject\PhpVersionFeature;
 use Rector\VersionBonding\Contract\MinPhpVersionInterface;
@@ -45,18 +45,18 @@ final class StringableForToStringRector extends AbstractRector implements MinPhp
     /**
      * @readonly
      */
-    private BetterNodeFinder $betterNodeFinder;
+    private SilentVoidResolver $silentVoidResolver;
     /**
      * @var string
      */
     private const STRINGABLE = 'Stringable';
     private bool $hasChanged = \false;
-    public function __construct(FamilyRelationsAnalyzer $familyRelationsAnalyzer, ReturnTypeInferer $returnTypeInferer, ClassAnalyzer $classAnalyzer, BetterNodeFinder $betterNodeFinder)
+    public function __construct(FamilyRelationsAnalyzer $familyRelationsAnalyzer, ReturnTypeInferer $returnTypeInferer, ClassAnalyzer $classAnalyzer, SilentVoidResolver $silentVoidResolver)
     {
         $this->familyRelationsAnalyzer = $familyRelationsAnalyzer;
         $this->returnTypeInferer = $returnTypeInferer;
         $this->classAnalyzer = $classAnalyzer;
-        $this->betterNodeFinder = $betterNodeFinder;
+        $this->silentVoidResolver = $silentVoidResolver;
     }
     public function provideMinPhpVersion() : int
     {
@@ -132,8 +132,7 @@ CODE_SAMPLE
         if ($toStringClassMethod->isAbstract()) {
             return;
         }
-        $hasReturn = $this->betterNodeFinder->hasInstancesOfInFunctionLikeScoped($toStringClassMethod, Return_::class);
-        if (!$hasReturn) {
+        if ($this->silentVoidResolver->hasSilentVoid($toStringClassMethod)) {
             $emptyStringReturn = new Return_(new String_(''));
             $toStringClassMethod->stmts[] = $emptyStringReturn;
             $this->hasChanged = \true;

@@ -3,7 +3,7 @@
 declare (strict_types=1);
 namespace Rector\PhpParser\Printer;
 
-use RectorPrefix202505\Nette\Utils\Strings;
+use RectorPrefix202506\Nette\Utils\Strings;
 use PhpParser\Comment;
 use PhpParser\Node;
 use PhpParser\Node\Arg;
@@ -21,7 +21,6 @@ use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Expr\Ternary;
 use PhpParser\Node\Expr\Yield_;
 use PhpParser\Node\InterpolatedStringPart;
-use PhpParser\Node\Param;
 use PhpParser\Node\Scalar\Float_;
 use PhpParser\Node\Scalar\Int_;
 use PhpParser\Node\Scalar\InterpolatedString;
@@ -38,6 +37,7 @@ use Rector\NodeAnalyzer\ExprAnalyzer;
 use Rector\NodeTypeResolver\Node\AttributeKey;
 use Rector\PhpParser\Node\CustomNode\FileWithoutNamespace;
 use Rector\Util\NewLineSplitter;
+use Rector\Util\StringUtils;
 /**
  * @see \Rector\Tests\PhpParser\Printer\BetterStandardPrinterTest
  *
@@ -55,10 +55,15 @@ final class BetterStandardPrinter extends Standard
      * @var string
      */
     private const EXTRA_SPACE_BEFORE_NOP_REGEX = '#^[ \\t]+$#m';
+    /**
+     * @see https://regex101.com/r/UluSYL/1
+     * @var string
+     */
+    private const SPACED_NEW_START_REGEX = '#^new\\s+#';
     public function __construct(ExprAnalyzer $exprAnalyzer)
     {
         $this->exprAnalyzer = $exprAnalyzer;
-        parent::__construct([]);
+        parent::__construct();
     }
     /**
      * @param Node[] $stmts
@@ -131,8 +136,8 @@ final class BetterStandardPrinter extends Standard
         }
         $this->wrapBinaryOp($node);
         $content = parent::p($node, $precedence, $lhsPrecedence, $parentFormatPreserved);
-        if ($node instanceof New_ && $node->class instanceof AnonymousClassNode) {
-            $content = 'new ' . \ltrim($content, 'new ');
+        if ($node instanceof New_ && $node->class instanceof AnonymousClassNode && !StringUtils::isMatch($content, self::SPACED_NEW_START_REGEX)) {
+            $content = 'new ' . $content;
         }
         return $node->getAttribute(AttributeKey::WRAPPED_IN_PARENTHESES) === \true ? '(' . $content . ')' : $content;
     }
@@ -239,14 +244,10 @@ final class BetterStandardPrinter extends Standard
         return \sprintf('%syield %s%s%s', $shouldAddBrackets ? '(' : '', $yield->key instanceof Expr ? $this->p($yield->key) . ' => ' : '', $this->p($yield->value), $shouldAddBrackets ? ')' : '');
     }
     /**
-     * Print arrays in short [] by default,
-     * to prevent manual explicit array shortening.
+     * Print new lined array items when newlined_array_print is set to true
      */
     protected function pExpr_Array(Array_ $array) : string
     {
-        if (!$array->hasAttribute(AttributeKey::KIND)) {
-            $array->setAttribute(AttributeKey::KIND, Array_::KIND_SHORT);
-        }
         if ($array->getAttribute(AttributeKey::NEWLINED_ARRAY_PRINT) === \true) {
             $printedArray = '[';
             $printedArray .= $this->pCommaSeparatedMultiline($array->items, \true);
@@ -327,13 +328,6 @@ final class BetterStandardPrinter extends Standard
             $arg->value->setAttribute(AttributeKey::ORIGINAL_NODE, null);
         }
         return $this->pDereferenceLhs($methodCall->var) . "\n" . $this->resolveIndentSpaces() . '->' . $this->pObjectProperty($methodCall->name) . '(' . $this->pMaybeMultiline($methodCall->args) . ')';
-    }
-    /**
-     * Keep attributes on newlines
-     */
-    protected function pParam(Param $param) : string
-    {
-        return $this->pAttrGroups($param->attrGroups) . $this->pModifiers($param->flags) . ($param->type instanceof Node ? $this->p($param->type) . ' ' : '') . ($param->byRef ? '&' : '') . ($param->variadic ? '...' : '') . $this->p($param->var) . ($param->default instanceof Expr ? ' = ' . $this->p($param->default) : '') . ($param->hooks !== [] ? ' {' . $this->pStmts($param->hooks) . $this->nl . '}' : '');
     }
     protected function pInfixOp(string $class, Node $leftNode, string $operatorString, Node $rightNode, int $precedence, int $lhsPrecedence) : string
     {

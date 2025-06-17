@@ -96,8 +96,8 @@ final class SomeCommand extends Command
 CODE_SAMPLE
 , <<<'CODE_SAMPLE'
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Command\Argument;
-use Symfony\Component\Console\Command\Option;
+use Symfony\Component\Console\Argument;
+use Symfony\Component\Console\Option;
 
 final class SomeCommand
 {
@@ -142,26 +142,27 @@ CODE_SAMPLE
         if (!$this->attributeFinder->findAttributeByClass($node, SymfonyAttribute::AS_COMMAND) instanceof Attribute) {
             return null;
         }
-        // 1. fetch configure method to get arguments and options metadata
-        $configureClassMethod = $node->getMethod(CommandMethodName::CONFIGURE);
-        if (!$configureClassMethod instanceof ClassMethod) {
-            return null;
-        }
-        // 2. rename execute to __invoke
+        // 1. rename execute to __invoke
         $executeClassMethod = $node->getMethod(CommandMethodName::EXECUTE);
         if (!$executeClassMethod instanceof ClassMethod) {
             return null;
         }
         $executeClassMethod->name = new Identifier('__invoke');
         $this->visibilityManipulator->makePublic($executeClassMethod);
-        // 3. create arguments and options parameters
-        // @todo
-        $commandArguments = $this->commandArgumentsAndOptionsResolver->collectCommandArguments($configureClassMethod);
-        $commandOptions = $this->commandArgumentsAndOptionsResolver->collectCommandOptions($configureClassMethod);
-        // 4. remove configure() method
-        $this->removeConfigureClassMethod($node);
-        // 5. decorate __invoke method with attributes
-        $invokeParams = $this->commandInvokeParamsFactory->createParams($commandArguments, $commandOptions);
+        // 2. fetch configure method to get arguments and options metadata
+        $configureClassMethod = $node->getMethod(CommandMethodName::CONFIGURE);
+        if ($configureClassMethod instanceof ClassMethod) {
+            // 3. create arguments and options parameters
+            // @todo
+            $commandArguments = $this->commandArgumentsAndOptionsResolver->collectCommandArguments($configureClassMethod);
+            $commandOptions = $this->commandArgumentsAndOptionsResolver->collectCommandOptions($configureClassMethod);
+            // 4. remove configure() method
+            $this->removeConfigureClassMethod($node);
+            // 5. decorate __invoke method with attributes
+            $invokeParams = $this->commandInvokeParamsFactory->createParams($commandArguments, $commandOptions);
+        } else {
+            $invokeParams = [];
+        }
         $executeClassMethod->params = \array_merge($invokeParams, [$executeClassMethod->params[1]]);
         // 6. remove parent class
         $node->extends = null;
@@ -175,8 +176,10 @@ CODE_SAMPLE
                 unset($executeClassMethod->attrGroups[$attrGroupKey]);
             }
         }
-        // 7. replace input->getArgument() and input->getOption() calls with direct variable access
-        $this->replaceInputArgumentOptionFetchWithVariables($executeClassMethod);
+        if ($configureClassMethod instanceof ClassMethod) {
+            // 7. replace input->getArgument() and input->getOption() calls with direct variable access
+            $this->replaceInputArgumentOptionFetchWithVariables($executeClassMethod);
+        }
         return $node;
     }
     /**
@@ -235,13 +238,15 @@ CODE_SAMPLE
             }
             $firstArgValue = $node->getArgs()[0]->value;
             if ($firstArgValue instanceof ClassConstFetch || $firstArgValue instanceof ConstFetch) {
-                return new Variable($this->valueResolver->getValue($firstArgValue));
+                $variableName = $this->valueResolver->getValue($firstArgValue);
+                return new Variable(\str_replace('-', '_', $variableName));
             }
             if (!$firstArgValue instanceof String_) {
                 // unable to resolve argument/option name
                 throw new ShouldNotHappenException();
             }
-            return new Variable($firstArgValue->value);
+            $variableName = $firstArgValue->value;
+            return new Variable(\str_replace('-', '_', $variableName));
         });
     }
     private function isFluentArgumentOptionChain(MethodCall $methodCall) : bool
