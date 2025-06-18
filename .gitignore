@@ -11,7 +11,6 @@ plugins-dist
 /prive/
 squelettes-dist
 tmp
-/vendor
 composer.*
 htaccess.txt
 LICENSE
@@ -19,7 +18,7 @@ LICENSE
 /*.php
 /*.md
 /spip.*
-
+vendor/
 dump/
 TMP_SPIP_3
 .env
