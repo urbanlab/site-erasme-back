@@ -93,7 +93,7 @@ class ReponseSPIP
 	}
 
 	// Récupération d'un objet
-	public static function findObjet(int $id, string $type_objet, array $objet = [], $orderby): ?array {
+	public static function findObjet(int $id, string $type_objet, array $objet = [], ?array $orderBy = null): ?array {
 		include_spip('inc/filtres');
 
 		$collection = table_objet($type_objet);

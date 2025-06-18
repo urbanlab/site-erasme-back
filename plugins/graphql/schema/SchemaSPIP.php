@@ -333,7 +333,7 @@ class SchemaSPIP
 
 								$where = array_merge($args['where'], [$parent['champ'] . '=' . $rootValue['id']]);
 
-								return ReponseSPIP::findCollection($type_enfant, $where, $args['pagination'], $args['page']);
+								return ReponseSPIP::findCollection($type_enfant, $where, $args['pagination'], $args['page'], $args['orderBy']);
 							},
 						];
 					}
@@ -367,7 +367,7 @@ class SchemaSPIP
 
 								$where = array_merge($args['where'], [sql_in($primary_enfant, $ids)]);
 
-								return ReponseSPIP::findCollection($type_enfant, $where, $args['pagination'], $args['page']);
+								return ReponseSPIP::findCollection($type_enfant, $where, $args['pagination'], $args['page'], $args['orderBy']);
 							},
 						];
 					}
