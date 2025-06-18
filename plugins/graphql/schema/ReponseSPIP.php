@@ -211,7 +211,7 @@ class ReponseSPIP
 					$collection_liee,
 					$where,
 					$collections_autorisees[$collection_liee]['pagination'],
-					$orderby
+					$orderBy
 				);
 			}
 		}
@@ -219,7 +219,7 @@ class ReponseSPIP
 		return $objet;
 	}
 
-	public static function searchCollection(string $collection, string $recherche, array $where = []): array {
+	public static function searchCollection(string $collection, string $recherche, array $where = [], ?array $orderBy = null): array {
 		include_spip('inc/prepare_recherche');
 		include_spip('inc/filtres');
 
@@ -236,7 +236,7 @@ class ReponseSPIP
 		$result = sql_allfetsel($select, $from, $where, '', ['points DESC']);
 
 		foreach ($result as $objet) {
-			$retour_recherche[] = self::findObjet((int) $objet['id'], $collection, $objet, $orderby);
+			$retour_recherche[] = self::findObjet((int) $objet['id'], $collection, $objet, $orderBy);
 		}
 
 		return $retour_recherche;
