@@ -457,7 +457,8 @@ class SchemaSPIP
 					],
 					'resolve' => fn ($rootValue, array $args, array $context, ResolveInfo $info) => ReponseSPIP::findObjet(
 						(int) $args['id'],
-						$info->fieldDefinition->name
+						$info->fieldDefinition->name,
+						$orderby
 					),
 				];
 			}
