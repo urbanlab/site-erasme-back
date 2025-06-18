@@ -311,7 +311,8 @@ class ReponseSPIP
 
 		return $retour_where;
 	}
-	private static function buildOrder(?array $orderBy): string {
+
+	private static function buildOrder(?array $orderBy = null): string {
 		if (!$orderBy) {
 			return ''; // pas d'ordre
 		}
