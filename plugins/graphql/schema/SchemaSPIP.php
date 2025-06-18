@@ -333,7 +333,7 @@ class SchemaSPIP
 
 								$where = array_merge($args['where'], [$parent['champ'] . '=' . $rootValue['id']]);
 
-								return ReponseSPIP::findCollection($type_enfant, $where, $args['pagination'], $args['page'], $args['orderBy']);
+								return ReponseSPIP::findCollection($type_enfant, $where, $args['pagination'], $args['page']);
 							},
 						];
 					}
@@ -367,7 +367,7 @@ class SchemaSPIP
 
 								$where = array_merge($args['where'], [sql_in($primary_enfant, $ids)]);
 
-								return ReponseSPIP::findCollection($type_enfant, $where, $args['pagination'], $args['page'], $args['orderBy']);
+								return ReponseSPIP::findCollection($type_enfant, $where, $args['pagination'], $args['page']);
 							},
 						];
 					}
@@ -457,8 +457,7 @@ class SchemaSPIP
 					],
 					'resolve' => fn ($rootValue, array $args, array $context, ResolveInfo $info) => ReponseSPIP::findObjet(
 						(int) $args['id'],
-						$info->fieldDefinition->name,
-						$orderby
+						$info->fieldDefinition->name
 					),
 				];
 			}

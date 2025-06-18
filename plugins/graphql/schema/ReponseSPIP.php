@@ -78,7 +78,7 @@ class ReponseSPIP
 		$objets = sql_allfetsel(self::getSelect($table), $from, $where, '', $order, $limit);
 
 		foreach ($objets as $objet) {
-			$retour_objets[] = self::findObjet((int) $objet['id'], $collection, $objet, $orderBy);
+			$retour_objets[] = self::findObjet((int) $objet['id'], $collection, $objet);
 		}
 
 		return ($limit == '') ? $retour_objets : [
@@ -93,7 +93,7 @@ class ReponseSPIP
 	}
 
 	// Récupération d'un objet
-	public static function findObjet(int $id, string $type_objet, array $objet = [], ?array $orderBy = null): ?array {
+	public static function findObjet(int $id, string $type_objet, array $objet = []): ?array {
 		include_spip('inc/filtres');
 
 		$collection = table_objet($type_objet);
@@ -210,8 +210,7 @@ class ReponseSPIP
 				$objet[$collection_liee] = self::findCollection(
 					$collection_liee,
 					$where,
-					$collections_autorisees[$collection_liee]['pagination'],
-					$orderBy
+					$collections_autorisees[$collection_liee]['pagination']
 				);
 			}
 		}
@@ -219,7 +218,7 @@ class ReponseSPIP
 		return $objet;
 	}
 
-	public static function searchCollection(string $collection, string $recherche, array $where = [], ?array $orderBy = null): array {
+	public static function searchCollection(string $collection, string $recherche, array $where = []): array {
 		include_spip('inc/prepare_recherche');
 		include_spip('inc/filtres');
 
@@ -236,7 +235,7 @@ class ReponseSPIP
 		$result = sql_allfetsel($select, $from, $where, '', ['points DESC']);
 
 		foreach ($result as $objet) {
-			$retour_recherche[] = self::findObjet((int) $objet['id'], $collection, $objet, $orderBy);
+			$retour_recherche[] = self::findObjet((int) $objet['id'], $collection, $objet);
 		}
 
 		return $retour_recherche;
@@ -311,8 +310,7 @@ class ReponseSPIP
 
 		return $retour_where;
 	}
-
-	private static function buildOrder(?array $orderBy = null): string {
+	private static function buildOrder(?array $orderBy): string {
 		if (!$orderBy) {
 			return ''; // pas d'ordre
 		}
