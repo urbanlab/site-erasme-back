@@ -61,7 +61,13 @@ class ReponseSPIP
 	}
 
 	// Récupération d'une collection d'objets
-	public static function findCollection(string $collection, array $where, int $pagination, int $page = 1, ?array $orderBy = null): ?array {
+	public static function findCollection(
+		string $collection,
+		array $where,
+		int $pagination,
+		int $page = 1,
+		?array $orderBy = null
+	): ?array {
 		$retour_objets = [];
 		$table = table_objet_sql($collection);
 		$from = $table . ' AS collection';
@@ -210,7 +216,7 @@ class ReponseSPIP
 				$objet[$collection_liee] = self::findCollection(
 					$collection_liee,
 					$where,
-					$collections_autorisees[$collection_liee]['pagination']
+					(int) $collections_autorisees[$collection_liee]['pagination']
 				);
 			}
 		}
@@ -310,6 +316,7 @@ class ReponseSPIP
 
 		return $retour_where;
 	}
+
 	private static function buildOrder(?array $orderBy): string {
 		if (!$orderBy) {
 			return ''; // pas d'ordre
@@ -327,5 +334,4 @@ class ReponseSPIP
 
 		return implode(', ', $orderClauses);
 	}
-
 }

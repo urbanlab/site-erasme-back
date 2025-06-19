@@ -1,4 +1,10 @@
 {
+    "repositories": {
+        "spip": {
+            "type": "composer",
+            "url": "https://get.spip.net/composer"
+        }
+    },
 	"require": {
 		"webonyx/graphql-php": "^15.20"
 	},
@@ -6,5 +12,16 @@
 		"classmap": [
 			"schema/"
 		]
-	}
+	},
+    "require-dev": {
+        "rector/rector": "^2.0",
+        "spip-league/rector": "dev-main",
+        "spip-league/easy-coding-standard": "^1.1"
+    },
+	"scripts": {
+        "rector": "vendor/bin/rector process --ansi",
+        "rector-dry-run": "vendor/bin/rector process --dry-run --ansi",
+        "check-cs": "vendor/bin/ecs check --ansi",
+        "fix-cs": "vendor/bin/ecs check --fix --ansi"
+    }
 }
