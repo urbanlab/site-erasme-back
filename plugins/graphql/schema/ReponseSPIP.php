@@ -36,6 +36,7 @@ class ReponseSPIP
 
 		// Filtrage par apport à la pagination
 		$totalPages = ceil(count($retour) / $pagination);
+		$totalItems = count($retour);
 		$offset = ($page - 1) * $pagination;
 		$retour = array_slice($retour, $offset, $pagination);
 
@@ -43,6 +44,7 @@ class ReponseSPIP
 			'pagination' => [
 				'currentPage' => $page,
 				'totalPages' => $totalPages,
+				'totalItems' => $totalItems,
 				'hasPreviousPage' => ($page > 1) ? true : false,
 				'hasNextPage' => ($page < $totalPages) ? true : false,
 			],
@@ -91,6 +93,7 @@ class ReponseSPIP
 			'pagination' => [
 				'currentPage' => $page,
 				'totalPages' => $totalPages,
+				'totalItems' => $totalObjets,
 				'hasPreviousPage' => ($page > 1) ? true : false,
 				'hasNextPage' => ($page < $totalPages) ? true : false,
 			],
@@ -128,7 +131,7 @@ class ReponseSPIP
 		foreach ($objet as $champ => $value) {
 			switch ($champ) {
 				case 'titre':
-					$objet[$champ] = supprimer_numero($value);
+					$objet[$champ] = $value;
 					$objet['rang'] = (preg_match('#^([0-9]+)[.][[:space:]]#', $value, $matches)) ?
 						$matches[1] : '0';
 					break;
@@ -140,6 +143,9 @@ class ReponseSPIP
 					$objet[$champ] = $value;
 					break;
 				case 'texte':
+					// Transformation des liens et des balises
+					$objet[$champ] = liens_absolus(trim(str_replace("\n", '<br>', propre($value))));
+					break;
 				case 'surtitre':
 				case 'soustitre':
 				case 'descriptif':
@@ -163,7 +169,7 @@ class ReponseSPIP
 
 			// Récupération du slug de l'objet
 			if ($champ == $slug_origin) {
-				$objet['slug'] = identifiant_slug(supprimer_numero($value));
+				$objet['slug'] = identifiant_slug($value);
 			}
 		}
 

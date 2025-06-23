@@ -43,7 +43,6 @@ function formulaires_configurer_collections_saisies_dist() {
 					$collections_liees[$matches[1]] = $matches[1];
 				}
 			}
-			if($collection==='auteurs')$collections_liees['articles'] = 'articles';
 
 			$saisies_fieldset = [
 				[

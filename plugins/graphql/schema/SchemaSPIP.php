@@ -151,6 +151,7 @@ class SchemaSPIP
 				$typeDefinition['fields'] = (fn () => [
 					'currentPage' => new NonNull(Type::int()),
 					'totalPages' => new NonNull(Type::int()),
+					'totalItems' => new NonNull(Type::int()),
 					'hasPreviousPage' => new NonNull(Type::boolean()),
 					'hasNextPage' => new NonNull(Type::boolean()),
 				]);
