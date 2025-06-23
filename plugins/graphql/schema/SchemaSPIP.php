@@ -414,8 +414,12 @@ class SchemaSPIP
 						'description' => _T('graphql:desc_arg_texte'),
 						'defaultValue' => '',
 					],
-					'lang' =>
-					[
+					'where' => [
+						'type' => new NonNull(Type::string()),
+						'description' => _T('graphql:desc_arg_where'),
+						'defaultValue' => '',
+					],
+					'lang' => [
 						'type' => new NonNull(Type::string()),
 						'description' => _T('graphql:desc_arg_lang'),
 						'defaultValue' => 'fr',
@@ -433,6 +437,7 @@ class SchemaSPIP
 				],
 				'resolve' => fn ($rootValue, array $args, array $context, ResolveInfo $info) => ReponseSPIP::recherche(
 					$args['texte'],
+					$args['where'],
 					$args['lang'],
 					$args['pagination'],
 					$args['page']

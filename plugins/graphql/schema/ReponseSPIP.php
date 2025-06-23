@@ -21,12 +21,19 @@ class ReponseSPIP
 		return $retourMeta;
 	}
 
-	public static function recherche(string $texte, string $lang, int $pagination, int $page = 1): array {
+	public static function recherche(string $texte, ?string $where, string $lang, int $pagination, int $page = 1): array {
 		$retour = [];
 		$collections_autorisees = lire_config('/meta_graphql/objets_editoriaux');
 
 		foreach ($collections_autorisees as $collection => $config) {
-			$result = self::searchCollection($collection, $texte, ['collection.lang=' . sql_quote($lang)]);
+			$where1 = [];
+			$where1[] = 'collection.lang=' . sql_quote($lang);
+			if ($where) {
+				foreach (explode(',', $where) as $w) {
+					$where1[] = $w;
+				}
+			}
+			$result = self::searchCollection($collection, $texte, $where1);
 
 			$retour = array_merge($retour, $result);
 		}
