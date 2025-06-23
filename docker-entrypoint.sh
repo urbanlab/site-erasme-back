@@ -108,8 +108,8 @@ fi
 #spip plugins:activer linkcheck -y
 spip plugins:activer simplog -y
 spip plugins:activer cextra -y
-spip plugins:activer erasme -y
 spip plugins:activer saisies -y
+spip plugins:activer erasme -y
 spip plugins:activer yaml -y
 spip plugins:activer graphql -y
 spip plugins:maj:bdd
