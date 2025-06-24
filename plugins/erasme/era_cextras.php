@@ -10,9 +10,9 @@ function era_declarer_champs_extras($champs = []) {
 		'saisie' => 'checkbox',
 		'options' => [
 			'nom' => 'isprototype',
-			'sql' => 'varchar(2) DEFAULT \'\' NOT NULL',
+			'sql' => 'varchar(2) DEFAULT "0" NOT NULL',
 			'data' => [
-				'on' => _L('Est un prototype ?'),
+				'1' => _L('Est un prototype ?'),
 			],
 		],
 	];

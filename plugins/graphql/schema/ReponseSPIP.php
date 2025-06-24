@@ -168,6 +168,8 @@ class ReponseSPIP
 				case 'id_groupe':
 				case 'id_trad':
 				case 'id_parent':
+					$value = preg_replace('#_#', '', $champ);
+					$objet[$champ] = '';
 					break;
 				default:
 					$objet[$champ] = $value;
