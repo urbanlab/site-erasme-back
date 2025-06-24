@@ -165,6 +165,7 @@ class ReponseSPIP
 					// Gestion des laisons SQL 1 => N ascendantes (voir les resolvers dans SchemaSPIP.php)
 				case 'id_secteur':
 				case 'id_rubrique':
+				case 'id_groupe':
 				case 'id_trad':
 				case 'id_parent':
 					break;
