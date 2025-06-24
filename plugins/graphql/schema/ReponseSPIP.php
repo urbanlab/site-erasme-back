@@ -21,7 +21,7 @@ class ReponseSPIP
 		return $retourMeta;
 	}
 
-	public static function recherche(string $texte, ?string $where, string $lang, int $pagination, int $page = 1): array {
+	public static function recherche(string $texte, ?string $where, array $orderBy, string $lang, int $pagination, int $page = 1): array {
 		$retour = [];
 		$collections_autorisees = lire_config('/meta_graphql/objets_editoriaux');
 
@@ -33,13 +33,13 @@ class ReponseSPIP
 					$where1[] = $w;
 				}
 			}
-			$result = self::searchCollection($collection, $texte, $where1);
+			$result = self::searchCollection($collection, $texte, $where1, $orderBy);
 
 			$retour = array_merge($retour, $result);
 		}
 
 		// Tri par points
-		usort($retour, fn ($item1, $item2) => $item2['points'] <=> $item1['points']);
+		//usort($retour, fn ($item1, $item2) => $item2['points'] <=> $item1['points']);
 
 		// Filtrage par apport à la pagination
 		$totalPages = ceil(count($retour) / $pagination);
@@ -168,8 +168,6 @@ class ReponseSPIP
 				case 'id_groupe':
 				case 'id_trad':
 				case 'id_parent':
-					$value = preg_replace('#_#', '', $champ);
-					$objet[$champ] = '';
 					break;
 				default:
 					$objet[$champ] = $value;
@@ -239,7 +237,7 @@ class ReponseSPIP
 		return $objet;
 	}
 
-	public static function searchCollection(string $collection, string $recherche, array $where = []): array {
+	public static function searchCollection(string $collection, string $recherche, array $where = [], array $orderBy = []): array {
 		include_spip('inc/prepare_recherche');
 		include_spip('inc/filtres');
 
@@ -249,11 +247,19 @@ class ReponseSPIP
 		$table = table_objet_sql($collection);
 		$select = self::getSelect($table);
 		$prepare_requete = inc_prepare_recherche_dist($recherche, $table);
+		$table_infos = lister_tables_objets_sql($table);
 		$select[] = $prepare_requete[0];
 		$from = [$table . ' as collection', table_objet_sql('resultats') . ' as resultats'];
 		$where[] = $prepare_requete[1];
 		$where[] = 'collection.' . id_table_objet($table) . '=resultats.id';
-		$result = sql_allfetsel($select, $from, $where, '', ['points DESC']);
+		if ($table != 'spip_auteurs' && array_key_exists('statut', $table_infos['field'])) {
+			$where[] = 'collection.statut=' . sql_quote('publie');
+		}
+		$order = self::buildOrder($orderBy);
+		spip_log($order, 'test');
+		if(!$order)$order=['points DESC'];
+		spip_log($order, 'test');
+		$result = sql_allfetsel($select, $from, $where, '', $order);
 
 		foreach ($result as $objet) {
 			$retour_recherche[] = self::findObjet((int) $objet['id'], $collection, $objet);
@@ -346,7 +352,7 @@ class ReponseSPIP
 				$orderClauses[] = "$champ $direction";
 			}
 		}
-
+spip_log(implode(', ', $orderClauses), 'test');
 		return implode(', ', $orderClauses);
 	}
 }
