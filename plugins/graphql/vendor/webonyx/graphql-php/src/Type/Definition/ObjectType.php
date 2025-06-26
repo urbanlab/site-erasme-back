@@ -50,19 +50,17 @@ use GraphQL\Utils\Utils;
  *     ]);
  *
  * @phpstan-import-type FieldResolver from Executor
- * @phpstan-import-type ArgsMapper from Executor
  *
  * @phpstan-type InterfaceTypeReference InterfaceType|callable(): InterfaceType
  * @phpstan-type ObjectConfig array{
  *   name?: string|null,
  *   description?: string|null,
  *   resolveField?: FieldResolver|null,
- *   argsMapper?: ArgsMapper|null,
  *   fields: (callable(): iterable<mixed>)|iterable<mixed>,
  *   interfaces?: iterable<InterfaceTypeReference>|callable(): iterable<InterfaceTypeReference>,
  *   isTypeOf?: (callable(mixed $objectValue, mixed $context, ResolveInfo $resolveInfo): (bool|Deferred|null))|null,
  *   astNode?: ObjectTypeDefinitionNode|null,
- *   extensionASTNodes?: array<ObjectTypeExtensionNode>|null
+ *   extensionASTNodes?: array<int, ObjectTypeExtensionNode>|null
  * }
  */
 class ObjectType extends Type implements OutputType, CompositeType, NullableType, HasFieldsType, NamedType, ImplementingType
@@ -73,7 +71,7 @@ class ObjectType extends Type implements OutputType, CompositeType, NullableType
 
     public ?ObjectTypeDefinitionNode $astNode;
 
-    /** @var array<ObjectTypeExtensionNode> */
+    /** @var array<int, ObjectTypeExtensionNode> */
     public array $extensionASTNodes;
 
     /**
@@ -82,13 +80,6 @@ class ObjectType extends Type implements OutputType, CompositeType, NullableType
      * @phpstan-var FieldResolver|null
      */
     public $resolveFieldFn;
-
-    /**
-     * @var callable|null
-     *
-     * @phpstan-var ArgsMapper|null
-     */
-    public $argsMapper;
 
     /** @phpstan-var ObjectConfig */
     public array $config;
@@ -103,7 +94,6 @@ class ObjectType extends Type implements OutputType, CompositeType, NullableType
         $this->name = $config['name'] ?? $this->inferName();
         $this->description = $config['description'] ?? null;
         $this->resolveFieldFn = $config['resolveField'] ?? null;
-        $this->argsMapper = $config['argsMapper'] ?? null;
         $this->astNode = $config['astNode'] ?? null;
         $this->extensionASTNodes = $config['extensionASTNodes'] ?? [];
 
@@ -127,7 +117,7 @@ class ObjectType extends Type implements OutputType, CompositeType, NullableType
 
     /**
      * @param mixed $objectValue The resolved value for the object type
-     * @param mixed $context The context that was passed to GraphQL::execute()
+     * @param mixed $context     The context that was passed to GraphQL::execute()
      *
      * @return bool|Deferred|null
      */
@@ -155,7 +145,7 @@ class ObjectType extends Type implements OutputType, CompositeType, NullableType
 
         $isTypeOf = $this->config['isTypeOf'] ?? null;
         // @phpstan-ignore-next-line not necessary according to types, but can happen during runtime
-        if (isset($isTypeOf) && ! is_callable($isTypeOf)) {
+        if (isset($isTypeOf) && ! \is_callable($isTypeOf)) {
             $notCallable = Utils::printSafe($isTypeOf);
             throw new InvariantViolation("{$this->name} must provide \"isTypeOf\" as null or a callable, but got: {$notCallable}.");
         }
@@ -172,7 +162,7 @@ class ObjectType extends Type implements OutputType, CompositeType, NullableType
         return $this->astNode;
     }
 
-    /** @return array<ObjectTypeExtensionNode> */
+    /** @return array<int, ObjectTypeExtensionNode> */
     public function extensionASTNodes(): array
     {
         return $this->extensionASTNodes;

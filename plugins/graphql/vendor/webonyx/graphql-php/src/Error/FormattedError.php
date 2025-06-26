@@ -7,7 +7,6 @@ use GraphQL\Language\Source;
 use GraphQL\Language\SourceLocation;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Utils\Utils;
-use PHPUnit\Framework\Test;
 
 /**
  * This class is used for [default error formatting](error-handling.md).
@@ -67,7 +66,7 @@ class FormattedError
 
         return $printedLocations === []
             ? $error->getMessage()
-            : implode("\n\n", array_merge([$error->getMessage()], $printedLocations)) . "\n";
+            : \implode("\n\n", \array_merge([$error->getMessage()], $printedLocations)) . "\n";
     }
 
     /**
@@ -84,7 +83,7 @@ class FormattedError
         $prevLineNum = (string) ($contextLine - 1);
         $lineNum = (string) $contextLine;
         $nextLineNum = (string) ($contextLine + 1);
-        $padLen = strlen($nextLineNum);
+        $padLen = \strlen($nextLineNum);
 
         $lines = Utils::splitLines($source->body);
         $lines[0] = self::spaces($source->locationOffset->column - 1) . $lines[0];
@@ -94,10 +93,10 @@ class FormattedError
             $line >= 2 ? (self::leftPad($padLen, $prevLineNum) . ': ' . $lines[$line - 2]) : null,
             self::leftPad($padLen, $lineNum) . ': ' . $lines[$line - 1],
             self::spaces(2 + $padLen + $contextColumn - 1) . '^',
-            $line < count($lines) ? self::leftPad($padLen, $nextLineNum) . ': ' . $lines[$line] : null,
+            $line < \count($lines) ? self::leftPad($padLen, $nextLineNum) . ': ' . $lines[$line] : null,
         ];
 
-        return implode("\n", array_filter($outputLines));
+        return \implode("\n", \array_filter($outputLines));
     }
 
     private static function getColumnOffset(Source $source, SourceLocation $location): int
@@ -109,12 +108,12 @@ class FormattedError
 
     private static function spaces(int $length): string
     {
-        return str_repeat(' ', $length);
+        return \str_repeat(' ', $length);
     }
 
     private static function leftPad(int $length, string $str): string
     {
-        return self::spaces($length - mb_strlen($str)) . $str;
+        return self::spaces($length - \mb_strlen($str)) . $str;
     }
 
     /**
@@ -129,7 +128,7 @@ class FormattedError
      *
      * @api
      */
-    public static function createFromException(\Throwable $exception, int $debugFlag = DebugFlag::NONE, ?string $internalErrorMessage = null): array
+    public static function createFromException(\Throwable $exception, int $debugFlag = DebugFlag::NONE, string $internalErrorMessage = null): array
     {
         $internalErrorMessage ??= self::$internalErrorMessage;
 
@@ -140,7 +139,7 @@ class FormattedError
         $formattedError = ['message' => $message];
 
         if ($exception instanceof Error) {
-            $locations = array_map(
+            $locations = \array_map(
                 static fn (SourceLocation $loc): array => $loc->toSerializableArray(),
                 $exception->getLocations()
             );
@@ -155,7 +154,7 @@ class FormattedError
 
         if ($exception instanceof ProvidesExtensions) {
             $extensions = $exception->getExtensions();
-            if (is_array($extensions) && $extensions !== []) {
+            if (\is_array($extensions) && $extensions !== []) {
                 $formattedError['extensions'] = $extensions;
             }
         }
@@ -258,10 +257,10 @@ class FormattedError
             // Remove invariant entries as they don't provide much value:
             && ($trace[0]['class'] . '::' . $trace[0]['function'] === 'GraphQL\Utils\Utils::invariant')
         ) {
-            array_shift($trace);
+            \array_shift($trace);
         } elseif (! isset($trace[0]['file'])) {
             // Remove root call as it's likely error handler trace:
-            array_shift($trace);
+            \array_shift($trace);
         }
 
         $formatted = [];
@@ -277,8 +276,8 @@ class FormattedError
             }
 
             $func = $err['function'];
-            $args = array_map([self::class, 'printVar'], $err['args'] ?? []);
-            $funcStr = $func . '(' . implode(', ', $args) . ')';
+            $args = \array_map([self::class, 'printVar'], $err['args'] ?? []);
+            $funcStr = $func . '(' . \implode(', ', $args) . ')';
 
             if (isset($err['class'])) {
                 $safeErr['call'] = $err['class'] . '::' . $funcStr;
@@ -299,32 +298,27 @@ class FormattedError
             return 'GraphQLType: ' . $var->toString();
         }
 
-        if (is_object($var)) {
-            // Calling `count` on instances of `PHPUnit\Framework\Test` triggers an unintended side effect - see https://github.com/sebastianbergmann/phpunit/issues/5866#issuecomment-2172429263
-            $count = ! $var instanceof Test && $var instanceof \Countable
-                ? '(' . count($var) . ')'
-                : '';
-
-            return 'instance of ' . get_class($var) . $count;
+        if (\is_object($var)) {
+            return 'instance of ' . \get_class($var) . ($var instanceof \Countable ? '(' . \count($var) . ')' : '');
         }
 
-        if (is_array($var)) {
-            return 'array(' . count($var) . ')';
+        if (\is_array($var)) {
+            return 'array(' . \count($var) . ')';
         }
 
         if ($var === '') {
             return '(empty string)';
         }
 
-        if (is_string($var)) {
-            return "'" . addcslashes($var, "'") . "'";
+        if (\is_string($var)) {
+            return "'" . \addcslashes($var, "'") . "'";
         }
 
-        if (is_bool($var)) {
+        if (\is_bool($var)) {
             return $var ? 'true' : 'false';
         }
 
-        if (is_scalar($var)) {
+        if (\is_scalar($var)) {
             return (string) $var;
         }
 
@@ -332,6 +326,6 @@ class FormattedError
             return 'null';
         }
 
-        return gettype($var);
+        return \gettype($var);
     }
 }

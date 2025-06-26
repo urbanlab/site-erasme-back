@@ -20,7 +20,7 @@ use GraphQL\Utils\Utils;
  *   interfaces?: iterable<InterfaceTypeReference>|callable(): iterable<InterfaceTypeReference>,
  *   resolveType?: ResolveType|null,
  *   astNode?: InterfaceTypeDefinitionNode|null,
- *   extensionASTNodes?: array<InterfaceTypeExtensionNode>|null
+ *   extensionASTNodes?: array<int, InterfaceTypeExtensionNode>|null
  * }
  */
 class InterfaceType extends Type implements AbstractType, OutputType, CompositeType, NullableType, HasFieldsType, NamedType, ImplementingType
@@ -31,7 +31,7 @@ class InterfaceType extends Type implements AbstractType, OutputType, CompositeT
 
     public ?InterfaceTypeDefinitionNode $astNode;
 
-    /** @var array<InterfaceTypeExtensionNode> */
+    /** @var array<int, InterfaceTypeExtensionNode> */
     public array $extensionASTNodes;
 
     /** @phpstan-var InterfaceConfig */
@@ -86,7 +86,7 @@ class InterfaceType extends Type implements AbstractType, OutputType, CompositeT
 
         $resolveType = $this->config['resolveType'] ?? null;
         // @phpstan-ignore-next-line not necessary according to types, but can happen during runtime
-        if ($resolveType !== null && ! is_callable($resolveType)) {
+        if ($resolveType !== null && ! \is_callable($resolveType)) {
             $notCallable = Utils::printSafe($resolveType);
             throw new InvariantViolation("{$this->name} must provide \"resolveType\" as null or a callable, but got: {$notCallable}.");
         }
@@ -99,7 +99,7 @@ class InterfaceType extends Type implements AbstractType, OutputType, CompositeT
         return $this->astNode;
     }
 
-    /** @return array<InterfaceTypeExtensionNode> */
+    /** @return array<int, InterfaceTypeExtensionNode> */
     public function extensionASTNodes(): array
     {
         return $this->extensionASTNodes;

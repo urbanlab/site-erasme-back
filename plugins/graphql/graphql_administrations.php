@@ -20,11 +20,12 @@ include_once _DIR_PLUGIN_GRAPHQL . 'vendor/autoload.php';
  *     Nom de la meta informant de la version du schéma de données du plugin installé dans SPIP
  * @param string $version_cible
  *     Version du schéma de données dans ce plugin (déclaré dans paquet.xml)
+ * @return void
  **/
 function graphql_upgrade($nom_meta_base_version, $version_cible) {
-	$maj = [];
+	$maj = array();
 	// Création de la table qui stockera la config du plugin
-	$maj['create'][] = ['installer_table_meta', 'meta_graphql'];
+	$maj['create'][] = array('installer_table_meta', 'meta_graphql');
 
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);
@@ -40,6 +41,7 @@ function graphql_upgrade($nom_meta_base_version, $version_cible) {
  *
  * @param string $nom_meta_base_version
  *     Nom de la meta informant de la version du schéma de données du plugin installé dans SPIP
+ * @return void
  **/
 function graphql_vider_tables($nom_meta_base_version) {
 	// Suppression de la table qui stocke la config du plugin

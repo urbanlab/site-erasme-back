@@ -1,9 +1,0 @@
-/.editorconfig
-/.gitignore
-/.gitlab-ci.yml
-/ecs.php export-ignore
-/phpstan-baseline.neon
-/phpstan.neon.dist
-/phpunit.xml
-/rector.php export-ignore
-/tests export-ignore

@@ -1,4 +1,1 @@
-vendor/bin/
-vendor/rector/
-vendor/spip-league/
-composer.lock
+.vscode

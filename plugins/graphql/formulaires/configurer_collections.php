@@ -1,5 +1,4 @@
 <?php
-
 if (!defined('_ECRIRE_INC_VERSION')) {
 	return;
 }
@@ -21,12 +20,9 @@ function formulaires_configurer_collections_saisies_dist() {
 
 		if (!in_array($collection, $collections_non)) {
 			$champs = [];
-			foreach ($infos['field'] as $nom_champ => $def) {
+			foreach ($infos["field"] as $nom_champ => $def) {
 				if (
-					$nom_champ != $champ_id && !in_array(
-						$nom_champ,
-						array_merge(GRAPHQL_CHAMPS_COMMUNS, ['nom', 'bio', 'id_vignette', 'nom_site'])
-					)
+					$nom_champ != $champ_id && !in_array($nom_champ, array_merge(GRAPHQL_CHAMPS_COMMUNS, ['nom', 'bio', 'id_vignette', 'nom_site']))
 				) {
 					$champs[$nom_champ] = $nom_champ;
 				}
@@ -36,11 +32,18 @@ function formulaires_configurer_collections_saisies_dist() {
 			// et qui ont du contenu lié
 			$collections_liees = [];
 			foreach (lister_tables_auxiliaires() as $table_aux => $infos_aux) {
-				if (
-					preg_match("#^spip_(\w+)_liens$#", $table_aux, $matches) &&
-					sql_countsel($table_aux, "objet='" . objet_type($table) . "'") != 0
-				) {
-					$collections_liees[$matches[1]] = $matches[1];
+				if (preg_match('/^spip_(.+)_liens$/', $table_aux, $matches)) {
+					if (sql_countsel($table_aux, "objet='" . objet_type($table) . "'") != 0) {
+						$collections_liees[$matches[1]] = $matches[1];
+					}
+
+					if ($collection == $matches[1]) {
+						$rows = sql_allfetsel('DISTINCT objet', $table . "_liens");
+						foreach ($rows as $i => $value) {
+							$objet = table_objet($value['objet']);
+							$collections_liees[$objet] = $objet;
+						}
+					}
 				}
 			}
 
@@ -76,7 +79,7 @@ function formulaires_configurer_collections_saisies_dist() {
 						'afficher_si' => '@' . $collection . '_exposer@=="actif"',
 						'data' => $champs,
 						'multiple' => 'oui',
-						'cacher_option_intro' => 'oui',
+						"cacher_option_intro" => "oui",
 						'size' => 5,
 					],
 				],
@@ -122,7 +125,7 @@ function formulaires_configurer_collections_saisies_dist() {
 					'nom' => $collection . '_deplier',
 					'conteneur_class' => 'pleine_largeur',
 					'collection' => $collection,
-					'estActif' => empty(lire_config('/meta_graphql/objets_editoriaux/' . $collection)) ? 'non' : 'oui',
+					'estActif' => empty(lire_config('/meta_graphql/objets_editoriaux/' . $collection)) ? "non" : "oui"
 				],
 			];
 
@@ -130,7 +133,7 @@ function formulaires_configurer_collections_saisies_dist() {
 				'saisie' => 'fieldset',
 				'options' => [
 					'nom' => $collection,
-					'conteneur_class' => 'config_' . $collection,
+					'conteneur_class' => 'config_' . $collection
 				],
 				'saisies' => $saisies_fieldset,
 			];
@@ -142,13 +145,13 @@ function formulaires_configurer_collections_saisies_dist() {
 
 function formulaires_configurer_collections_charger_dist() {
 	$valeurs = [];
-	$objets_editoriaux = lire_config('/meta_graphql/objets_editoriaux', []);
+	$objets_editoriaux = lire_config('/meta_graphql/objets_editoriaux', array());
 
 	foreach ($objets_editoriaux as $collection => $statut) {
-		$valeurs[$collection . '_exposer'] = 'actif';
-		$valeurs[$collection . '_pagination'] = $statut['pagination'];
-		$valeurs[$collection . '_champs'] = $statut['champs'];
-		$valeurs[$collection . '_liaisons'] = $statut['liaisons'];
+		$valeurs[$collection . "_exposer"] = "actif";
+		$valeurs[$collection . "_pagination"] = $statut["pagination"];
+		$valeurs[$collection . "_champs"] = $statut["champs"];
+		$valeurs[$collection . "_liaisons"] = $statut["liaisons"];
 	}
 	return $valeurs;
 }
@@ -161,8 +164,8 @@ function formulaires_configurer_collections_traiter_dist() {
 		if (_request($collection . '_exposer')) {
 			$objets_editoriaux[$collection] = [
 				'pagination' => _request($collection . '_pagination'),
-				'champs' => _request($collection . '_champs') ?: [],
-				'liaisons' => _request($collection . '_liaisons') ?: [],
+				'champs' => _request($collection . '_champs') ? _request($collection . '_champs') : [],
+				'liaisons' => _request($collection . '_liaisons') ? _request($collection . '_liaisons') : [],
 			];
 		}
 	}

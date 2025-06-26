@@ -5,22 +5,21 @@ declare(strict_types=1);
 namespace SPIP\GraphQL;
 
 use GraphQL\Deferred;
+use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Definition\CustomScalarType;
-use GraphQL\Type\Definition\EnumType;
+use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\InterfaceType;
+use GraphQL\Type\Definition\EnumType;
+use GraphQL\Type\Definition\UnionType;
 use GraphQL\Type\Definition\ListOfType;
 use GraphQL\Type\Definition\NonNull;
-use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\ResolveInfo;
-use GraphQL\Type\Definition\Type;
-use GraphQL\Type\Definition\UnionType;
+
 
 // Permet de créer des types ré-utilisables dans l'API
 // https://webonyx.github.io/graphql-php/schema-definition/#lazy-loading-of-types
-class SchemaSPIP
-{
+class SchemaSPIP {
 	public array $collections_autorisees = [];
-
 	public array $metas_autorisees = [];
 
 	/**
@@ -89,10 +88,12 @@ class SchemaSPIP
 				// Interface ObjetPagination pour mutualiser des champs
 				$typeDefinition['description'] = _T('graphql:desc_type_collection_pagination');
 
-				$typeDefinition['fields'] = (fn () => [
-					'pagination' => $this->get('Pagination'),
-					'result' => new ListOfType($this->get('Objet')),
-				]);
+				$typeDefinition['fields'] = function () {
+					return [
+						'pagination' => $this->get('Pagination'),
+						'result' => new ListOfType($this->get('Objet'))
+					];
+				};
 
 				$typeDefinition['resolveType'] = function ($value, $context, ResolveInfo $info) {
 					// TODO : écrire le resolveType pour les requêtes qui retourneraient un Objet ou un tableau d'Objet
@@ -148,28 +149,32 @@ class SchemaSPIP
 			case 'Pagination':
 				// Pour gérer la pagination
 				$typeDefinition['description'] = _T('graphql:desc_type_pagination');
-				$typeDefinition['fields'] = (fn () => [
-					'currentPage' => new NonNull(Type::int()),
-					'totalPages' => new NonNull(Type::int()),
-					'totalItems' => new NonNull(Type::int()),
-					'hasPreviousPage' => new NonNull(Type::boolean()),
-					'hasNextPage' => new NonNull(Type::boolean()),
-				]);
+				$typeDefinition['fields'] = function () {
+					return [
+						'currentPage' => new NonNull(Type::int()),
+						'totalPages' => new NonNull(Type::int()),
+						'totalItems' => new NonNull(Type::int()),
+						'hasPreviousPage' => new NonNull(Type::boolean()),
+						'hasNextPage' => new NonNull(Type::boolean())
+					];
+				};
 				return new ObjectType($typeDefinition);
 				break;
 			case 'Query':
 				// Les requêtes disponibles
 				$typeDefinition['description'] = _T('graphql:desc_type_query');
-				$typeDefinition['fields'] = fn () => $this->getQueryFields();
+				$typeDefinition['fields'] = fn() => $this->getQueryFields();
 				return new ObjectType($typeDefinition);
 				break;
 			case 'RecherchePagination':
 				// Type permettant de retourner les résultats de la recherche avec sa pagination
 				$typeDefinition['description'] = _T('graphql:desc_type_recherchePagination');
-				$typeDefinition['fields'] = (fn () => [
-					'pagination' => $this->get('Pagination'),
-					'result' => new ListOfType($this->get('SearchResult')),
-				]);
+				$typeDefinition['fields'] = function () {
+					return [
+						'pagination' => $this->get('Pagination'),
+						'result' => new ListOfType($this->get('SearchResult'))
+					];
+				};
 
 				return new ObjectType($typeDefinition);
 				break;
@@ -197,10 +202,12 @@ class SchemaSPIP
 		if (preg_match('#^([A-Z]{1}[[:alpha:]|_]{2,})Pagination$#', $name, $matches)) {
 			$typeDefinition['description'] = _T('graphql:desc_type_collection_pagination');
 			$typeDefinition['interfaces'] = [$this->get('ObjetPagination')];
-			$typeDefinition['fields'] = (fn () => [
-				'pagination' => $this->get('Pagination'),
-				'result' => new ListOfType($this->get($matches[1])),
-			]);
+			$typeDefinition['fields'] = function () use ($matches) {
+				return [
+					'pagination' => $this->get('Pagination'),
+					'result' => new ListOfType($this->get($matches[1]))
+				];
+			};
 			return new ObjectType($typeDefinition);
 		}
 
@@ -223,71 +230,64 @@ class SchemaSPIP
 				$info_champs = $collection_infos['champs'];
 				foreach ($this->collections_autorisees[$collection]['champs'] as $champ) {
 					$fieldConfiguration = null;
-					$typeSQL = $info_champs[$champ] ?: '';
+					$typeSQL = $info_champs[$champ] ? $info_champs[$champ] : "";
 
 					switch (true) {
 						// On gère d'abord les types de champs spécifiques qui retourneront un objet
 						// (Liaisons SQL 1 => N ascendantes)
-						case in_array($champ, ['id_rubrique', 'id_secteur']):
-							if (array_key_exists('rubriques', $this->collections_autorisees)) {
+						case (in_array($champ, ['id_rubrique', 'id_secteur'])):
+							if (array_key_exists('rubriques', $this->collections_autorisees))
 								$fieldConfiguration = [
 									'type' => $this->get('Rubrique'),
-									'resolve' => function (array $currentObject, array $args, array $context, ResolveInfo $info) use (
-										$champ
-									): Deferred {
+									'resolve' => function (array $currentObject, array $args, array $context, ResolveInfo $info) use ($champ): Deferred {
 										BufferSPIP::add($currentObject[$champ], 'rubriques');
 
-										return new Deferred(fn () => (
-											($currentObject['typeCollection'] == 'RUBRIQUES') &&
+										return new Deferred(function () use ($currentObject, $champ) {
+											return (($currentObject['typeCollection'] == 'RUBRIQUES') &&
 												$currentObject['id'] == $currentObject[$champ]
-										) ? null : BufferSPIP::get($currentObject[$champ], 'rubriques'));
-									},
+											) ? null : BufferSPIP::get($currentObject[$champ], 'rubriques');
+										});
+									}
 								];
-							}
 							break;
-						case $champ == 'id_groupe':
-							if (array_key_exists('groupes_mots', $this->collections_autorisees)) {
+						case ($champ == 'id_groupe'):
+							if (array_key_exists('groupes_mots', $this->collections_autorisees))
 								$fieldConfiguration = [
 									'type' => $this->get('Groupe_mots'),
-									'resolve' => function (array $currentObject, array $args, array $context, ResolveInfo $info) use (
-										$champ
-									): Deferred {
+									'resolve' => function (array $currentObject, array $args, array $context, ResolveInfo $info) use ($champ): Deferred {
 										BufferSPIP::add($currentObject[$champ], 'groupes_mots');
 
-										return new Deferred(fn () => ($currentObject[$champ] === 0) ? null : BufferSPIP::get(
-											$currentObject[$champ],
-											'groupes_mots'
-										));
-									},
+										return new Deferred(function () use ($currentObject, $champ) {
+											return ($currentObject[$champ] === 0) ? null : BufferSPIP::get($currentObject[$champ], 'groupes_mots');
+										});
+									}
 								];
-							}
 							break;
-						case in_array($champ, ['id_trad', 'id_parent']):
+						case (in_array($champ, ['id_trad', 'id_parent'])):
 							$fieldConfiguration = [
 								'type' => $collectionType,
-								'resolve' => function (array $currentObject, array $args, array $context, ResolveInfo $info) use (
-									$champ
-								): Deferred {
+								'resolve' => function (array $currentObject, array $args, array $context, ResolveInfo $info) use ($champ): Deferred {
 									BufferSPIP::add($currentObject[$champ], strtolower($currentObject['typeCollection']));
 
-									return new Deferred(fn () => (
-										($currentObject[$champ] === '0') ||
+									return new Deferred(function () use ($currentObject, $champ) {
+										return (($currentObject[$champ] === '0') ||
 											$currentObject['id'] === $currentObject[$champ]
-									) ? null : BufferSPIP::get($currentObject[$champ], strtolower($currentObject['typeCollection'])));
-								},
+										) ? null : BufferSPIP::get($currentObject[$champ], strtolower($currentObject['typeCollection']));
+									});
+								}
 							];
 							break;
-							// Ensuite, on gère les types scalaires
-						case stripos($typeSQL, 'double') !== false:
+						// Ensuite, on gère les types scalaires
+						case (stripos($typeSQL, 'double') !== false):
 							$fieldConfiguration = Type::float();
 							break;
-						case stripos($typeSQL, 'smallint') !== false:
-						case stripos($typeSQL, 'integer') !== false:
-						case stripos($typeSQL, 'bigint') !== false:
+						case (stripos($typeSQL, 'smallint') !== false):
+						case (stripos($typeSQL, 'integer') !== false):
+						case (stripos($typeSQL, 'bigint') !== false):
 							$fieldConfiguration = Type::int();
 							break;
-						case stripos($typeSQL, 'timestamp') !== false:
-						case stripos($typeSQL, 'datetime') !== false:
+						case (stripos($typeSQL, 'timestamp') !== false):
+						case (stripos($typeSQL, 'datetime') !== false):
 							$fieldConfiguration = $this->get('Date');
 							break;
 						default:
@@ -295,7 +295,7 @@ class SchemaSPIP
 							break;
 					}
 
-					if ($fieldConfiguration !== null) {
+					if (!is_null($fieldConfiguration)) {
 						$champ = preg_replace('#(id_)#', '', $champ);
 						$graphQLfields[$champ] = $fieldConfiguration;
 					}
@@ -306,9 +306,7 @@ class SchemaSPIP
 					$infos_collection_liee = lister_tables_objets_sql(table_objet_sql($collection_liee));
 
 					// Le champ 'parent' doit être déclaré dans les infos de la table SQL
-					if (!isset($infos_collection_liee['parent'])) {
-						continue;
-					}
+					if (!isset($infos_collection_liee['parent'])) continue;
 
 					// Le type mot ne renvoit pas une liste mais un tableau associatif
 					$parent = (array_values($infos_collection_liee['parent']) !== $infos_collection_liee['parent']) ?
@@ -317,13 +315,11 @@ class SchemaSPIP
 
 					// S'il ne s'agit pas d'un champ autorisé dans la collection liée
 					// Il faut par ex autoriser id_rubrique dans la collection Articles pour qu'un objet Rubrique puisse exposer ses Articles
-					if (!in_array($parent['champ'], $this->collections_autorisees[$collection_liee]['champs'])) {
-						continue;
-					}
+					if (!in_array($parent['champ'], $this->collections_autorisees[$collection_liee]['champs'])) continue;
 
 					// Si le champ correspond à la clé primaire de la table en cours
 					if (
-						$parent['champ'] == id_table_objet($collection) ||
+						$parent['champ'] ==  id_table_objet($collection) ||
 						($parent['champ'] == 'id_parent' && $parent['type'] == objet_type($collection))
 					) {
 						$graphQLfields[$collection_liee] = [
@@ -334,8 +330,13 @@ class SchemaSPIP
 
 								$where = array_merge($args['where'], [$parent['champ'] . '=' . $rootValue['id']]);
 
-								return ReponseSPIP::findCollection($type_enfant, $where, $args['pagination'], $args['page']);
-							},
+								return ReponseSPIP::findCollection(
+									$type_enfant,
+									$where,
+									$args['pagination'],
+									$args['page']
+								);
+							}
 						];
 					}
 				}
@@ -368,8 +369,13 @@ class SchemaSPIP
 
 								$where = array_merge($args['where'], [sql_in($primary_enfant, $ids)]);
 
-								return ReponseSPIP::findCollection($type_enfant, $where, $args['pagination'], $args['page']);
-							},
+								return ReponseSPIP::findCollection(
+									$type_enfant,
+									$where,
+									$args['pagination'],
+									$args['page']
+								);
+							}
 						];
 					}
 				}
@@ -392,7 +398,9 @@ class SchemaSPIP
 			$queryFields['getMetas'] = [
 				'type' => new NonNull($this->get('MetaList')),
 				'description' => _T('graphql:desc_query_getmeta'),
-				'resolve' => fn ($rootValue, array $args, array $context, ResolveInfo $info) => ReponseSPIP::findMeta(),
+				'resolve' => function ($rootValue, array $args, array $context, ResolveInfo $info) {
+					return ReponseSPIP::findMeta();
+				}
 			];
 		}
 
@@ -401,7 +409,9 @@ class SchemaSPIP
 			$queryFields['getCollections'] = [
 				'type' => new NonNull(new ListOfType($this->get('Collection'))),
 				'description' => _T('graphql:desc_query_collections'),
-				'resolve' => fn ($rootValue, array $args, array $context, ResolveInfo $info) => ReponseSPIP::afficheCollections(),
+				'resolve' => function ($rootValue, array $args, array $context, ResolveInfo $info) {
+					return ReponseSPIP::afficheCollections();
+				}
 			];
 
 			// Requête pour la recherche
@@ -412,7 +422,7 @@ class SchemaSPIP
 					'texte' => [
 						'type' => new NonNull(Type::string()),
 						'description' => _T('graphql:desc_arg_texte'),
-						'defaultValue' => '',
+						'defaultValue' => ''
 					],
 					'where' => [
 						'type' => new NonNull(Type::string()),
@@ -427,27 +437,22 @@ class SchemaSPIP
 					'lang' => [
 						'type' => new NonNull(Type::string()),
 						'description' => _T('graphql:desc_arg_lang'),
-						'defaultValue' => 'fr',
+						'defaultValue' => 'fr'
 					],
 					'pagination' => [
 						'type' => new NonNull(Type::int()),
 						'description' => _T('graphql:desc_arg_pagination'),
-						'defaultValue' => (int) lire_config('/meta_graphql/config/recherche_pagination', 10),
+						'defaultValue' => (int) lire_config('/meta_graphql/config/recherche_pagination', 10)
 					],
 					'page' => [
 						'type' => new NonNull(Type::int()),
 						'description' => _T('graphql:desc_arg_page'),
-						'defaultValue' => 1,
-					],
+						'defaultValue' => 1
+					]
 				],
-				'resolve' => fn ($rootValue, array $args, array $context, ResolveInfo $info) => ReponseSPIP::recherche(
-					$args['texte'],
-					$args['where'],
-					$args['orderby'],
-					$args['lang'],
-					$args['pagination'],
-					$args['page']
-				),
+				'resolve' => function ($rootValue, array $args, array $context, ResolveInfo $info) {
+					return ReponseSPIP::recherche($args['texte'], $args['where'], $args['orderby'], $args['lang'], $args['pagination'], $args['page']);
+				}
 			];
 
 			// Pour chaque collection exposée
@@ -465,12 +470,11 @@ class SchemaSPIP
 						'id' => [
 							'type' => new NonNull(Type::int()),
 							'description' => _T('graphql:desc_arg_id'),
-						],
+						]
 					],
-					'resolve' => fn ($rootValue, array $args, array $context, ResolveInfo $info) => ReponseSPIP::findObjet(
-						(int) $args['id'],
-						$info->fieldDefinition->name
-					),
+					'resolve' => function ($rootValue, array $args, array $context, ResolveInfo $info) {
+						return ReponseSPIP::findObjet((int) $args['id'], $info->fieldDefinition->name);
+					}
 				];
 			}
 		}
@@ -493,13 +497,15 @@ class SchemaSPIP
 			'type' => $this->get(ucfirst($collection_infos['type_objet']) . 'Pagination'),
 			'description' => _T('graphql:desc_query_collection') . ' ' . $collection_infos['nameObjet'],
 			'args' => $this->collectionArgs((int) $this->collections_autorisees[$collection_infos['collection']]['pagination']),
-			'resolve' => fn ($rootValue, array $args, array $context, ResolveInfo $info) => ReponseSPIP::findCollection(
-				$info->fieldDefinition->name,
-				$args['where'],
-				$args['pagination'],
-				$args['page'],
-				$args['orderby'],
-			),
+			'resolve' => function ($rootValue, array $args, array $context, ResolveInfo $info) {
+				return ReponseSPIP::findCollection(
+					$info->fieldDefinition->name,
+					$args['where'],
+					$args['pagination'],
+					$args['page'],
+					$args['orderby']
+				);
+			}
 		];
 	}
 
@@ -508,7 +514,7 @@ class SchemaSPIP
 			'where' => [
 				'type' => new NonNull(new ListOfType(new NonNull(Type::string()))),
 				'description' => _T('graphql:desc_arg_where'),
-				'defaultValue' => [],
+				'defaultValue' => []
 			],
 			'orderby' => [
 				'type' => new NonNull(new ListOfType(new NonNull(Type::string()))),
@@ -518,13 +524,13 @@ class SchemaSPIP
 			'pagination' => [
 				'type' => new NonNull(Type::int()),
 				'description' => _T('graphql:desc_arg_pagination'),
-				'defaultValue' => $pagination,
+				'defaultValue' => $pagination
 			],
 			'page' => [
 				'type' => new NonNull(Type::int()),
 				'description' => _T('graphql:desc_arg_page'),
-				'defaultValue' => 1,
-			],
+				'defaultValue' => 1
+			]
 		];
 	}
 }

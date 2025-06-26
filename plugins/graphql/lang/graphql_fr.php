@@ -4,7 +4,7 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 	return;
 }
 
-return [
+$GLOBALS[$GLOBALS['idx_lang']] = array(
 	// A
 	'actif_oui' => 'Actif',
 	'actif_non' => 'Inactif',
@@ -23,6 +23,7 @@ return [
 	'cfg_meta' => 'Sélectionner les metas à exposer sur l\'API',
 	'champs_objet' => 'Sélectionner les champs que vous souhaitez exposer sur l\'API',
 	'collection' => 'Collection',
+	'copied' => 'Copié !',
 	'copier' => 'Copier dans le presse-papier',
 
 	// D
@@ -84,4 +85,4 @@ return [
 	'titre_graphql_jeton' => 'Jeton API',
 	'titre_page_configurer_graphql' => 'GraphQL',
 	'type_meta_desc' => 'Retourne les metas autorisées'
-];
+);

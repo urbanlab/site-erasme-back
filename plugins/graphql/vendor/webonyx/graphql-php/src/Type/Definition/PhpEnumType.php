@@ -3,12 +3,12 @@
 namespace GraphQL\Type\Definition;
 
 use GraphQL\Error\SerializationError;
-use GraphQL\Language\AST\EnumTypeDefinitionNode;
-use GraphQL\Language\AST\EnumTypeExtensionNode;
 use GraphQL\Utils\PhpDoc;
 use GraphQL\Utils\Utils;
 
-/** @phpstan-import-type PartialEnumValueConfig from EnumType */
+/**
+ * @phpstan-import-type PartialEnumValueConfig from EnumType
+ */
 class PhpEnumType extends EnumType
 {
     public const MULTIPLE_DESCRIPTIONS_DISALLOWED = 'Using more than 1 Description attribute is not supported.';
@@ -18,23 +18,13 @@ class PhpEnumType extends EnumType
     protected string $enumClass;
 
     /**
-     * @param class-string<\UnitEnum> $enumClass The fully qualified class name of a native PHP enum
+     * @param class-string<\UnitEnum> $enum
      * @param string|null $name The name the enum will have in the schema, defaults to the basename of the given class
-     * @param string|null $description The description the enum will have in the schema, defaults to PHPDoc of the given class
-     * @param array<EnumTypeExtensionNode>|null $extensionASTNodes
-     *
-     * @throws \Exception
-     * @throws \ReflectionException
      */
-    public function __construct(
-        string $enumClass,
-        ?string $name = null,
-        ?string $description = null,
-        ?EnumTypeDefinitionNode $astNode = null,
-        ?array $extensionASTNodes = null
-    ) {
-        $this->enumClass = $enumClass;
-        $reflection = new \ReflectionEnum($enumClass);
+    public function __construct(string $enum, string $name = null)
+    {
+        $this->enumClass = $enum;
+        $reflection = new \ReflectionEnum($enum);
 
         /**
          * @var array<string, PartialEnumValueConfig> $enumDefinitions
@@ -49,43 +39,20 @@ class PhpEnumType extends EnumType
         }
 
         parent::__construct([
-            'name' => $name ?? $this->baseName($enumClass),
+            'name' => $name ?? $this->baseName($enum),
             'values' => $enumDefinitions,
-            'description' => $description ?? $this->extractDescription($reflection),
-            'astNode' => $astNode,
-            'extensionASTNodes' => $extensionASTNodes,
+            'description' => $this->extractDescription($reflection),
         ]);
     }
 
     public function serialize($value): string
     {
-        if ($value instanceof $this->enumClass) {
-            return $value->name;
+        if (! is_a($value, $this->enumClass)) {
+            $notEnum = Utils::printSafe($value);
+            throw new SerializationError("Cannot serialize value as enum: {$notEnum}, expected instance of {$this->enumClass}.");
         }
 
-        if (is_a($this->enumClass, \BackedEnum::class, true)) {
-            try {
-                $instance = $this->enumClass::from($value);
-            } catch (\ValueError|\TypeError $_) {
-                $notEnumInstanceOrValue = Utils::printSafe($value);
-                throw new SerializationError("Cannot serialize value as enum: {$notEnumInstanceOrValue}, expected instance or valid value of {$this->enumClass}.");
-            }
-
-            return $instance->name;
-        }
-
-        $notEnum = Utils::printSafe($value);
-        throw new SerializationError("Cannot serialize value as enum: {$notEnum}, expected instance of {$this->enumClass}.");
-    }
-
-    public function parseValue($value)
-    {
-        // Can happen when variable values undergo a serialization cycle before execution
-        if ($value instanceof $this->enumClass) {
-            return $value;
-        }
-
-        return parent::parseValue($value);
+        return $value->name;
     }
 
     /** @param class-string $class */
@@ -96,11 +63,6 @@ class PhpEnumType extends EnumType
         return end($parts);
     }
 
-    /**
-     * @param \ReflectionClassConstant|\ReflectionClass<\UnitEnum> $reflection
-     *
-     * @throws \Exception
-     */
     protected function extractDescription(\ReflectionClassConstant|\ReflectionClass $reflection): ?string
     {
         $attributes = $reflection->getAttributes(Description::class);
@@ -119,7 +81,6 @@ class PhpEnumType extends EnumType
         return PhpDoc::unwrap($unpadded);
     }
 
-    /** @throws \Exception */
     protected function deprecationReason(\ReflectionClassConstant $reflection): ?string
     {
         $attributes = $reflection->getAttributes(Deprecated::class);

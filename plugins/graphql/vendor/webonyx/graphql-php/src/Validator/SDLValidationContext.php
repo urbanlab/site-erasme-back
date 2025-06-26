@@ -12,7 +12,7 @@ class SDLValidationContext implements ValidationContext
 
     protected ?Schema $schema;
 
-    /** @var list<Error> */
+    /** @var array<int, Error> */
     protected array $errors = [];
 
     public function __construct(DocumentNode $ast, ?Schema $schema)

@@ -20,7 +20,7 @@ use GraphQL\Utils\Utils;
  *   fields: iterable<FieldConfig>|callable(): iterable<FieldConfig>,
  *   parseValue?: callable(array<string, mixed>): mixed,
  *   astNode?: InputObjectTypeDefinitionNode|null,
- *   extensionASTNodes?: array<InputObjectTypeExtensionNode>|null
+ *   extensionASTNodes?: array<int, InputObjectTypeExtensionNode>|null
  * }
  */
 class InputObjectType extends Type implements InputType, NullableType, NamedType
@@ -29,7 +29,7 @@ class InputObjectType extends Type implements InputType, NullableType, NamedType
 
     public ?InputObjectTypeDefinitionNode $astNode;
 
-    /** @var array<InputObjectTypeExtensionNode> */
+    /** @var array<int, InputObjectTypeExtensionNode> */
     public array $extensionASTNodes;
 
     /** @phpstan-var InputObjectConfig */
@@ -109,7 +109,7 @@ class InputObjectType extends Type implements InputType, NullableType, NamedType
     protected function initializeFields(): void
     {
         $fields = $this->config['fields'];
-        if (is_callable($fields)) {
+        if (\is_callable($fields)) {
             $fields = $fields();
         }
 
@@ -128,26 +128,23 @@ class InputObjectType extends Type implements InputType, NullableType, NamedType
      */
     protected function initializeField($nameOrIndex, $field): void
     {
-        if (is_callable($field)) {
+        if (\is_callable($field)) {
             $field = $field();
         }
-        assert($field instanceof Type || is_array($field) || $field instanceof InputObjectField);
 
         if ($field instanceof Type) {
             $field = ['type' => $field];
         }
-        assert(is_array($field) || $field instanceof InputObjectField); // @phpstan-ignore-line TODO remove when using actual union types
 
-        if (is_array($field)) {
+        if (\is_array($field)) {
             $field['name'] ??= $nameOrIndex;
 
-            if (! is_string($field['name'])) {
+            if (! \is_string($field['name'])) {
                 throw new InvariantViolation("{$this->name} fields must be an associative array with field names as keys, an array of arrays with a name attribute, or a callable which returns one of those.");
             }
 
-            $field = new InputObjectField($field); // @phpstan-ignore-line array type is wrongly inferred
+            $field = new InputObjectField($field);
         }
-        assert($field instanceof InputObjectField); // @phpstan-ignore-line TODO remove when using actual union types
 
         $this->fields[$field->name] = $field;
     }
@@ -182,11 +179,11 @@ class InputObjectType extends Type implements InputType, NullableType, NamedType
         Utils::assertValidName($this->name);
 
         $fields = $this->config['fields'] ?? null;
-        if (is_callable($fields)) {
+        if (\is_callable($fields)) {
             $fields = $fields();
         }
 
-        if (! is_iterable($fields)) {
+        if (! \is_iterable($fields)) {
             $invalidFields = Utils::printSafe($fields);
             throw new InvariantViolation("{$this->name} fields must be an iterable or a callable which returns an iterable, got: {$invalidFields}.");
         }
@@ -203,7 +200,7 @@ class InputObjectType extends Type implements InputType, NullableType, NamedType
         return $this->astNode;
     }
 
-    /** @return array<InputObjectTypeExtensionNode> */
+    /** @return array<int, InputObjectTypeExtensionNode> */
     public function extensionASTNodes(): array
     {
         return $this->extensionASTNodes;

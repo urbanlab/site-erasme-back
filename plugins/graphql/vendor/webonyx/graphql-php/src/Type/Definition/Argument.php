@@ -69,14 +69,11 @@ class Argument
         $list = [];
 
         foreach ($config as $name => $argConfig) {
-            if (! is_array($argConfig)) {
+            if (! \is_array($argConfig)) {
                 $argConfig = ['type' => $argConfig];
             }
 
-            /** @phpstan-var ArgumentConfig $argConfigWithName */
-            $argConfigWithName = $argConfig + ['name' => $name];
-
-            $list[] = new self($argConfigWithName);
+            $list[] = new self($argConfig + ['name' => $name]);
         }
 
         return $list;
@@ -94,7 +91,7 @@ class Argument
 
     public function defaultValueExists(): bool
     {
-        return array_key_exists('defaultValue', $this->config);
+        return \array_key_exists('defaultValue', $this->config);
     }
 
     public function isRequired(): bool

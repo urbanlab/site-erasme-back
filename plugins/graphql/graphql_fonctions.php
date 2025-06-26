@@ -11,11 +11,11 @@ function graphql_verif_jeton($headers) {
 	}
 
 	$token_envoye = '';
-	if (isset($headers['X-Auth-Token'])) {
-		$token_envoye = $headers['X-Auth-Token'];
+	if (isset($headers["X-Auth-Token"])) {
+		$token_envoye = $headers["X-Auth-Token"];
 	}
 
-	return $token_envoye == $token_param;
+	return ($token_envoye == $token_param);
 }
 
 function graphql_getCollectionInfos(string $collection): array {

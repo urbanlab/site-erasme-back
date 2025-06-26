@@ -10,29 +10,27 @@ include_spip('inc/config');
 include_spip('graphql_fonctions');
 include_once _DIR_PLUGIN_GRAPHQL . 'vendor/autoload.php';
 
-use GraphQL\Error\DebugFlag;
-use GraphQL\GraphQL;
-use GraphQL\Type\Definition\Type;
-use GraphQL\Type\Schema;
-use GraphQL\Validator\DocumentValidator;
-use GraphQL\Validator\Rules\DisableIntrospection;
-use GraphQL\Validator\Rules\QueryDepth;
 use SPIP\GraphQL\SchemaSPIP;
 
+use GraphQL\GraphQL;
+use GraphQL\Type\Schema;
+use GraphQL\Type\Definition\Type;
+use GraphQL\Validator\Rules\QueryDepth;
+use GraphQL\Validator\Rules\DisableIntrospection;
+use GraphQL\Validator\DocumentValidator;
+use GraphQL\Error\DebugFlag;
+
 // Point d'entrée de l'API GraphQL
-function action_graphql_dist() {
+function  action_graphql_dist() {
 	try {
 		// Vérification du jeton
-		if (!graphql_verif_jeton(getallheaders())) {
+		if (!graphql_verif_jeton(getallheaders()))
 			throw new RuntimeException(_T('graphql:erreur_jeton'));
-		}
 
 		// Construction du schéma
 		// https://webonyx.github.io/graphql-php/schema-definition/#lazy-loading-of-types
 		$schemaSPIP = new SchemaSPIP();
-		if (empty($schemaSPIP->collections_autorisees)) {
-			throw new RuntimeException(_T('graphql:erreur_schema'));
-		}
+		if (empty($schemaSPIP->collections_autorisees)) throw new RuntimeException(_T('graphql:erreur_schema'));
 
 		$schema = new Schema([
 			'query' => $schemaSPIP->get('Query'),
@@ -49,18 +47,15 @@ function action_graphql_dist() {
 			// Requêtes POST
 			$input = json_decode($rawInput, true);
 			$query = (is_array($input) && array_key_exists('query', $input)) ? $input['query'] : '';
-			$variableValues = $input['variables'] ?? null;
+			$variableValues = isset($input['variables']) ? $input['variables'] : null;
 		} elseif (array_key_exists('query', $_GET)) {
 			// Requêtes GET
-			if (lire_config('/meta_graphql/securite/autoriser_get', ['non'])[0] == 'non') {
+			if (lire_config('/meta_graphql/securite/autoriser_get', ['non'])[0] == 'non')
 				throw new RuntimeException('GET queries not allowed');
-			}
 			$query = $_GET['query'];
 		}
 
-		if (!$query) {
-			throw new RuntimeException(_T('graphql:erreur_pas_requete'));
-		}
+		if (!$query) throw new RuntimeException(_T('graphql:erreur_pas_requete'));
 
 		// Préparation de la requête
 		// https://webonyx.github.io/graphql-php/executing-queries/#using-facade-method
@@ -71,8 +66,8 @@ function action_graphql_dist() {
 
 		// Contexte de la requête (pour passer des données communes à toutes les requêtes)
 		$contexte = [
-			'rootUrl' => lire_config('adresse_site'),
-			'request' => $_REQUEST,
+			'rootUrl' => lire_config("adresse_site"),
+			'request' => $_REQUEST
 		];
 
 		// Limitation de la profondeur des requêtes si activé
@@ -89,7 +84,13 @@ function action_graphql_dist() {
 		}
 
 		// Exécution de la requête
-		$output = GraphQL::executeQuery($schema, $query, $rootValue, $contexte, $variableValues);
+		$output = GraphQL::executeQuery(
+			$schema,
+			$query,
+			$rootValue,
+			$contexte,
+			$variableValues,
+		);
 
 		// On vérifie si le mode debug est activé
 		if (in_array('true', lire_config('/meta_graphql/config/debug', []))) {
@@ -102,13 +103,16 @@ function action_graphql_dist() {
 		$output = [
 			'errors' => [
 				[
-					'message' => $e->getMessage(),
-				],
-			],
+					'message' => $e->getMessage()
+				]
+			]
 		];
 	}
 
 	// Envoi de la réponse
 	header('Content-Type: application/json');
-	echo json_encode($output, JSON_THROW_ON_ERROR);
+	echo json_encode(
+		$output,
+		JSON_THROW_ON_ERROR
+	);
 }

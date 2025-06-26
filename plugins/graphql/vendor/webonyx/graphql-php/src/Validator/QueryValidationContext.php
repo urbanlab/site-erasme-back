@@ -36,7 +36,7 @@ class QueryValidationContext implements ValidationContext
 
     protected DocumentNode $ast;
 
-    /** @var list<Error> */
+    /** @var array<int, Error> */
     protected array $errors = [];
 
     private TypeInfo $typeInfo;
@@ -73,7 +73,7 @@ class QueryValidationContext implements ValidationContext
         $this->errors[] = $error;
     }
 
-    /** @return list<Error> */
+    /** @return array<int, Error> */
     public function getErrors(): array
     {
         return $this->errors;
@@ -107,7 +107,7 @@ class QueryValidationContext implements ValidationContext
                 $allUsages[] = $this->getVariableUsages($fragment);
             }
 
-            $usages = array_merge(...$allUsages);
+            $usages = \array_merge(...$allUsages);
             $this->recursiveVariableUsages[$operation] = $usages;
         }
 
@@ -159,7 +159,7 @@ class QueryValidationContext implements ValidationContext
             $collectedNames = [];
             $nodesToVisit = [$operation];
             while ($nodesToVisit !== []) {
-                $node = array_pop($nodesToVisit);
+                $node = \array_pop($nodesToVisit);
                 $spreads = $this->getFragmentSpreads($node);
                 foreach ($spreads as $spread) {
                     $fragName = $spread->name->value;
@@ -198,7 +198,7 @@ class QueryValidationContext implements ValidationContext
 
             $setsToVisit = [$node->getSelectionSet()];
             while ($setsToVisit !== []) {
-                $set = array_pop($setsToVisit);
+                $set = \array_pop($setsToVisit);
 
                 foreach ($set->selections as $selection) {
                     if ($selection instanceof FragmentSpreadNode) {

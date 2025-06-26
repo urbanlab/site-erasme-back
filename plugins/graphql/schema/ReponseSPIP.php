@@ -4,17 +4,16 @@ declare(strict_types=1);
 
 namespace SPIP\GraphQL;
 
-class ReponseSPIP
-{
+class ReponseSPIP {
 	public static function findMeta(): array {
-		$metas = lire_config('/meta_graphql/meta', []);
+		$metas = lire_config("/meta_graphql/meta", []);
 		$where = "nom IN ('" . implode("','", $metas) . "')";
-		$liste_meta_publique = sql_allfetsel('nom, valeur', 'spip_meta', $where);
+		$liste_meta_publique = sql_allfetsel("nom, valeur", "spip_meta", $where);
 
 		$retourMeta = [];
 		if (!empty($liste_meta_publique)) {
 			foreach ($liste_meta_publique as $meta) {
-				$retourMeta[$meta['nom']] = $meta['valeur'];
+				$retourMeta[$meta["nom"]] = $meta["valeur"];
 			}
 		}
 
@@ -26,6 +25,7 @@ class ReponseSPIP
 		$collections_autorisees = lire_config('/meta_graphql/objets_editoriaux');
 
 		foreach ($collections_autorisees as $collection => $config) {
+			$result = self::searchCollection($collection, $texte, ['collection.lang=' . sql_quote($lang)]);
 			$where1 = [];
 			$where1[] = 'collection.lang=' . sql_quote($lang);
 			if ($where) {
@@ -35,11 +35,18 @@ class ReponseSPIP
 			}
 			$result = self::searchCollection($collection, $texte, $where1, $orderBy);
 
-			$retour = array_merge($retour, $result);
+			$retour = array_merge(
+				$retour,
+				$result
+			);
 		}
 
 		// Tri par points
-		//usort($retour, fn ($item1, $item2) => $item2['points'] <=> $item1['points']);
+		/*
+		usort($retour, function ($item1, $item2) {
+			return $item2['points'] <=> $item1['points'];
+		});
+		*/
 
 		// Filtrage par apport à la pagination
 		$totalPages = ceil(count($retour) / $pagination);
@@ -55,7 +62,7 @@ class ReponseSPIP
 				'hasPreviousPage' => ($page > 1) ? true : false,
 				'hasNextPage' => ($page < $totalPages) ? true : false,
 			],
-			'result' => $retour,
+			'result' => $retour
 		];
 	}
 
@@ -70,13 +77,7 @@ class ReponseSPIP
 	}
 
 	// Récupération d'une collection d'objets
-	public static function findCollection(
-		string $collection,
-		array $where,
-		int $pagination,
-		int $page = 1,
-		?array $orderBy = null
-	): ?array {
+	public static function findCollection(string $collection, array $where, int $pagination, int $page = 1, ?array $orderBy = null): ?array {
 		$retour_objets = [];
 		$table = table_objet_sql($collection);
 		$from = $table . ' AS collection';
@@ -86,7 +87,7 @@ class ReponseSPIP
 		$limit = ($pagination == 0) ? '' : "$offset,$pagination";
 
 		if ($limit != '') {
-			$totalObjets = sql_countsel($from, $where);
+			$totalObjets =  sql_countsel($from, $where);
 			$totalPages = ceil($totalObjets / $pagination);
 		}
 
@@ -104,7 +105,7 @@ class ReponseSPIP
 				'hasPreviousPage' => ($page > 1) ? true : false,
 				'hasNextPage' => ($page < $totalPages) ? true : false,
 			],
-			'result' => $retour_objets,
+			'result' => $retour_objets
 		];
 	}
 
@@ -123,13 +124,15 @@ class ReponseSPIP
 
 		if (empty($objet)) {
 			$table = table_objet_sql($collection);
-			$where = [$champ_id . '=' . $id];
-			$objet = sql_fetsel(self::getSelect($table), $table . ' AS collection', self::getWhere($table, $where));
+			$where = [$champ_id . "=" . $id];
+			$objet = sql_fetsel(
+				self::getSelect($table),
+				$table . ' AS collection',
+				self::getWhere($table, $where)
+			);
 		}
 
-		if (!$objet) {
-			return [];
-		}
+		if (!$objet) return [];
 
 		// Champ de base pour créer le champ slug
 		$slug_origin = self::champSlug($collection);
@@ -137,37 +140,34 @@ class ReponseSPIP
 		// Récupération des champs
 		foreach ($objet as $champ => $value) {
 			switch ($champ) {
-				case 'titre':
+				case "titre":
 					$objet[$champ] = $value;
-					$objet['rang'] = (preg_match('#^([0-9]+)[.][[:space:]]#', $value, $matches)) ?
+					$objet['rang'] = (preg_match("#^([0-9]+)[.][[:space:]]#", $value, $matches)) ?
 						$matches[1] : '0';
 					break;
-				case 'fichier':
+				case "fichier":
 					$objet[$champ] = url_absolue(_DIR_IMG . $value);
 					break;
-				case 'saisies':
+				case "saisies":
 					// TODO : transformer le tableau de saisies en html
 					$objet[$champ] = $value;
 					break;
-				case 'texte':
+				case "texte":
+				case "surtitre":
+				case "soustitre":
+				case "descriptif":
+				case "chapo":
+				case "bio":
+				case "credits":
 					// Transformation des liens et des balises
 					$objet[$champ] = liens_absolus(trim(str_replace("\n", '<br>', propre($value))));
 					break;
-				case 'surtitre':
-				case 'soustitre':
-				case 'descriptif':
-				case 'chapo':
-				case 'bio':
-				case 'credits':
-					// Transformation des liens et des balises
-					$objet[$champ] = liens_absolus(trim(str_replace("\n", '<br>', propre($value))));
-					break;
-					// Gestion des laisons SQL 1 => N ascendantes (voir les resolvers dans SchemaSPIP.php)
-				case 'id_secteur':
-				case 'id_rubrique':
-				case 'id_groupe':
-				case 'id_trad':
-				case 'id_parent':
+				// Gestion des laisons SQL 1 => N ascendantes (voir les resolvers dans SchemaSPIP.php)
+				case "id_secteur":
+				case "id_rubrique":
+				case "id_groupe":
+				case "id_trad":
+				case "id_parent":
 					break;
 				default:
 					$objet[$champ] = $value;
@@ -188,20 +188,18 @@ class ReponseSPIP
 		if ($collection == 'documents' && $objet['id_vignette'] !== '0') {
 			// Si on est sur un document
 			include_spip('inc/documents');
-			$objet['logo'] = lire_config('adresse_site') . '/' . vignette_logo_document($objet);
+			$objet['logo'] = lire_config("adresse_site") . "/" . vignette_logo_document($objet);
 		} else {
 			// Si on est sur un objet éditorial
-			$logo = quete_logo_objet($objet['id'], $type_objet, 'on');
+			$logo =  quete_logo_objet($objet['id'], $type_objet, 'on');
 			if (array_key_exists('chemin', $logo)) {
-				$objet['logo'] = lire_config('adresse_site') . '/' . $logo['chemin'];
+				$objet['logo'] = lire_config("adresse_site") . "/" . $logo['chemin'];
 			}
 		}
 
 		// Récupération des collections liées (liaisons SQL N => N)
-		$collections_autorisees = lire_config('/meta_graphql/objets_editoriaux');
-		if (!array_key_exists($collection, $collections_autorisees)) {
-			return $objet;
-		}
+		$collections_autorisees = lire_config("/meta_graphql/objets_editoriaux");
+		if (!array_key_exists($collection, $collections_autorisees)) return $objet;
 
 		$config_collection = $collections_autorisees[table_objet($type_objet)];
 
@@ -249,17 +247,18 @@ class ReponseSPIP
 		$prepare_requete = inc_prepare_recherche_dist($recherche, $table);
 		$table_infos = lister_tables_objets_sql($table);
 		$select[] = $prepare_requete[0];
-		$from = [$table . ' as collection', table_objet_sql('resultats') . ' as resultats'];
+		$from = [$table . ' as collection', table_objet_sql("resultats") .  " as resultats",];
 		$where[] = $prepare_requete[1];
 		$where[] = 'collection.' . id_table_objet($table) . '=resultats.id';
 		if ($table != 'spip_auteurs' && array_key_exists('statut', $table_infos['field'])) {
 			$where[] = 'collection.statut=' . sql_quote('publie');
 		}
 		$order = self::buildOrder($orderBy);
-		spip_log($order, 'test');
-		if(!$order)$order=['points DESC'];
-		spip_log($order, 'test');
+		if (!$order) {
+			$order = ['points DESC'];
+		}
 		$result = sql_allfetsel($select, $from, $where, '', $order);
+
 
 		foreach ($result as $objet) {
 			$retour_recherche[] = self::findObjet((int) $objet['id'], $collection, $objet);
@@ -270,14 +269,14 @@ class ReponseSPIP
 
 	public static function champSlug(string $collection) {
 		switch ($collection) {
-			case 'auteurs':
-				return 'nom';
+			case "auteurs":
+				return "nom";
 				break;
-			case 'syndic':
-				return 'nom_site';
+			case "syndic":
+				return "nom_site";
 				break;
 			default:
-				return 'titre';
+				return "titre";
 		}
 	}
 
@@ -331,13 +330,12 @@ class ReponseSPIP
 			}
 		}
 
-		if ($table != 'spip_auteurs' && array_key_exists('statut', $table_infos['field'])) {
-			$retour_where[] = 'collection.statut=' . sql_quote('publie');
+		if ($table != "spip_auteurs" && array_key_exists("statut", $table_infos["field"])) {
+			$retour_where[] = "collection.statut=" . sql_quote('publie');
 		}
 
 		return $retour_where;
 	}
-
 	private static function buildOrder(?array $orderBy): string {
 		if (!$orderBy) {
 			return ''; // pas d'ordre
@@ -352,7 +350,7 @@ class ReponseSPIP
 				$orderClauses[] = "$champ $direction";
 			}
 		}
-spip_log(implode(', ', $orderClauses), 'test');
+
 		return implode(', ', $orderClauses);
 	}
 }

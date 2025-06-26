@@ -4,20 +4,9 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit3f1061e250611d2df9302fde16b30941
+class ComposerStaticIniteff71e94df1f70f219325798221e1207
 {
-    public static $files = array (
-        '9b38cf48e83f5d8f60375221cd213eee' => __DIR__ . '/..' . '/phpstan/phpstan/bootstrap.php',
-        '5bf57f5eebf62cf90c3fc03a259adc34' => __DIR__ . '/..' . '/symplify/easy-coding-standard/bootstrap.php',
-        '38143a9afc50997d55e4815db8489d1c' => __DIR__ . '/..' . '/rector/rector/bootstrap.php',
-    );
-
     public static $prefixLengthsPsr4 = array (
-        'S' => 
-        array (
-            'SpipLeague\\EasyCodingStandard\\' => 30,
-            'SpipLeague\\Component\\Rector\\' => 28,
-        ),
         'G' => 
         array (
             'GraphQL\\' => 8,
@@ -25,15 +14,6 @@ class ComposerStaticInit3f1061e250611d2df9302fde16b30941
     );
 
     public static $prefixDirsPsr4 = array (
-        'SpipLeague\\EasyCodingStandard\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/spip-league/easy-coding-standard/src',
-        ),
-        'SpipLeague\\Component\\Rector\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/spip-league/rector/src',
-            1 => __DIR__ . '/..' . '/spip-league/rector/rules',
-        ),
         'GraphQL\\' => 
         array (
             0 => __DIR__ . '/..' . '/webonyx/graphql-php/src',
@@ -50,9 +30,9 @@ class ComposerStaticInit3f1061e250611d2df9302fde16b30941
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit3f1061e250611d2df9302fde16b30941::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit3f1061e250611d2df9302fde16b30941::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit3f1061e250611d2df9302fde16b30941::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticIniteff71e94df1f70f219325798221e1207::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticIniteff71e94df1f70f219325798221e1207::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticIniteff71e94df1f70f219325798221e1207::$classMap;
 
         }, null, ClassLoader::class);
     }

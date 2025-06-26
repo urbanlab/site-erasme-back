@@ -15,9 +15,6 @@ use GraphQL\Validator\QueryValidationContext;
 
 class QueryDepth extends QuerySecurityRule
 {
-    /** @var array<string, bool> Fragment names which are already calculated in recursion */
-    protected array $calculatedFragments = [];
-
     protected int $maxQueryDepth;
 
     /** @throws \InvalidArgumentException */
@@ -85,14 +82,7 @@ class QueryDepth extends QuerySecurityRule
                 $fragment = $this->getFragment($node);
 
                 if ($fragment !== null) {
-                    $name = $fragment->name->value;
-                    if (isset($this->calculatedFragments[$name])) {
-                        return $this->maxQueryDepth + 1;
-                    }
-
-                    $this->calculatedFragments[$name] = true;
                     $maxDepth = $this->fieldDepth($fragment, $depth, $maxDepth);
-                    unset($this->calculatedFragments[$name]);
                 }
 
                 break;
