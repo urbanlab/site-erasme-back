@@ -334,7 +334,8 @@ class SchemaSPIP {
 									$type_enfant,
 									$where,
 									$args['pagination'],
-									$args['page']
+									$args['page'],
+									$args['orderby']
 								);
 							}
 						];
@@ -373,7 +374,8 @@ class SchemaSPIP {
 									$type_enfant,
 									$where,
 									$args['pagination'],
-									$args['page']
+									$args['page'],
+									$args['orderby']
 								);
 							}
 						];
