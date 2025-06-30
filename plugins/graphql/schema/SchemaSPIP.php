@@ -361,11 +361,19 @@ class SchemaSPIP {
 								$primary_enfant = id_table_objet($type_enfant);
 								$collection_parent = strtolower($rootValue['typeCollection']);
 								$type_parent = objet_type($collection_parent);
+								$primary_parent = id_table_objet($type_parent);
 								$id_parent = $rootValue['id'];
 								$liaison_col = objet_trouver_liens([$type_enfant => '*'], [$type_parent => $id_parent]);
 
-								foreach ($liaison_col as $l) {
-									$ids[] = $l[$primary_enfant];
+								if ($liaison_col) {
+									foreach ($liaison_col as $l) {
+										$ids[] = $l[$primary_enfant];
+									}
+								} else {
+									$result = sql_allfetsel('id_objet', 'spip_' . $collection_parent . '_liens', ['objet='. sql_quote($type_enfant), $primary_parent . '=' . intval($id_parent)]);
+									foreach ($result as $res) {
+										$ids[] = $res['id_objet'];
+									}
 								}
 
 								$where = array_merge($args['where'], [sql_in($primary_enfant, $ids)]);

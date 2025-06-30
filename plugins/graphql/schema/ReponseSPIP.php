@@ -212,31 +212,17 @@ class ReponseSPIP {
 			$table_liee = table_objet_sql($collection_liee);
 			$type_objet_lie = objet_type($table_liee);
 			$cle_collection_liee = id_table_objet($table_liee);
-spip_log($objet, 'test');
-			if (strtolower($objet['typeCollection']) != 'auteurs') {
-				if (
-					array_key_exists($collection_liee, $collections_autorisees)
-					&& $liaison_col = objet_trouver_liens([$type_objet_lie => '*'], [$type_objet => $id])
-				) {
 
-					foreach ($liaison_col as $l) {
-						$ids[] = $l[$cle_collection_liee];
-					}
+			if (
+				array_key_exists($collection_liee, $collections_autorisees)
+				&& $liaison_col = objet_trouver_liens([$type_objet_lie => '*'], [$type_objet => $id])
+			) {
 
-					$where = [sql_in($cle_collection_liee, $ids)];
-
-					$objet[$collection_liee] = self::findCollection(
-						$collection_liee,
-						$where,
-						(int) $collections_autorisees[$collection_liee]['pagination']
-					);
+				foreach ($liaison_col as $l) {
+					$ids[] = $l[$cle_collection_liee];
 				}
-			} else {
-				$rows = sql_allfetsel('*', "spip_".$collection_liee."_liens", sql_in('id_auteur', $objet['id']));
-				foreach ($rows as $value) {
-					if ($value['objet'] == objet_type($collection_liee)) $ids[] = $value['id_objet'];
-				}
-				$where = [sql_in('id_objet', $ids)];
+
+				$where = [sql_in($cle_collection_liee, $ids)];
 
 				$objet[$collection_liee] = self::findCollection(
 					$collection_liee,
