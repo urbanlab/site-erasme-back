@@ -4,7 +4,7 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 	return;
 }
 
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 	// A
 	'actif_oui' => 'Actif',
 	'actif_non' => 'Inactif',
@@ -85,4 +85,4 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_graphql_jeton' => 'Jeton API',
 	'titre_page_configurer_graphql' => 'GraphQL',
 	'type_meta_desc' => 'Retourne les metas autorisées'
-);
+];
