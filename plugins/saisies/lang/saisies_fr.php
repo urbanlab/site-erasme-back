@@ -158,6 +158,8 @@ return [
 	'option_disable_label' => 'Désactiver le champ',
 	'option_env_explication' => 'Valeur par défaut <code>false</code>. Mettre à <code>true</code> si on veut que l’environnement d’appel soit entièrement passé au squelette de la saisie.',
 	'option_env_label' => 'Transmettre l’environnement d’appel à la saisie',
+	'option_cle_secrete_label' => 'La saisie est une clé secrète',
+	'option_cle_secrete_explication' => 'Une clé secrète ne sera pas visible au rechargement du formulaire, mais masquée partiellement. Pour les formulaires de configuration déclarés en saisie PHP, le plugin Saisies récupére automatiquement la clé secrète en base en cas de nouvelle soumission du formulaire.',
 	'option_erreur_obligatoire_explication' => 'Vous pouvez personnaliser le message d’erreur affiché pour indiquer l’obligation (sinon laisser vide).',
 	'option_erreur_obligatoire_label' => 'Message d’erreur pour l’obligation',
 	'option_explication_apres_attention' => 'Pour des raisons d’accessibilité, les explications importantes doivent toujours être avant la saisie.',

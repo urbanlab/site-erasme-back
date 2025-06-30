@@ -146,6 +146,12 @@ options:
       -  'inclure:saisies/_base/obligatoire.yaml'
 options_dev:
       - 'inclure:saisies/_base/options_dev.yaml'
+      -
+        saisie: 'input'
+        options:
+          nom: 'cle_secrete'
+          label: '<:saisies:option_cle_secrete_label:>'
+          explication: '<:saisies:option_cle_secrete_explication:>'
 defaut:
   options:
     label: '<:saisies:saisie_input_titre:>'

@@ -9,7 +9,7 @@
 		<traducteur nom="George" lien="https://trad.spip.net/auteur/george" />
 	</langue>
 	<langue code="ca" url="https://trad.spip.net/tradlang_module/saisies?lang_cible=ca" total="301" traduits="75" relire="0" modifs="19" nouveaux="207" pourcent="24.92" />
-	<langue code="de" url="https://trad.spip.net/tradlang_module/saisies?lang_cible=de" total="301" traduits="180" relire="0" modifs="9" nouveaux="112" pourcent="59.80">
+	<langue code="de" url="https://trad.spip.net/tradlang_module/saisies?lang_cible=de" total="301" traduits="301" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
 		<traducteur nom="klaus++" lien="https://trad.spip.net/auteur/klaus" />
 		<traducteur nom="Torsten Willmann" lien="https://trad.spip.net/auteur/torsten-willmann" />
 	</langue>

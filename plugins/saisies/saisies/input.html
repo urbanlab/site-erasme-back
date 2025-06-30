@@ -41,7 +41,7 @@
 [(#REM) cle secrete > on modifie le place holder]
 #SET{placeholder,''}
 [(#ENV{cle_secrete}|oui)
-	#SET{placeholder,#ENV{valeur_forcee,#ENV{valeur,#ENV{default}}}|spip_affiche_mot_de_passe_masque{true}}
+	#SET{placeholder,#ENV{valeur_forcee,#ENV{valeur,#ENV{defaut}}}|spip_affiche_mot_de_passe_masque{true}}
 ]
 [(#ENV{cle_secrete}|non)
 	#SET{placeholder,#ENV{placeholder}}
