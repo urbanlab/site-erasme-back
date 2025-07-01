@@ -160,11 +160,8 @@ class ReponseSPIP {
 				case "chapo":
 				case "bio":
 				case "credits":
-					$value = echappe_html($value);
-					$value = expanser_liens($value, '', []);
-					$value = expanser_liens($value, '', []);
-					$value = traiter_raccourcis($value);
-					$value = echappe_retour_modeles($value, false);
+					$value = typo($value);
+					$value = propre($value);
 					// Transformation des liens et des balises
 					$objet[$champ] = liens_absolus(trim(str_replace("\n", '<br>', $value)));
 					break;
