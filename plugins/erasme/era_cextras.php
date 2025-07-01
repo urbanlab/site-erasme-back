@@ -28,7 +28,7 @@ function era_declarer_champs_extras($champs = []) {
 			'rechercher' => 'on',
 			'rechercher_ponderation' => '8',
 			'defaut' => 'Ex. : Tous à table !',
-			'afficher_si' => '@isprototype@=="on"',
+			'afficher_si' => '@isprototype@=="1"',
 		],
 	];
 
@@ -43,7 +43,7 @@ function era_declarer_champs_extras($champs = []) {
 			'rechercher' => 'on',
 			'rechercher_ponderation' => '2',
 			'defaut' => '',
-			'afficher_si' => '@isprototype@=="on"',
+			'afficher_si' => '@isprototype@=="1"',
 		],
 	];
 
@@ -59,7 +59,7 @@ function era_declarer_champs_extras($champs = []) {
 			'rechercher' => 'on',
 			'rechercher_ponderation' => '8',
 			'defaut' => 'Ex. : Comment ça marche ?',
-			'afficher_si' => '@isprototype@=="on"',
+			'afficher_si' => '@isprototype@=="1"',
 		],
 	];
 
@@ -73,7 +73,7 @@ function era_declarer_champs_extras($champs = []) {
 			'rechercher' => 'on',
 			'rechercher_ponderation' => '2',
 			'defaut' => '',
-			'afficher_si' => '@isprototype@=="on"',
+			'afficher_si' => '@isprototype@=="1"',
 		],
 	];
 
@@ -91,7 +91,7 @@ function era_declarer_champs_extras($champs = []) {
 > 2 ans d\'expérimentation
 8 établissements dont 4 écoles et 4 collèges
 844 fiches et 8 scénarios produits',
-			'afficher_si' => '@isprototype@=="on"',
+			'afficher_si' => '@isprototype@=="1"',
 		],
 	];
 	/* Renommer ce champ en description_title_third */
@@ -107,7 +107,7 @@ function era_declarer_champs_extras($champs = []) {
 			'rechercher' => 'on',
 			'rechercher_ponderation' => '8',
 			'defaut' => '',
-			'afficher_si' => '@isprototype@=="on"',
+			'afficher_si' => '@isprototype@=="1"',
 		],
 	];
 	/* Renommer ce champ en description_third */
@@ -122,7 +122,7 @@ function era_declarer_champs_extras($champs = []) {
 			'rechercher' => 'on',
 			'rechercher_ponderation' => '2',
 			'defaut' => '',
-			'afficher_si' => '@isprototype@=="on"',
+			'afficher_si' => '@isprototype@=="1"',
 		],
 	];
 
@@ -137,7 +137,7 @@ function era_declarer_champs_extras($champs = []) {
 			'sql' => 'text DEFAULT \'\' NOT NULL',
 			'rechercher_ponderation' => '2',
 			'defaut' => 'Ex. :	2011 : Conception	2012 : Expérimentation	> 2013 : Incubation	2014 : Externalisation',
-			'afficher_si' => '@isprototype@=="on"',
+			'afficher_si' => '@isprototype@=="1"',
 		],
 	];
 
@@ -147,7 +147,7 @@ function era_declarer_champs_extras($champs = []) {
 			'nom' => 'fieldset_1',
 			'label' => 'Descriptif technique',
 			'explication' => 'Laisser un champ vide pour ne pas l\'afficher dans la fiche projet',
-			'afficher_si' => '@isprototype@=="on"',
+			'afficher_si' => '@isprototype@=="1"',
 		],
 		'saisies' => [
 			'descr_tech_technique' => [
@@ -216,7 +216,7 @@ function era_declarer_champs_extras($champs = []) {
 		'options' => [
 			'nom' => 'fieldset_3',
 			'label' => 'Informations',
-			'afficher_si' => '@isprototype@=="on"',
+			'afficher_si' => '@isprototype@=="1"',
 		],
 		'saisies' => [
 			'information_site_web' => [
@@ -279,7 +279,7 @@ function era_declarer_champs_extras($champs = []) {
 		'options' => [
 			'nom' => 'fieldset_5',
 			'label' => 'Contenus supplémentaires',
-			'afficher_si' => '@isprototype@=="on"',
+			'afficher_si' => '@isprototype@=="1"',
 		],
 		'saisies' => [
 			'description_title_third' => [
@@ -390,7 +390,7 @@ function era_declarer_champs_extras($champs = []) {
 			'defaut' => 'type_diaporama',
 			'sql' => 'text DEFAULT \'\' NOT NULL',
 			'rechercher_ponderation' => '2',
-			'afficher_si' => '@isprototype@=="on"',
+			'afficher_si' => '@isprototype@=="1"',
 		],
 	];
 

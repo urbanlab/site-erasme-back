@@ -112,6 +112,7 @@ class ReponseSPIP {
 	// Récupération d'un objet
 	public static function findObjet(int $id, string $type_objet, array $objet = []): ?array {
 		include_spip('inc/filtres');
+		include_spip('inc/texte_mini');
 
 		$collection = table_objet($type_objet);
 
@@ -159,8 +160,13 @@ class ReponseSPIP {
 				case "chapo":
 				case "bio":
 				case "credits":
+					$value = echappe_html($value);
+					$value = expanser_liens($value, '', []);
+					$value = expanser_liens($value, '', []);
+					$value = traiter_raccourcis($value);
+					$value = echappe_retour_modeles($value, false);
 					// Transformation des liens et des balises
-					$objet[$champ] = liens_absolus(trim(str_replace("\n", '<br>', propre($value))));
+					$objet[$champ] = liens_absolus(trim(str_replace("\n", '<br>', $value)));
 					break;
 				// Gestion des laisons SQL 1 => N ascendantes (voir les resolvers dans SchemaSPIP.php)
 				case "id_secteur":
