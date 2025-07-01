@@ -25,12 +25,16 @@ function era_upgrade($nom_meta_base_version, $version_cible) {
 	cextras_api_upgrade(era_declarer_champs_extras(), $maj['1.0.6']);
 	cextras_api_upgrade(era_declarer_champs_extras(), $maj['1.0.7']);
 	cextras_api_upgrade(era_declarer_champs_extras(), $maj['1.1.1']);
-	cextras_api_upgrade(era_declarer_champs_extras(), $maj['1.2.0']);
+	cextras_api_upgrade(era_declarer_champs_extras(), $maj['1.2.1']);
+	$maj['1.2.2'] = [['era_maj_autoinc']];
 
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);
 }
 
+function era_maj_autoinc() {
+	sql_alter('TABLE spip_articles MODIFY COLUMN isprototype int(1) DEFAULT "0" NOT NULL');
+}
 function era_ajouter_mots_cles() {
 	spip_log('Ajout des mots-cles');
 

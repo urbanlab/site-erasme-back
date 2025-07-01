@@ -1,10 +1,10 @@
 <paquet
     prefix="era"
     categorie="squelette"
-    version="2.0.2"
+    version="2.0.3"
     etat="dev"
     logo="era.png"
-    schema="1.2.0"
+    schema="1.2.2"
     compatibilite="[3.0;["
 >
     <nom>Erasme - Plugin du site</nom>
