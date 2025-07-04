@@ -14,4 +14,5 @@
     <necessite nom="cextras" compatibilite="[3.0.5;[" />
 
     <pipeline nom="declarer_champs_extras" inclure="era_cextras.php" />
+	<pipeline nom="propres_creer_chaine_url" inclure="era_pipelines.php" />
 </paquet>

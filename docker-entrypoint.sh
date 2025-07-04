@@ -111,7 +111,6 @@ spip plugins:activer saisies -y
 spip plugins:activer yaml -y
 spip plugins:activer cextra -y
 spip plugins:activer correction_liens_internes -y
-spip plugins:activer urls_par_numero -y
 spip plugins:activer erasme -y
 spip plugins:activer graphql -y
 spip plugins:maj:bdd
