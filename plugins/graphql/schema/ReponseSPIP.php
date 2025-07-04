@@ -160,10 +160,9 @@ class ReponseSPIP {
 				case "chapo":
 				case "bio":
 				case "credits":
-					$value = typo($value);
-					$value = propre($value);
 					// Transformation des liens et des balises
-					$objet[$champ] = liens_absolus(trim(str_replace("\n", '<br>', $value)));
+					propre($value); // contrer un bogue SPIP https://git.spip.net/spip/ecrire/-/issues/66
+					$objet[$champ] = liens_absolus(trim(str_replace("\n", '<br>', propre($value))));
 					break;
 				// Gestion des laisons SQL 1 => N ascendantes (voir les resolvers dans SchemaSPIP.php)
 				case "id_secteur":

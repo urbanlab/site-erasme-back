@@ -1,6 +1,8 @@
 .ddev
 .vscode
 .env
+.editorconfig
+.gitattributes
 .htaccess
 config
 ecrire
@@ -12,6 +14,7 @@ plugins-dist
 squelettes-dist
 tmp
 /composer.*
+/*.txt
 htaccess.txt
 LICENSE
 /*.json
