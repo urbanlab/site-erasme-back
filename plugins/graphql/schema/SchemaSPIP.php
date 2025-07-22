@@ -306,39 +306,40 @@ class SchemaSPIP {
 					$infos_collection_liee = lister_tables_objets_sql(table_objet_sql($collection_liee));
 
 					// Le champ 'parent' doit être déclaré dans les infos de la table SQL
-					if (!isset($infos_collection_liee['parent'])) continue;
+					if (!empty($infos_collection_liee['parent'])) {
 
-					// Le type mot ne renvoit pas une liste mais un tableau associatif
-					$parent = (array_values($infos_collection_liee['parent']) !== $infos_collection_liee['parent']) ?
-						$infos_collection_liee['parent'] :
-						$infos_collection_liee['parent'][0];
+						// Le type mot ne renvoit pas une liste mais un tableau associatif
+						$parent = (array_values($infos_collection_liee['parent']) !== $infos_collection_liee['parent']) ?
+							$infos_collection_liee['parent'] :
+							$infos_collection_liee['parent'][0];
 
-					// S'il ne s'agit pas d'un champ autorisé dans la collection liée
-					// Il faut par ex autoriser id_rubrique dans la collection Articles pour qu'un objet Rubrique puisse exposer ses Articles
-					if (!in_array($parent['champ'], $this->collections_autorisees[$collection_liee]['champs'])) continue;
+						// S'il ne s'agit pas d'un champ autorisé dans la collection liée
+						// Il faut par ex autoriser id_rubrique dans la collection Articles pour qu'un objet Rubrique puisse exposer ses Articles
+						if (!in_array($parent['champ'], $this->collections_autorisees[$collection_liee]['champs'])) continue;
 
-					// Si le champ correspond à la clé primaire de la table en cours
-					if (
-						$parent['champ'] ==  id_table_objet($collection) ||
-						($parent['champ'] == 'id_parent' && $parent['type'] == objet_type($collection))
-					) {
-						$graphQLfields[$collection_liee] = [
-							'type' => $this->get(ucfirst(objet_type($collection_liee)) . 'Pagination'),
-							'args' => $this->collectionArgs((int) $this->collections_autorisees[$collection_liee]['pagination']),
-							'resolve' => function ($rootValue, array $args, array $context, ResolveInfo $info) use ($parent) {
-								$type_enfant = objet_type($info->fieldDefinition->name);
+						// Si le champ correspond à la clé primaire de la table en cours
+						if (
+							$parent['champ'] ==  id_table_objet($collection) ||
+							($parent['champ'] == 'id_parent' && $parent['type'] == objet_type($collection))
+						) {
+							$graphQLfields[$collection_liee] = [
+								'type' => $this->get(ucfirst(objet_type($collection_liee)) . 'Pagination'),
+								'args' => $this->collectionArgs((int) $this->collections_autorisees[$collection_liee]['pagination']),
+								'resolve' => function ($rootValue, array $args, array $context, ResolveInfo $info) use ($parent) {
+									$type_enfant = objet_type($info->fieldDefinition->name);
 
-								$where = array_merge($args['where'], [$parent['champ'] . '=' . $rootValue['id']]);
+									$where = array_merge($args['where'], [$parent['champ'] . '=' . $rootValue['id']]);
 
-								return ReponseSPIP::findCollection(
-									$type_enfant,
-									$where,
-									$args['pagination'],
-									$args['page'],
-									$args['orderby']
-								);
-							}
-						];
+									return ReponseSPIP::findCollection(
+										$type_enfant,
+										$where,
+										$args['pagination'],
+										$args['page'],
+										$args['orderby']
+									);
+								}
+							];
+						}
 					}
 				}
 

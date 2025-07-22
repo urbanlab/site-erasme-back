@@ -25,9 +25,9 @@ class ReponseSPIP {
 		$collections_autorisees = lire_config('/meta_graphql/objets_editoriaux');
 
 		foreach ($collections_autorisees as $collection => $config) {
-			$result = self::searchCollection($collection, $texte, ['collection.lang=' . sql_quote($lang)]);
 			$where1 = [];
-			$where1[] = 'collection.lang=' . sql_quote($lang);
+			if ($collection != 'documents') $where1[] = 'collection.lang=' . sql_quote($lang);
+			$result = self::searchCollection($collection, $texte, $where1);
 			if ($where) {
 				foreach (explode(',', $where) as $w) {
 					$where1[] = $w;
