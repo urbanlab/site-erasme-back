@@ -1,0 +1,29 @@
+<paquet
+	prefix="identifiants"
+	categorie="divers"
+	version="2.2.1"
+	etat="stable"
+	compatibilite="[4.2.0;4.*]"
+	logo="identifiants.svg"
+	documentation="https://contrib.spip.net/4762"
+	schema="2.0.1"
+>
+
+	<nom>Identifiants</nom>
+
+	<auteur>tcharlss</auteur>
+
+	<licence>GNU/GPL</licence>
+
+	<pipeline nom="autoriser" inclure="identifiants_autorisations.php" />
+	<pipeline nom="declarer_tables_objets_sql" inclure="base/identifiants.php" />
+	<pipeline nom="editer_contenu_objet" inclure="identifiants_pipelines.php" />
+	<pipeline nom="pre_edition" inclure="identifiants_pipelines.php" />
+	<pipeline nom="formulaire_verifier" inclure="identifiants_pipelines.php" />
+	<pipeline nom="boite_infos" inclure="identifiants_pipelines.php" />
+	<pipeline nom="affiche_droite" inclure="identifiants_pipelines.php" />
+	<pipeline nom="identifiants_utiles" action="" />
+
+	<menu nom="identifiants" titre="identifiant:titre_identifiants" parent="menu_edition" icone="images/identifiant-16.svg" />
+
+</paquet>

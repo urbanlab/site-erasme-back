@@ -1,0 +1,10 @@
+[(#REM)
+
+	Affichage de l'identifiant sur la fiche d'un objet, si présent.
+	Inclus via le pipeline boite_infos.
+
+]
+[<div class="identifiant">
+	<span class="identifiant__label"><:identifiant:champ_identifiant_label:> :</span>
+	<span class="identifiant__valeur">(#ENV{identifiant})</span>
+</div>]

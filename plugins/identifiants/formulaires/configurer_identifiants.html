@@ -1,0 +1,84 @@
+<div class="formulaire_spip formulaire_configurer formulaire_#FORM">
+
+	<h3 class="titrem"><:identifiant:cfg_titre_parametrages:></h3>
+
+	[(#ENV{demander_confirmer}|non)
+		[<p class="reponse_formulaire reponse_formulaire_ok">(#ENV*{message_ok})</p>]
+		[<p class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</p>]
+	]
+
+	<form method="post" action="#ENV{action}">
+
+	<div>
+		#ACTION_FORMULAIRE{#ENV{action}}
+		<input type="hidden" name="_meta_casier" value="identifiants" />
+		<input type="hidden" name="demander_confirmer" value="#ENV{demander_confirmer}" />
+
+		<div class="editer-groupe"[ (#ENV{demander_confirmer}|oui)style="display:none"]>
+
+			[(#REM) choix des objets sur lesquels l'ajout d'identifiants est possible ]
+			#SET{name,objets}
+			#SET{erreurs,#ENV**{erreurs/#GET{name}}}
+			<div class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+				<p class="explication">
+					<:identifiant:champ_cfg_objets_explication:>
+				</p>
+				<BOUCLE_attention(CONDITION) {si #ENV{tables_natives}|ou{#ENV{tables_utiles_manquantes}}}>
+				<p class="attention">
+					<B_objets_exclus>
+					<:identifiant:info_identifiants_objets_exclus|label_ponctuer:>
+					<BOUCLE_objets_exclus(DATA) {source table, #ENV{tables_natives}} {","}>
+					[(#VALEUR|objet_info{texte_objets}|_T)]
+					</BOUCLE_objets_exclus>
+					<B_objets_manquants>
+					<br><:identifiant:info_identifiants_objets_manquants|label_ponctuer:>
+					<BOUCLE_objets_manquants(DATA) {source table, #ENV{tables_utiles_manquantes}} {","}>
+					[(#VALEUR|objet_info{texte_objets}|_T)]
+					</BOUCLE_objets_manquants>
+					</B_objets_manquants>
+				</p>
+				</BOUCLE_attention>
+				<label><:identifiant:champ_cfg_objets_label:></label>
+				[<span class='erreur_message'>(#GET{erreurs})</span>]
+				<INCLURE{fond=formulaires/inc-choisir-objets,
+					name=#GET{name},
+					selected=#ENV**{#GET{name}},
+					exclus=#ENV{tables_natives}}
+				>
+			</div>
+
+			[(#REM) Unicité ]
+			#SET{name,unicite}
+			#SET{erreurs,#ENV**{erreurs/#GET{name}}}
+			#SET{id,#GET{name}}
+			#SET{valeur,#ENV{#GET{name}}}
+			#SET{valeur_case,on}
+			#SET{checked,#GET{valeur}|=={#GET{valeur_case}}}
+			<div class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+				<label for="#GET{id}"><:identifiant:champ_cfg_unicite_label:></label>
+				<p class="explication"><:identifiant:champ_cfg_unicite_explication:></p>
+				[<span class='erreur_message'>(#GET{erreurs})</span>]
+				<div class="choix">
+					<input name="#GET{name}" id="#GET{id}" type="checkbox" value="#GET{valeur_case}"[ (#GET{checked}|oui)checked="checked"] />
+					<label for="#GET{id}"><:identifiant:champ_cfg_unicite_label_case:></label>
+				</div>
+			</div>
+
+
+		</div>
+
+		[(#ENV{demander_confirmer}|oui)
+			[(#ALERTE_MESSAGE{#ENV*{message_erreur}})]
+		]
+
+		<p class="boutons">
+			[(#ENV{demander_confirmer}|non)
+				<button type="submit" class="submit" value="1"><:bouton_enregistrer:></button>
+			][(#ENV{demander_confirmer}|oui)
+				<button type="submit" name="confirmer" value="non" class="btn btn_secondaire"><:bouton_annuler:></button>
+				<button type="submit" name="confirmer" value="oui" class="btn"><:identifiant:bouton_confirmer:></button>
+			]
+		</p>
+	</div>
+	</form>
+</div>

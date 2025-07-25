@@ -1,0 +1,38 @@
+[(#REM)<style>]
+#HTTP_HEADER{Content-Type: text/css; charset=#CHARSET}
+#HTTP_HEADER{Vary: Accept-Encoding}
+
+/* Liste d'identifiants */
+.liste-objets.identifiants .caption {
+	background-image: url([(#CHEMIN_IMAGE{identifiant-24.svg})]);
+	padding-inline-start: var(--spip-list-heading-iconpadding);
+}
+
+/* Boîte identifiants utiles */
+.identifiants-utiles .dropdown-menu {
+  padding: 0;
+  border: 0;
+}
+/* Rustine charte  */
+.identifiants-utiles .dropdown-menu .btn {
+  justify-content: start;
+  text-align: var(--spip-left);
+}
+
+/* Boîte infos */
+.infos .identifiant {
+  padding: calc(var(--spip-spacing-y) / 2) 0;
+  border-bottom: 1px solid var(--spip-box-sep-color);
+  text-align: center;
+  margin-bottom: var(--spip-spacing-y);
+}
+.infos .identifiant__label {
+  text-transform: uppercase;
+  font-size: 0.769em;
+  font-weight: bold;
+}
+.infos .identifiant__valeur {
+  display: block;
+  font-family: mono;
+  color: var(--spip-color-theme-dark);
+}
