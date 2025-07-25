@@ -478,14 +478,15 @@ class SchemaSPIP {
 
 				// Requête pour un objet de la collection
 				$args = [];
-				$args['id'] = [
-					'type' => new NonNull(Type::int()),
-					'description' => _T('graphql:desc_arg_id'),
-				];
 				if (defined('_DIR_PLUGIN_IDENTIFIANTS') and array_key_exists('identifiant', $table_infos['field'])) {
 					$args['identifiant'] = [
 						'type' => new NonNull(Type::string()),
 						'description' => _T('graphql:desc_arg_identifiant'),
+					];
+				} else {
+					$args['id'] = [
+						'type' => new NonNull(Type::int()),
+						'description' => _T('graphql:desc_arg_id'),
 					];
 				}
 				$queryFields['get' . $collection_infos['nameObjet']] = [
