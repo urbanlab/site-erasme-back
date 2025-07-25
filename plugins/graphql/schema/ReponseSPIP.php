@@ -25,8 +25,12 @@ class ReponseSPIP {
 		$collections_autorisees = lire_config('/meta_graphql/objets_editoriaux');
 
 		foreach ($collections_autorisees as $collection => $config) {
+			$table = table_objet_sql($collection);
+			$table_infos = lister_tables_objets_sql($table);
 			$where1 = [];
-			if ($collection != 'documents') $where1[] = 'collection.lang=' . sql_quote($lang);
+			if (array_key_exists('lang', $table_infos['field'])) {
+				$where1[] = 'collection.lang=' . sql_quote($lang);
+			}
 			$result = self::searchCollection($collection, $texte, $where1);
 			if ($where) {
 				foreach (explode(',', $where) as $w) {
@@ -87,7 +91,7 @@ class ReponseSPIP {
 		$limit = ($pagination == 0) ? '' : "$offset,$pagination";
 
 		if ($limit != '') {
-			$totalObjets =  sql_countsel($from, $where);
+			$totalObjets = sql_countsel($from, $where);
 			$totalPages = ceil($totalObjets / $pagination);
 		}
 
@@ -193,7 +197,7 @@ class ReponseSPIP {
 			$objet['logo'] = lire_config("adresse_site") . "/" . vignette_logo_document($objet);
 		} else {
 			// Si on est sur un objet éditorial
-			$logo =  quete_logo_objet($objet['id'], $type_objet, 'on');
+			$logo = quete_logo_objet($objet['id'], $type_objet, 'on');
 			if (array_key_exists('chemin', $logo)) {
 				$objet['logo'] = lire_config("adresse_site") . "/" . $logo['chemin'];
 			}
@@ -260,7 +264,6 @@ class ReponseSPIP {
 			$order = ['points DESC'];
 		}
 		$result = sql_allfetsel($select, $from, $where, '', $order);
-
 
 		foreach ($result as $objet) {
 			$retour_recherche[] = self::findObjet((int) $objet['id'], $collection, $objet);

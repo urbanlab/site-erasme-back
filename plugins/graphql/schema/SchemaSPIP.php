@@ -319,7 +319,7 @@ class SchemaSPIP {
 
 						// Si le champ correspond à la clé primaire de la table en cours
 						if (
-							$parent['champ'] ==  id_table_objet($collection) ||
+							$parent['champ'] == id_table_objet($collection) ||
 							($parent['champ'] == 'id_parent' && $parent['type'] == objet_type($collection))
 						) {
 							$graphQLfields[$collection_liee] = [
@@ -468,21 +468,30 @@ class SchemaSPIP {
 
 			// Pour chaque collection exposée
 			foreach ($this->collections_autorisees as $collection => $config) {
+				$table = table_objet_sql($collection);
+				$table_infos = lister_tables_objets_sql($table);
+
 				$collection_infos = graphql_getCollectionInfos($collection);
 
 				// Requête pour la collection
 				$queryFields[$collection] = $this->getQueryCollection($collection_infos);
 
 				// Requête pour un objet de la collection
+				$args = [];
+				$args['id'] = [
+					'type' => new NonNull(Type::int()),
+					'description' => _T('graphql:desc_arg_id'),
+				];
+				if (defined('_DIR_PLUGIN_IDENTIFIANTS') and array_key_exists('identifiant', $table_infos['field'])) {
+					$args['identifiant'] = [
+						'type' => new NonNull(Type::string()),
+						'description' => _T('graphql:desc_arg_identifiant'),
+					];
+				}
 				$queryFields['get' . $collection_infos['nameObjet']] = [
 					'type' => $this->get($collection_infos['nameObjet']),
 					'description' => _T('graphql:desc_query_objet') . ' ' . $collection_infos['nameObjet'],
-					'args' => [
-						'id' => [
-							'type' => new NonNull(Type::int()),
-							'description' => _T('graphql:desc_arg_id'),
-						]
-					],
+					'args' => $args,
 					'resolve' => function ($rootValue, array $args, array $context, ResolveInfo $info) {
 						return ReponseSPIP::findObjet((int) $args['id'], $info->fieldDefinition->name);
 					}

@@ -40,6 +40,7 @@ Pour le moment, les requêtes disponibles sont :
 - `maCollection` et `getMonObjet` pour chaque collection exposée
 
 Les requêtes `getMonObjet` reçoivent un `id` en paramètre et les requêtes `maCollection` peuvent recevoir les paramètres suivants :
+- `orderby` pour indiquer le sens de la liste `id_article_ASC`
 - `where` (un tableau de string comme `['id_rubrique=1','id_trad=2']`)
 - `pagination` pour indiquer le nombre d'items dans la pagination
 - `page` pour indiquer la page voulue dans la pagination
