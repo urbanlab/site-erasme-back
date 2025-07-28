@@ -412,7 +412,8 @@ function era_declarer_champs_extras($champs = []) {
 		'options' => [
 			'nom' => 'auteur_compte_linkedin',
 			'label' => 'Auteur compte LinkedIn',
-			'type' => 'text', 'size' => '40',
+			'type' => 'text',
+			'size' => '40',
 			'autocomplete' => 'defaut',
 			'sql' => 'text DEFAULT \'\' NOT NULL',
 			'rechercher_ponderation' => '2',

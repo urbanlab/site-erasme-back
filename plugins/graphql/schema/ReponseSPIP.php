@@ -114,7 +114,7 @@ class ReponseSPIP {
 	}
 
 	// Récupération d'un objet
-	public static function findObjet(int $id, string $type_objet, array $objet = []): ?array {
+	public static function findObjet($id, string $type_objet, array $objet = []): ?array {
 		include_spip('inc/filtres');
 		include_spip('inc/texte_mini');
 
@@ -125,7 +125,16 @@ class ReponseSPIP {
 		}
 
 		$type_objet = objet_type($collection);
-		$champ_id = id_table_objet($collection);
+
+		if (is_numeric($id)) {
+        // Recherche par ID
+				$champ_id = id_table_objet($collection);
+				$id = (int)$id;
+    } else {
+        // Recherche par identifiant (string)
+				$champ_id = "identifiant";
+				$id = "'" . addslashes($id) . "'";
+    }
 
 		if (empty($objet)) {
 			$table = table_objet_sql($collection);
@@ -138,9 +147,6 @@ class ReponseSPIP {
 		}
 
 		if (!$objet) return [];
-
-		// Champ de base pour créer le champ slug
-		$slug_origin = self::champSlug($collection);
 
 		// Récupération des champs
 		foreach ($objet as $champ => $value) {
@@ -178,11 +184,6 @@ class ReponseSPIP {
 				default:
 					$objet[$champ] = $value;
 					break;
-			}
-
-			// Récupération du slug de l'objet
-			if ($champ == $slug_origin) {
-				$objet['slug'] = identifiant_slug($value);
 			}
 		}
 
@@ -270,19 +271,6 @@ class ReponseSPIP {
 		}
 
 		return $retour_recherche;
-	}
-
-	public static function champSlug(string $collection) {
-		switch ($collection) {
-			case "auteurs":
-				return "nom";
-				break;
-			case "syndic":
-				return "nom_site";
-				break;
-			default:
-				return "titre";
-		}
 	}
 
 	public static function getSelect(string $table): array {

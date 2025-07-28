@@ -478,14 +478,16 @@ class SchemaSPIP {
 
 				// Requête pour un objet de la collection
 				$args = [];
-				$args['id'] = [
-					'type' => Type::int(),
-					'description' => _T('graphql:desc_arg_id'),
-				];
+
 				if (defined('_DIR_PLUGIN_IDENTIFIANTS') and array_key_exists('identifiant', $table_infos['field'])) {
 					$args['identifiant'] = [
 						'type' => Type::string(),
 						'description' => _T('graphql:desc_arg_identifiant'),
+					];
+				} else {
+					$args['id'] = [
+						'type' => new NonNull(Type::int()),
+						'description' => _T('graphql:desc_arg_id'),
 					];
 				}
 				$queryFields['get' . $collection_infos['nameObjet']] = [
@@ -493,7 +495,8 @@ class SchemaSPIP {
 					'description' => _T('graphql:desc_query_objet') . ' ' . $collection_infos['nameObjet'],
 					'args' => $args,
 					'resolve' => function ($rootValue, array $args, array $context, ResolveInfo $info) {
-						return ReponseSPIP::findObjet((int) $args['id'], $info->fieldDefinition->name);
+						$id = $args['id'] ?? $args['identifiant'] ?? null;
+						return ReponseSPIP::findObjet($id, $info->fieldDefinition->name);
 					}
 				];
 			}

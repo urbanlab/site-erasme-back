@@ -16,8 +16,9 @@
 
 	<necessite nom="saisies" compatibilite="[4.7.1;]" />
 	<necessite nom="yaml" compatibilite="[3.0.0;]" />
+	<utilise nom="identifiants" compatibilite="[2.2.1;]" />
 
-    <menu nom="graphql" titre="graphql:titre_page_configurer_graphql" icone="images/graphql-16.png" parent="menu_publication" action="graphiql" />
+  <menu nom="graphql" titre="graphql:titre_page_configurer_graphql" icone="images/graphql-16.png" parent="menu_publication" action="graphiql" />
 
 	<onglet nom="graphql_ide" titre="graphql:titre_graphiql" icone="" parent="graphql" action="graphiql" />
 	<onglet nom="graphql_configurer" titre="graphql:titre_graphql_configurer" icone="" parent="graphql" action="configurer_graphql" />
