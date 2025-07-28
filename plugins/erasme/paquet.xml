@@ -4,7 +4,7 @@
     version="2.0.3"
     etat="dev"
     logo="era.png"
-    schema="1.2.2"
+    schema="1.2.3"
     compatibilite="[3.0;["
 >
     <nom>Erasme - Plugin du site</nom>

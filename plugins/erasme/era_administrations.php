@@ -27,6 +27,7 @@ function era_upgrade($nom_meta_base_version, $version_cible) {
 	cextras_api_upgrade(era_declarer_champs_extras(), $maj['1.1.1']);
 	cextras_api_upgrade(era_declarer_champs_extras(), $maj['1.2.1']);
 	$maj['1.2.2'] = [['era_maj_autoinc']];
+	cextras_api_upgrade(era_declarer_champs_extras(), $maj['1.2.3']);
 
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);
