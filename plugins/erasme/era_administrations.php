@@ -5,7 +5,7 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 }
 
 include_spip('inc/cextras');
-include_spip('era_cextras.php');
+include_spip('era_cextras');
 
 /**
  * Déclaration des actions nécessaires en fonction de la version du schema déclarée dans paquet.xml.
