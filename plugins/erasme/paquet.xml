@@ -1,7 +1,7 @@
 <paquet
     prefix="era"
     categorie="squelette"
-    version="2.0.3"
+    version="2.0.4"
     etat="dev"
     logo="era.png"
     schema="1.2.3"
@@ -15,4 +15,5 @@
 
     <pipeline nom="declarer_champs_extras" inclure="era_cextras.php" />
 	<pipeline nom="taches_generales_cron" inclure="era_pipelines.php" />
+	<pipeline nom="post_edition" inclure="era_pipelines.php" />
 </paquet>
