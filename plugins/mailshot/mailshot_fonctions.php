@@ -69,7 +69,7 @@ function mailshot_url_newsletter($id){
 	if (!test_plugin_actif("newsletters"))
 		return "";
 
-	return generer_url_entite($id,'newsletter');
+	return generer_objet_url($id,'newsletter');
 }
 
 /**

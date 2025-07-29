@@ -6,17 +6,19 @@
 return [
 
 	// B
-	'bouton_envoyer' => 'Envoyer !', # MODIF
-	'bouton_tester_envoi' => 'Tester !', # MODIF
+	'bouton_envoyer' => 'إرسال!',
+	'bouton_tester_envoi' => 'إختبار!',
 
 	// I
-	'info_envoi_unique_newsletter' => 'Envoyer à 1 personne', # MODIF
-	'info_envoi_unique_reussi' => 'La newsletter a bien été envoyée à @email@', # MODIF
-	'info_envoyer_newsletter' => 'Envoyer l’infolettre', # MODIF
-	'info_test_envoye' => 'La newsletter a été envoyée en test à @email@', # MODIF
-	'info_tester_newsletter' => 'Tester avec un envoi unique', # MODIF
+	'info_envoi_unique_newsletter' => 'إرسال الى شخص واحد',
+	'info_envoi_unique_reussi' => 'تم إرسال النشرة بنجاح الى @email@',
+	'info_envoyer_newsletter' => 'إرسال النشرة',
+	'info_test_envoye' => 'تم إرسال النشرة كتجربة الى @email@',
+	'info_tester_newsletter' => 'تجربة الارسال الى عنوان واحد',
 
 	// L
-	'label_email_test' => 'à l’adresse email', # MODIF
-	'label_liste' => 'aux abonnés de ', # MODIF
+	'label_date_start' => 'برمجة الارسال',
+	'label_email_test' => 'الى عنوان البريد',
+	'label_liste' => 'الى المشتركين',
+	'label_resend_oui' => 'إرسال مرة أخرى الى المرسَل اليهم الذين سبق وتلقوها',
 ];

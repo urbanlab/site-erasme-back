@@ -5,7 +5,7 @@
 	url="https://trad.spip.net"
 	source="https://git.spip.net/spip-contrib-extensions/mailshot.git"
 	reference="fr">
-	<langue code="ar" url="https://trad.spip.net/tradlang_module/newsletter?lang_cible=ar">
+	<langue code="ar" url="https://trad.spip.net/tradlang_module/newsletter?lang_cible=ar" total="11" traduits="11" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
 		<traducteur nom="George" lien="https://trad.spip.net/auteur/george" />
 	</langue>
 	<langue code="de" url="https://trad.spip.net/tradlang_module/newsletter?lang_cible=de" total="11" traduits="11" relire="0" modifs="0" nouveaux="0" pourcent="100.00">

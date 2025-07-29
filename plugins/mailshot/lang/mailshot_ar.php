@@ -5,6 +5,9 @@
 
 return [
 
+	// B
+	'bouton_acquiter_alerte' => 'إعادة تنشيط الارسالات',
+
 	// C
 	'cfg_exemple' => 'مثال',
 	'cfg_exemple_explication' => 'تفسير هذا المثال',
@@ -18,6 +21,7 @@ return [
 	'erreur_generation_newsletter' => 'حصل خطأ لدى انتاج النشرة البريدية',
 	'explication_boost_send' => 'في هذه الوضعية، يتم إرسال الرسائل في أسرع وقت ممكن. لا توجد أية حدود لوتيرة الإرسال.
 										الإسال السريع غير مستحب لأنه يرفع من احتمال وصم خادم البريد بالخنزرة.',
+	'explication_check_fail_ratio' => 'اذا تخطت نسبة الفشل @ratio@٪ يتم تعليق الارسالات وارسال بريد الى المشرف على الموقع لتفقد خدمة الارسال',
 	'explication_purger_historique' => 'لكل إرسال بالجملة، يتم حفظ جميع المرسل اليهم في قاعدة البيانات مع معلومات وضعية الإرسال.
 	قد يشكل ذلك حجم بيانات كبير اذا كانت وتيرة الإرسال مرتفعة ويستحسن تفريغ تفاصيل الإرسالات القديمة. ',
 	'explication_rate_limit' => 'تحديد الحد الأقصى لعدد الرسائل المرسلة في اليوم الواحد او ترك الحقل فارغ لعدد لا محدود',
@@ -30,6 +34,7 @@ return [
 	'info_archiver' => 'أرشفة',
 	'info_aucun_destinataire' => 'لا يوجد اي مرسل اليه',
 	'info_aucun_envoi' => 'لا يوجد اي إرسال',
+	'info_date_envoi' => 'تاريخ الارسال:',
 	'info_envoi_programme_1_destinataire' => 'إرسال مبرمج الى مرسل اليه واحد',
 	'info_envoi_programme_nb_destinataires' => 'إرسال مبرمج  الى @nb@ مرسل اليه',
 	'info_mailshot_no' => 'إرسال رقم @id@',
@@ -54,6 +59,7 @@ return [
 	// L
 	'label_avancement' => 'حال الإرسال',
 	'label_boost_send_oui' => 'إرسال سريع',
+	'label_check_fail_ratio_oui' => 'مراقبة نسبة الفشل',
 	'label_control_pause' => 'توقف مؤقت',
 	'label_control_play' => 'إعادة الإرسال',
 	'label_control_stop' => 'التخلي عن الإرسال',
@@ -68,6 +74,7 @@ return [
 	'label_mailer_defaut_desactive' => 'غير ممكن: لا توجد اية خدمة ارسال معدّة',
 	'label_mailer_mailjet' => 'خدمة Mailjet',
 	'label_mailer_mandrill' => 'خدمة Mandrill',
+	'label_mailer_sendinblue' => 'Brevo',
 	'label_mailer_smtp' => 'خادم SMTP',
 	'label_mailer_sparkpost' => 'خدمة Sparkpost',
 	'label_mailjet_api_key' => 'مفتاح Mailjet',
@@ -77,6 +84,7 @@ return [
 	'label_purger_historique_delai' => 'أقدم من',
 	'label_purger_historique_oui' => 'حذف تفاصيل الإرسالات القديمة',
 	'label_rate_limit' => 'حد وتيرة الإرسال',
+	'label_sendinblue_api_key' => 'مفتاح Brevo APIv3',
 	'label_sparkpost_api_endpoint' => 'API Endpoint',
 	'label_sparkpost_api_key' => 'مفتاح Sparkpost',
 	'label_sujet' => 'الموضوع',
@@ -87,7 +95,10 @@ return [
 	'lien_voir_newsletter' => 'عرض النشرة البريدية',
 
 	// M
+	'mail_alerte_fail_ratio_sujet' => '[Mailshot #@id@] تنبيه نسبة فشل ارسال البريد',
+	'mail_alerte_fail_ratio_texte' => 'تم اكتشاف نسبة فشل غير طبيعية @ratio@٪ في ارسال البريد رقم #@id@. كل الارسالات متوقفة. يجب الدخول الى الموقع @url@ والتدقيق في خدمة الارسال.',
 	'mailshot_titre' => 'البريد الدعائي',
+	'message_admin_alerte_fail_ratio' => 'في تاريخ @date@ تم اكتشاف نسبة فشل غير طبيعية في ارسال البريد بحجم كبير. <br />كل الارسالات معلقة.<br /> دققوا في خدمة الارسال قبل اعادة تنشيط الارسالات.',
 
 	// T
 	'texte_changer_statut_mailshot' => 'هذا الإرسال هو:',
@@ -99,13 +110,14 @@ return [
 	'texte_statut_processing' => 'جاري',
 	'titre_envois_archives' => 'الإرسالات المؤرشفة',
 	'titre_envois_destinataires_clic' => 'الرسائل التي نُقرت',
-	'titre_envois_destinataires_fail' => 'الإرسالات التي فشلت', # MODIF
+	'titre_envois_destinataires_fail' => 'الإرسالات التي فشلت',
 	'titre_envois_destinataires_init_encours' => 'لا يوجد اي مرسل اليه مبرمج (جاري التأصيل)',
+	'titre_envois_destinataires_kill' => 'إرسالات ملغية',
 	'titre_envois_destinataires_ok' => 'الإرسالات الناجحة',
 	'titre_envois_destinataires_read' => 'الرسائل التي فتحت',
 	'titre_envois_destinataires_sent' => 'الإرسالات الناجحة',
 	'titre_envois_destinataires_spam' => 'رسائل الخنزرة',
-	'titre_envois_destinataires_todo' => 'إراسلات قادمة', # MODIF
+	'titre_envois_destinataires_todo' => 'إرسالات قادمة',
 	'titre_envois_en_cours' => 'إرسالات حالية',
 	'titre_envois_planifies' => 'إرسالات مبرمجة',
 	'titre_envois_termines' => 'إرسالات منتهية',
