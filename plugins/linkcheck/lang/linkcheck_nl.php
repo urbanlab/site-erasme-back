@@ -3,11 +3,7 @@
 // extrait automatiquement de https://trad.spip.net/tradlang_module/linkcheck?lang_cible=nl
 // ** ne pas modifier le fichier **
 
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
-
-$GLOBALS[$GLOBALS['idx_lang']] = array(
+return [
 
 	// A
 	'afficher_alerte' => 'Waarschuwingen tonen',
@@ -100,5 +96,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// U
 	'url' => 'URL',
-	'utilise' => 'gebruikt in ' # MODIF
-);
+	'utilise' => 'gebruikt in ', # MODIF
+];

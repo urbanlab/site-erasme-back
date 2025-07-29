@@ -1,11 +1,8 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
 // Fichier source, a modifier dans https://git.spip.net/spip-contrib-extensions/linkcheck.git
-if (!defined('_ECRIRE_INC_VERSION')) {
-	return;
-}
 
-return[
+return [
 
 	// A
 	'afficher_alerte' => 'Afficher les alertes',
@@ -113,5 +110,5 @@ return[
 
 	// U
 	'url' => 'URL',
-	'utilise' => 'Utilisé dans '
+	'utilise' => 'Utilisé dans ',
 ];

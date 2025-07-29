@@ -304,6 +304,7 @@ function linkcheck_nettoyer_texte(string $texte): string {
 	static $wheel = null;
 
 	// code, cadre, ...
+	include_spip('inc/texte');
 	$texte = echappe_html($texte, 'TYPO');
 
 	// backtick markdowns
