@@ -18,5 +18,9 @@ function genie_generer_slug($time) {
 	foreach ($mots as $mot) {
 		sql_updateq('spip_mots', ['identifiant' => identifiant_slug($mot['titre'])], 'id_mot=' . intval($mot['id_mot']));
 	}
+	$auteurs = sql_allfetsel('*', 'spip_auteurs', ['identifiant = ""'],'','','0,100');
+	foreach ($auteurs as $auteur) {
+		sql_updateq('spip_auteurs', ['identifiant' => identifiant_slug($auteur['nom'])], 'id_auteur=' . intval($auteur['id_auteur']));
+	}
 	return 0;
 }
