@@ -36,4 +36,11 @@ function era_post_edition($flux) {
 		$mot = sql_fetsel('*', $flux['args']['table'], 'id_mot=' . intval($flux['args']['id_objet']));
 		sql_updateq($flux['args']['table'], ['identifiant' => identifiant_slug($mot['titre'])], 'id_mot=' . intval($flux['args']['id_objet']));
 	}
+	if (isset($flux['args']['table']) && $flux['args']['table'] === 'spip_auteurs'
+		&& isset($flux['args']['action']) && $flux['args']['action'] === 'modifier'
+		&& isset($flux['args']['id_objet'])
+	) {
+		$auteur = sql_fetsel('*', $flux['args']['table'], 'id_auteur=' . intval($flux['args']['id_objet']));
+		sql_updateq($flux['args']['table'], ['identifiant' => identifiant_slug($auteur['nom'])], 'id_auteur=' . intval($flux['args']['id_objet']));
+	}
 }
