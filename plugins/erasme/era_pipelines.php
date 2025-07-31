@@ -15,32 +15,29 @@ function era_taches_generales_cron($taches) {
 }
 
 function era_post_edition($flux) {
-	if (isset($flux['args']['table']) && $flux['args']['table'] === 'spip_articles'
-		&& isset($flux['args']['action']) && $flux['args']['action'] === 'modifier'
-		&& isset($flux['args']['id_objet'])
-	) {
-		$article = sql_fetsel('*', $flux['args']['table'], 'id_article=' . intval($flux['args']['id_objet']));
-		sql_updateq($flux['args']['table'], ['identifiant' => identifiant_slug($article['titre'])], 'id_article=' . intval($flux['args']['id_objet']));
-	}
-	if (isset($flux['args']['table']) && $flux['args']['table'] === 'spip_rubriques'
-		&& isset($flux['args']['action']) && $flux['args']['action'] === 'modifier'
-		&& isset($flux['args']['id_objet'])
-	) {
-		$rubrique = sql_fetsel('*', $flux['args']['table'], 'id_rubrique=' . intval($flux['args']['id_objet']));
-		sql_updateq($flux['args']['table'], ['identifiant' => identifiant_slug($rubrique['titre'])], 'id_rubrique=' . intval($flux['args']['id_objet']));
-	}
-	if (isset($flux['args']['table']) && $flux['args']['table'] === 'spip_mots'
-		&& isset($flux['args']['action']) && $flux['args']['action'] === 'modifier'
-		&& isset($flux['args']['id_objet'])
-	) {
-		$mot = sql_fetsel('*', $flux['args']['table'], 'id_mot=' . intval($flux['args']['id_objet']));
-		sql_updateq($flux['args']['table'], ['identifiant' => identifiant_slug($mot['titre'])], 'id_mot=' . intval($flux['args']['id_objet']));
-	}
-	if (isset($flux['args']['table']) && $flux['args']['table'] === 'spip_auteurs'
-		&& isset($flux['args']['action']) && $flux['args']['action'] === 'modifier'
-		&& isset($flux['args']['id_objet'])
-	) {
-		$auteur = sql_fetsel('*', $flux['args']['table'], 'id_auteur=' . intval($flux['args']['id_objet']));
-		sql_updateq($flux['args']['table'], ['identifiant' => identifiant_slug($auteur['nom'])], 'id_auteur=' . intval($flux['args']['id_objet']));
+	$tables_identifiables = identifiants_lister_tables_identifiables(true);
+	foreach ($tables_identifiables as $table) {
+		if (isset($flux['args']['table']) && $flux['args']['table'] === $table
+			&& isset($flux['args']['action']) && $flux['args']['action'] === 'modifier'
+			&& isset($flux['args']['id_objet'])
+		) {
+			$champ = sql_getfetsel(
+				'titre',
+				$flux['args']['table'],
+				table_objet($flux['args']['table']) . '=' . intval($flux['args']['id_objet'])
+			);
+			if ($table == 'spip_auteurs') {
+				$champ = sql_getfetsel(
+					'nom',
+					$flux['args']['table'],
+					table_objet($flux['args']['table']) . '=' . intval($flux['args']['id_objet'])
+				);
+			}
+			sql_updateq(
+				$flux['args']['table'],
+				['identifiant' => identifiant_slug($champ)],
+				table_objet($flux['args']['table']) . '=' . intval($flux['args']['id_objet'])
+			);
+		}
 	}
 }
